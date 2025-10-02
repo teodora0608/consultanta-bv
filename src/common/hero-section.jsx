@@ -25,17 +25,13 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <section
-      id="acasa"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{
-        backgroundImage:
-          "url(https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hero-bg-photo-Mqf6hWnAvarhUX1fxwRtroEokZFmBg.png)",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
+    <section id="acasa" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <picture className="absolute inset-0 w-full h-full">
+        <source media="(min-width: 1024px)" srcSet="/images/hero-desktop.png" />
+        <source media="(min-width: 640px)" srcSet="/images/hero-tablet.jpg" />
+        <img src="/images/hero-mobile.jpg" alt="" className="w-full h-full object-cover object-center" />
+      </picture>
+
       <div className="max-w-[1200px] mx-auto px-4 md:px-6 lg:px-8 relative z-10 text-center py-32">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
@@ -43,7 +39,7 @@ export default function HeroSection() {
           transition={{ duration: 0.6 }}
           className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight font-serif"
         >
-          Soluții juridice rapide, clare și sigure
+          Soluții juridice rapide și sigure
         </motion.h1>
 
         <div className="h-[90px] md:h-[70px] flex items-center justify-center mb-16">
@@ -93,22 +89,22 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="grid grid-cols-2 md:flex md:flex-nowrap items-center justify-center gap-x-4 md:gap-x-6 gap-y-3 text-white/85 text-sm md:text-base font-sans mt-12 md:mt-16"
+          className="grid grid-cols-2 md:flex md:flex-nowrap items-center justify-center gap-x-4 md:gap-x-6 gap-y-3 text-white/85 text-sm md:text-base font-sans mt-12 md:mt-16 py-0.5"
         >
           <div className="flex items-center gap-2">
             <CheckCircle className="h-4 w-4 md:h-5 md:w-5 text-[#3eb89a] flex-shrink-0" />
-            <span>Răspuns &lt; 24h</span>
+            <span>Răspuns &lt; 2h</span>
           </div>
           <div className="flex items-center gap-2">
             <Lock className="h-4 w-4 md:h-5 md:w-5 text-[#3eb89a] flex-shrink-0" />
             <span>Confidențial</span>
           </div>
-          <span className="hidden md:inline text-white/40"></span>
+          <span className="hidden md:inline text-white/40">•</span>
           <div className="flex items-center gap-2">
             <MessageCircle className="h-4 w-4 md:h-5 md:w-5 text-[#3eb89a] flex-shrink-0" />
             <span>Suport dedicat</span>
           </div>
-          <span className="hidden md:inline text-white/40"></span>
+          <span className="hidden md:inline text-white/40">•</span>
           <div className="flex items-center gap-2">
             <DollarSign className="h-4 w-4 md:h-5 md:w-5 text-[#3eb89a] flex-shrink-0" />
             <span>Fără costuri ascunse</span>

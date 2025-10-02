@@ -26,7 +26,7 @@ export default function Footer() {
               alt="Consultant ABV"
               className="h-14 w-auto mb-6 brightness-0 invert"
             />
-            <p className="text-white/80 text-base leading-relaxed mb-6 max-w-md">
+            <p className="text-white/80 text-base leading-relaxed mb-6 max-w-md font-sans">
               Consultanță juridică premium pentru firme și antreprenori. Soluții rapide, transparente și sigure,
               adaptate nevoilor tale.
             </p>
@@ -57,7 +57,7 @@ export default function Footer() {
 
           {/* Navigation */}
           <div>
-            <h3 className="font-bold text-lg mb-6 text-white">Navigare rapidă</h3>
+            <h3 className="font-bold text-lg mb-6 text-white font-serif">Navigare rapidă</h3>
             <ul className="space-y-3">
               {[
                 { href: "#acasa", label: "Acasă" },
@@ -68,7 +68,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-white/70 hover:text-[#3eb89a] transition-colors text-base inline-flex items-center group"
+                    className="text-white/70 hover:text-[#3eb89a] transition-colors text-base inline-flex items-center group font-sans"
                   >
                     <span className="w-0 h-px bg-[#3eb89a] transition-all duration-300 group-hover:w-4 group-hover:mr-2" />
                     {link.label}
@@ -80,12 +80,12 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="font-bold text-lg mb-6 text-white">Contact</h3>
+            <h3 className="font-bold text-lg mb-6 text-white font-serif">Contact</h3>
             <ul className="space-y-4">
               <li>
                 <a
                   href="mailto:contact@consultantabv.ro"
-                  className="flex items-start gap-3 text-white/70 hover:text-[#3eb89a] transition-colors text-base group"
+                  className="flex items-start gap-3 text-white/70 hover:text-[#3eb89a] transition-colors text-base group font-sans"
                 >
                   <Mail className="h-5 w-5 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-transform" />
                   <span>contact@consultantabv.ro</span>
@@ -94,14 +94,14 @@ export default function Footer() {
               <li>
                 <a
                   href="tel:+40123456789"
-                  className="flex items-start gap-3 text-white/70 hover:text-[#3eb89a] transition-colors text-base group"
+                  className="flex items-start gap-3 text-white/70 hover:text-[#3eb89a] transition-colors text-base group font-sans"
                 >
                   <Phone className="h-5 w-5 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-transform" />
                   <span>+40 123 456 789</span>
                 </a>
               </li>
               <li>
-                <div className="flex items-start gap-3 text-white/70 text-base">
+                <div className="flex items-start gap-3 text-white/70 text-base font-sans">
                   <MapPin className="h-5 w-5 mt-0.5 flex-shrink-0" />
                   <span>Brașov, România</span>
                 </div>
@@ -112,7 +112,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-white/10 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/60">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/60 font-sans">
             <p>© {currentYear} consultantabv.ro – Toate drepturile rezervate.</p>
             <div className="flex items-center gap-6">
               <a href="#" className="hover:text-[#3eb89a] transition-colors">
