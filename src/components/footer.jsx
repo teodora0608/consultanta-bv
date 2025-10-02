@@ -1,0 +1,133 @@
+"use client"
+
+import { Mail, Phone, MapPin, Facebook, Music } from "lucide-react"
+
+export default function Footer() {
+  const currentYear = new Date().getFullYear()
+
+  return (
+    <footer className="bg-[#0a2540] text-white relative overflow-hidden">
+      {/* Decorative pattern */}
+      <div className="absolute inset-0 opacity-[0.02]">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%23ffffff' fillOpacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }}
+        />
+      </div>
+
+      <div className="container mx-auto px-6 lg:px-12 py-16 relative">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+          {/* Logo and description */}
+          <div className="lg:col-span-2">
+            <img
+              src="/images/logo.png"
+              alt="Consultant ABV"
+              className="h-14 w-auto mb-6 brightness-0 invert"
+            />
+            <p className="text-white/80 text-base leading-relaxed mb-6 max-w-md">
+              Consultanță juridică premium pentru firme și antreprenori. Soluții rapide, transparente și sigure,
+              adaptate nevoilor tale.
+            </p>
+            <div className="flex items-center gap-4">
+              <a
+                href="#"
+                className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a]"
+                aria-label="Facebook"
+              >
+                <Facebook className="h-5 w-5" />
+              </a>
+              <a
+                href="#"
+                className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a]"
+                aria-label="TikTok"
+              >
+                <Music className="h-5 w-5" />
+              </a>
+              <a
+                href="mailto:contact@consultantabv.ro"
+                className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a]"
+                aria-label="Email"
+              >
+                <Mail className="h-5 w-5" />
+              </a>
+            </div>
+          </div>
+
+          {/* Navigation */}
+          <div>
+            <h3 className="font-bold text-lg mb-6 text-white">Navigare rapidă</h3>
+            <ul className="space-y-3">
+              {[
+                { href: "#acasa", label: "Acasă" },
+                { href: "#servicii", label: "Servicii" },
+                { href: "#despre", label: "Despre noi" },
+                { href: "#contact", label: "Contact" },
+              ].map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="text-white/70 hover:text-[#3eb89a] transition-colors text-base inline-flex items-center group"
+                  >
+                    <span className="w-0 h-px bg-[#3eb89a] transition-all duration-300 group-hover:w-4 group-hover:mr-2" />
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h3 className="font-bold text-lg mb-6 text-white">Contact</h3>
+            <ul className="space-y-4">
+              <li>
+                <a
+                  href="mailto:contact@consultantabv.ro"
+                  className="flex items-start gap-3 text-white/70 hover:text-[#3eb89a] transition-colors text-base group"
+                >
+                  <Mail className="h-5 w-5 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                  <span>contact@consultantabv.ro</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="tel:+40123456789"
+                  className="flex items-start gap-3 text-white/70 hover:text-[#3eb89a] transition-colors text-base group"
+                >
+                  <Phone className="h-5 w-5 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                  <span>+40 123 456 789</span>
+                </a>
+              </li>
+              <li>
+                <div className="flex items-start gap-3 text-white/70 text-base">
+                  <MapPin className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                  <span>Brașov, România</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="border-t border-white/10 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/60">
+            <p>© {currentYear} consultantabv.ro – Toate drepturile rezervate.</p>
+            <div className="flex items-center gap-6">
+              <a href="#" className="hover:text-[#3eb89a] transition-colors">
+                Politică de confidențialitate
+              </a>
+              <a href="#" className="hover:text-[#3eb89a] transition-colors">
+                Termeni și condiții
+              </a>
+              <a href="#" className="hover:text-[#3eb89a] transition-colors">
+                Cookies
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  )
+}
