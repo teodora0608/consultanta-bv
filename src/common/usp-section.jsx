@@ -49,8 +49,9 @@ export default function USPSection() {
   ]
 
   return (
-    <section className="section-spacing bg-gray-50">
-      <div className="page-container">
+    <section className="py-24 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        {/* Why section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -58,13 +59,14 @@ export default function USPSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#0a2540] font-serif">De ce consultantabv.ro?</h2>
-          <p className="text-lg text-[#0a2540]/70 max-w-3xl mx-auto font-sans">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#0a2540]">De ce consultantabv.ro?</h2>
+          <p className="text-lg text-[#0a2540]/70 max-w-3xl mx-auto">
             Combinăm expertiza juridică cu tehnologia pentru a-ți oferi servicii de calitate superioară
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 lg:gap-6 mb-20">
+        {/* 3-step process */}
+        <div className="grid md:grid-cols-3 gap-8 mb-20">
           {steps.map((step, index) => (
             <motion.div
               key={index}
@@ -75,9 +77,9 @@ export default function USPSection() {
               className="relative"
             >
               <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 h-full">
-                <div className={`text-5xl font-bold mb-4 ${step.color} font-serif`}>{step.number}</div>
-                <h3 className="text-xl font-bold mb-3 text-[#0a2540] font-serif">{step.title}</h3>
-                <p className="text-[#0a2540]/70 font-sans">{step.description}</p>
+                <div className={`text-5xl font-bold mb-4 ${step.color}`}>{step.number}</div>
+                <h3 className="text-xl font-bold mb-3 text-[#0a2540]">{step.title}</h3>
+                <p className="text-[#0a2540]/70">{step.description}</p>
               </div>
               {index < steps.length - 1 && (
                 <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
@@ -88,7 +90,8 @@ export default function USPSection() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6">
+        {/* USP cards */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {usps.map((usp, index) => {
             const Icon = usp.icon
             return (
@@ -98,13 +101,13 @@ export default function USPSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="rounded-2xl bg-[#1a3d52] text-white p-8 hover:bg-[#234a61] transition-all duration-300 group min-h-[44px]"
+                className="rounded-2xl bg-[#1a3d52] text-white p-8 hover:bg-[#234a61] transition-all duration-300 group"
               >
                 <div className="w-14 h-14 rounded-xl bg-white/10 flex items-center justify-center mb-6 group-hover:bg-[#3eb89a] transition-colors duration-300">
                   <Icon className="h-7 w-7" />
                 </div>
-                <h3 className="text-xl font-bold mb-3 font-serif">{usp.title}</h3>
-                <p className="text-white/80 leading-relaxed font-sans">{usp.description}</p>
+                <h3 className="text-xl font-bold mb-3">{usp.title}</h3>
+                <p className="text-white/80 leading-relaxed">{usp.description}</p>
               </motion.div>
             )
           })}

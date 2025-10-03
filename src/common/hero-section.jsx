@@ -20,42 +20,29 @@ export default function HeroSection() {
     const interval = setInterval(() => {
       setCurrentTextIndex((prevIndex) => (prevIndex + 1) % rotatingTexts.length)
     }, 3000)
+
     return () => clearInterval(interval)
   }, [])
 
   return (
-    <section
-      id="acasa"
-      /* full screen, izolat pe stiva pentru z-index corect */
-      className="relative isolate h-screen w-screen flex items-center justify-center overflow-hidden"
-    >
-      {/* BG image: ABSOLUTE (nu fixed) ca să nu intre sub secțiunile următoare */}
+    <section id="acasa" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <picture className="absolute inset-0 w-full h-full">
         <source media="(min-width: 1024px)" srcSet="/images/hero-desktop.png" />
         <source media="(min-width: 640px)" srcSet="/images/hero-tablet.jpg" />
-        <img
-          src="/images/hero-mobile.jpg"
-          alt="Hero background"
-          className="w-full h-full object-cover object-center md:object-center lg:object-[right_center] select-none"
-        />
+        <img src="/images/hero-mobile.jpg" alt="" className="w-full h-full object-cover object-center" />
       </picture>
 
-      {/* Overlay pentru contrast text */}
-      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 via-black/20 to-transparent z-[5]" />
-
-      {/* Conținutul – neschimbat */}
-      <div className="page-container relative z-10 text-center lg:text-left py-32">
+      <div className="max-w-[1200px] mx-auto px-4 md:px-6 lg:px-8 relative z-10 text-center py-32">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight font-serif"
-          style={{ textShadow: "0 2px 8px rgba(0, 0, 0, 0.3)" }}
         >
           Soluții juridice rapide și sigure
         </motion.h1>
 
-        <div className="h-[90px] md:h-[70px] flex items-center justify-center lg:justify-start mb-16">
+        <div className="h-[90px] md:h-[70px] flex items-center justify-center mb-16">
           <AnimatePresence mode="wait">
             <motion.p
               key={currentTextIndex}
@@ -63,7 +50,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
-              className="text-xl md:text-2xl text-white/95 max-w-2xl mx-auto lg:mx-0 font-sans font-medium"
+              className="text-xl md:text-2xl text-white/95 max-w-2xl mx-auto font-sans font-medium"
             >
               {rotatingTexts[currentTextIndex]}
             </motion.p>
@@ -74,13 +61,13 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex flex-col lg:flex-row gap-4 justify-center lg:justify-start items-stretch lg:items-center mb-10"
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10"
         >
           <a
             href="#contact"
-            className="w-full lg:w-auto inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085]
+            className="w-full sm:w-auto inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085]
                        text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg
-                       transition-all duration-300 group font-sans min-h-[44px]"
+                       transition-all duration-300 group font-sans"
           >
             Solicită ofertă gratuită
             <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -88,10 +75,10 @@ export default function HeroSection() {
 
           <a
             href="tel:+40123456789"
-            className="w-full lg:w-auto inline-flex items-center justify-center border-2 border-white/30
-                       bg-white/0 text-white hover:bg-white/10 hover:border-white
+            className="w-full sm:w-auto inline-flex items-center justify-center border-2 border-white/30
+                       text-white hover:bg-white/10 hover:border-white
                        font-semibold px-8 py-4 rounded-lg text-lg
-                       transition-all duration-300 font-sans min-h-[44px]"
+                       transition-all duration-300 font-sans"
           >
             <Phone className="mr-2 h-5 w-5" />
             Sună acum
@@ -102,38 +89,25 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 max-w-3xl mx-auto lg:mx-0 mt-12 lg:mt-16"
+          className="grid grid-cols-2 md:flex md:flex-nowrap items-center justify-center gap-x-4 md:gap-x-6 gap-y-3 text-white/85 text-sm md:text-base font-sans mt-12 md:mt-16 py-0.5"
         >
-          <div
-            className="flex items-center gap-2 text-white/90 text-sm md:text-base font-sans min-h-[44px]"
-            style={{ textShadow: "0 1px 4px rgba(0, 0, 0, 0.4)" }}
-          >
-            <CheckCircle className="h-5 w-5 text-[#3eb89a] flex-shrink-0" />
-            <span className="text-white">Răspuns &lt; 24h</span>
+          <div className="flex items-center gap-2">
+            <CheckCircle className="h-4 w-4 md:h-5 md:w-5 text-[#3eb89a] flex-shrink-0" />
+            <span>Răspuns &lt; 2h</span>
           </div>
-
-          <div
-            className="flex items-center gap-2 text-white/90 text-sm md:text-base font-sans min-h-[44px]"
-            style={{ textShadow: "0 1px 4px rgba(0, 0, 0, 0.4)" }}
-          >
-            <Lock className="h-5 w-5 text-[#3eb89a] flex-shrink-0" />
-            <span className="text-white">Securitate juridică</span>
+          <div className="flex items-center gap-2">
+            <Lock className="h-4 w-4 md:h-5 md:w-5 text-[#3eb89a] flex-shrink-0" />
+            <span>Confidențial</span>
           </div>
-
-          <div
-            className="flex items-center gap-2 text-white/90 text-sm md:text-base font-sans min-h-[44px]"
-            style={{ textShadow: "0 1px 4px rgba(0, 0, 0, 0.4)" }}
-          >
-            <MessageCircle className="h-5 w-5 text-[#3eb89a] flex-shrink-0" />
-            <span className="text-white">Asistenţă rapidă</span>
+          <span className="hidden md:inline text-white/40">•</span>
+          <div className="flex items-center gap-2">
+            <MessageCircle className="h-4 w-4 md:h-5 md:w-5 text-[#3eb89a] flex-shrink-0" />
+            <span>Suport dedicat</span>
           </div>
-
-          <div
-            className="flex items-center gap-2 text-white/90 text-sm md:text-base font-sans min-h-[44px]"
-            style={{ textShadow: "0 1px 4px rgba(0, 0, 0, 0.4)" }}
-          >
-            <DollarSign className="h-5 w-5 text-[#3eb89a] flex-shrink-0" />
-            <span className="text-white">Prețuri corecte</span>
+          <span className="hidden md:inline text-white/40">•</span>
+          <div className="flex items-center gap-2">
+            <DollarSign className="h-4 w-4 md:h-5 md:w-5 text-[#3eb89a] flex-shrink-0" />
+            <span>Fără costuri ascunse</span>
           </div>
         </motion.div>
       </div>
