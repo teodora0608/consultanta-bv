@@ -16,6 +16,17 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = ""
+    }
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [isMobileMenuOpen])
+
   const navLinks = [
     { href: "#servicii", label: "Servicii" },
     { href: "#despre", label: "Despre" },
@@ -31,7 +42,7 @@ export default function Navbar() {
         isScrolled ? "bg-white shadow-sm h-[60px]" : "bg-transparent h-[72px]"
       }`}
     >
-      <div className="max-w-[1200px] mx-auto px-4 md:px-6 lg:px-8 h-full">
+      <div className="page-container h-full">
         <div className="flex items-center justify-between h-full">
           <a
             href="#acasa"
@@ -47,7 +58,7 @@ export default function Navbar() {
             />
           </a>
 
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden lg:flex items-center gap-6">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -69,10 +80,9 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`md:hidden p-2 transition-colors duration-200 ${isScrolled ? "text-gray-700" : "text-white"}`}
+            className={`lg:hidden p-2 transition-colors duration-200 ${isScrolled ? "text-gray-700" : "text-white"}`}
             aria-label="Toggle menu"
             aria-expanded={isMobileMenuOpen}
           >
@@ -87,7 +97,7 @@ export default function Navbar() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2 }}
-              className="md:hidden overflow-hidden bg-white"
+              className="lg:hidden overflow-hidden bg-white"
             >
               <div className="pt-4 pb-6 space-y-3 px-2">
                 {navLinks.map((link, index) => (
@@ -100,7 +110,7 @@ export default function Navbar() {
                     <a
                       href={link.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="block text-base font-medium text-gray-700 hover:text-[#3eb89a] transition-colors py-2.5 px-3 font-sans"
+                      className="block text-base font-medium text-gray-700 hover:text-[#3eb89a] transition-colors py-2.5 px-3 font-sans min-h-[44px] flex items-center"
                     >
                       {link.label}
                     </a>
@@ -109,7 +119,7 @@ export default function Navbar() {
                 <a
                   href="#contact"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="block w-full px-6 py-3.5 bg-[#3eb89a] text-white rounded-xl font-medium text-center hover:bg-[#3eb89a]/90 transition-all font-sans mt-2"
+                  className="block w-full px-6 py-3.5 bg-[#3eb89a] text-white rounded-xl font-medium text-center hover:bg-[#3eb89a]/90 transition-all font-sans mt-2 min-h-[44px]"
                 >
                   Solicită ofertă
                 </a>

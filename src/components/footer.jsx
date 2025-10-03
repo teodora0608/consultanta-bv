@@ -17,12 +17,12 @@ export default function Footer() {
         />
       </div>
 
-      <div className="container mx-auto px-6 lg:px-12 py-16 relative">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+      <div className="page-container py-16 relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 lg:gap-12 mb-12">
           {/* Logo and description */}
           <div className="lg:col-span-2">
             <img
-              src="/images/logo.png"
+              src="/images/design-mode/logo.png"
               alt="Consultant ABV"
               className="h-14 w-auto mb-6 brightness-0 invert"
             />
@@ -33,21 +33,21 @@ export default function Footer() {
             <div className="flex items-center gap-4">
               <a
                 href="#"
-                className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a]"
+                className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a] min-h-[44px] min-w-[44px] flex items-center justify-center"
                 aria-label="Facebook"
               >
                 <Facebook className="h-5 w-5" />
               </a>
               <a
                 href="#"
-                className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a]"
+                className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a] min-h-[44px] min-w-[44px] flex items-center justify-center"
                 aria-label="TikTok"
               >
                 <Music className="h-5 w-5" />
               </a>
               <a
                 href="mailto:contact@consultantabv.ro"
-                className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a]"
+                className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a] min-h-[44px] min-w-[44px] flex items-center justify-center"
                 aria-label="Email"
               >
                 <Mail className="h-5 w-5" />
@@ -68,7 +68,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-white/70 hover:text-[#3eb89a] transition-colors text-base inline-flex items-center group font-sans"
+                    className="text-white/70 hover:text-[#3eb89a] transition-colors text-base inline-flex items-center group font-sans min-h-[44px]"
                   >
                     <span className="w-0 h-px bg-[#3eb89a] transition-all duration-300 group-hover:w-4 group-hover:mr-2" />
                     {link.label}
@@ -85,7 +85,7 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:contact@consultantabv.ro"
-                  className="flex items-start gap-3 text-white/70 hover:text-[#3eb89a] transition-colors text-base group font-sans"
+                  className="flex items-start gap-3 text-white/70 hover:text-[#3eb89a] transition-colors text-base group font-sans min-h-[44px]"
                 >
                   <Mail className="h-5 w-5 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-transform" />
                   <span>contact@consultantabv.ro</span>
@@ -94,14 +94,14 @@ export default function Footer() {
               <li>
                 <a
                   href="tel:+40123456789"
-                  className="flex items-start gap-3 text-white/70 hover:text-[#3eb89a] transition-colors text-base group font-sans"
+                  className="flex items-start gap-3 text-white/70 hover:text-[#3eb89a] transition-colors text-base group font-sans min-h-[44px]"
                 >
                   <Phone className="h-5 w-5 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-transform" />
                   <span>+40 123 456 789</span>
                 </a>
               </li>
               <li>
-                <div className="flex items-start gap-3 text-white/70 text-base font-sans">
+                <div className="flex items-start gap-3 text-white/70 text-base font-sans min-h-[44px]">
                   <MapPin className="h-5 w-5 mt-0.5 flex-shrink-0" />
                   <span>Brașov, România</span>
                 </div>
@@ -114,14 +114,14 @@ export default function Footer() {
         <div className="border-t border-white/10 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/60 font-sans">
             <p>© {currentYear} consultantabv.ro – Toate drepturile rezervate.</p>
-            <div className="flex items-center gap-6">
-              <a href="#" className="hover:text-[#3eb89a] transition-colors">
+            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+              <a href="#" className="hover:text-[#3eb89a] transition-colors min-h-[44px] flex items-center">
                 Politică de confidențialitate
               </a>
-              <a href="#" className="hover:text-[#3eb89a] transition-colors">
+              <a href="#" className="hover:text-[#3eb89a] transition-colors min-h-[44px] flex items-center">
                 Termeni și condiții
               </a>
-              <a href="#" className="hover:text-[#3eb89a] transition-colors">
+              <a href="#" className="hover:text-[#3eb89a] transition-colors min-h-[44px] flex items-center">
                 Cookies
               </a>
             </div>
