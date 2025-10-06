@@ -24,11 +24,7 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <section
-      id="acasa"
-      /* full screen, izolat pe stiva pentru z-index corect */
-      className="relative isolate h-screen w-screen flex items-center justify-center overflow-hidden"
-    >
+    <section id="acasa" className="relative isolate h-screen w-screen flex items-center justify-center overflow-hidden">
       {/* BG image: ABSOLUTE (nu fixed) ca să nu intre sub secțiunile următoare */}
       <picture className="absolute inset-0 w-full h-full">
         <source media="(min-width: 1024px)" srcSet="/images/hero-desktop.png" />
@@ -44,7 +40,7 @@ export default function HeroSection() {
       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 via-black/20 to-transparent z-[5]" />
 
       {/* Conținutul – neschimbat */}
-      <div className="page-container relative z-10 text-center lg:text-left py-32">
+      <div className="page-container relative z-10 text-center py-32">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -55,7 +51,7 @@ export default function HeroSection() {
           Soluții juridice rapide și sigure
         </motion.h1>
 
-        <div className="h-[90px] md:h-[70px] flex items-center justify-center lg:justify-start mb-16">
+        <div className="h-[90px] md:h-[70px] flex items-center justify-center mb-16">
           <AnimatePresence mode="wait">
             <motion.p
               key={currentTextIndex}
@@ -63,7 +59,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
-              className="text-xl md:text-2xl text-white/95 max-w-2xl mx-auto lg:mx-0 font-sans font-medium"
+              className="text-xl md:text-2xl text-white/95 max-w-2xl mx-auto font-sans font-medium"
             >
               {rotatingTexts[currentTextIndex]}
             </motion.p>
@@ -74,7 +70,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex flex-col lg:flex-row gap-4 justify-center lg:justify-start items-stretch lg:items-center mb-10"
+          className="flex flex-col lg:flex-row gap-4 justify-center items-stretch lg:items-center mb-10"
         >
           <a
             href="#contact"
@@ -102,10 +98,10 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 max-w-3xl mx-auto lg:mx-0 mt-12 lg:mt-16"
+          className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 max-w-3xl mx-auto mt-12 lg:mt-16"
         >
           <div
-            className="flex items-center gap-2 text-white/90 text-sm md:text-base font-sans min-h-[44px]"
+            className="flex items-center justify-center lg:justify-start gap-2 text-white/90 text-sm md:text-base font-sans min-h-[44px]"
             style={{ textShadow: "0 1px 4px rgba(0, 0, 0, 0.4)" }}
           >
             <CheckCircle className="h-5 w-5 text-[#3eb89a] flex-shrink-0" />
@@ -113,7 +109,7 @@ export default function HeroSection() {
           </div>
 
           <div
-            className="flex items-center gap-2 text-white/90 text-sm md:text-base font-sans min-h-[44px]"
+            className="flex items-center justify-center lg:justify-start gap-2 text-white/90 text-sm md:text-base font-sans min-h-[44px]"
             style={{ textShadow: "0 1px 4px rgba(0, 0, 0, 0.4)" }}
           >
             <Lock className="h-5 w-5 text-[#3eb89a] flex-shrink-0" />
@@ -121,7 +117,7 @@ export default function HeroSection() {
           </div>
 
           <div
-            className="flex items-center gap-2 text-white/90 text-sm md:text-base font-sans min-h-[44px]"
+            className="flex items-center justify-center lg:justify-start gap-2 text-white/90 text-sm md:text-base font-sans min-h-[44px]"
             style={{ textShadow: "0 1px 4px rgba(0, 0, 0, 0.4)" }}
           >
             <MessageCircle className="h-5 w-5 text-[#3eb89a] flex-shrink-0" />
@@ -129,7 +125,7 @@ export default function HeroSection() {
           </div>
 
           <div
-            className="flex items-center gap-2 text-white/90 text-sm md:text-base font-sans min-h-[44px]"
+            className="flex items-center justify-center lg:justify-start gap-2 text-white/90 text-sm md:text-base font-sans min-h-[44px]"
             style={{ textShadow: "0 1px 4px rgba(0, 0, 0, 0.4)" }}
           >
             <DollarSign className="h-5 w-5 text-[#3eb89a] flex-shrink-0" />
