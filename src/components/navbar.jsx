@@ -1,12 +1,15 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { Link, useLocation } from "react-router-dom"
 import { Menu, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const location = useLocation()
+  const isHomePage = location.pathname === "/"
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,7 +33,7 @@ export default function Navbar() {
   const navLinks = [
     { href: "#servicii", label: "Servicii" },
     { href: "#despre", label: "Despre" },
-    { href: "#contact", label: "Contact" },
+    { href: "/contact", label: "Contact", isRoute: true },
   ]
 
   return (
@@ -44,8 +47,8 @@ export default function Navbar() {
     >
       <div className="page-container h-full">
         <div className="flex items-center justify-between h-full">
-          <a
-            href="#acasa"
+          <Link
+            to="/"
             className="flex items-center group relative transition-transform hover:scale-[1.04] active:scale-[0.97]"
             aria-label="Consultant ABV Home"
           >
@@ -56,28 +59,41 @@ export default function Navbar() {
                 isScrolled ? "opacity-100" : "brightness-0 invert"
               }`}
             />
-          </a>
+          </Link>
 
           <div className="hidden lg:flex items-center gap-6">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className={`text-sm font-medium transition-all duration-200 relative group py-2 font-sans ${
-                  isScrolled ? "text-gray-700 hover:text-[#3eb89a]" : "text-white hover:text-[#3eb89a]"
-                }`}
-              >
-                {link.label}
-                <span className="absolute -bottom-0 left-0 w-0 h-0.5 bg-[#3eb89a] transition-all duration-200 group-hover:w-full" />
-              </a>
-            ))}
-            <a
-              href="#contact"
+            {navLinks.map((link) =>
+              link.isRoute ? (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  className={`text-sm font-medium transition-all duration-200 relative group py-2 font-sans ${
+                    isScrolled ? "text-gray-700 hover:text-[#3eb89a]" : "text-white hover:text-[#3eb89a]"
+                  }`}
+                >
+                  {link.label}
+                  <span className="absolute -bottom-0 left-0 w-0 h-0.5 bg-[#3eb89a] transition-all duration-200 group-hover:w-full" />
+                </Link>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={`text-sm font-medium transition-all duration-200 relative group py-2 font-sans ${
+                    isScrolled ? "text-gray-700 hover:text-[#3eb89a]" : "text-white hover:text-[#3eb89a]"
+                  }`}
+                >
+                  {link.label}
+                  <span className="absolute -bottom-0 left-0 w-0 h-0.5 bg-[#3eb89a] transition-all duration-200 group-hover:w-full" />
+                </a>
+              ),
+            )}
+            <Link
+              to="/contact"
               className="px-5 py-2.5 bg-[#3eb89a] text-white rounded-xl font-medium text-sm hover:bg-[#3eb89a]/90 transition-all duration-200 hover:shadow-lg hover:shadow-[#3eb89a]/20 font-sans"
               aria-label="Request a quote"
             >
               Solicită ofertă
-            </a>
+            </Link>
           </div>
 
           <button
@@ -107,22 +123,32 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.08, duration: 0.2 }}
                   >
-                    <a
-                      href={link.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block text-base font-medium text-gray-700 hover:text-[#3eb89a] transition-colors py-2.5 px-3 font-sans min-h-[44px] flex items-center"
-                    >
-                      {link.label}
-                    </a>
+                    {link.isRoute ? (
+                      <Link
+                        to={link.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="block text-base font-medium text-gray-700 hover:text-[#3eb89a] transition-colors py-2.5 px-3 font-sans min-h-[44px] flex items-center"
+                      >
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <a
+                        href={link.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="block text-base font-medium text-gray-700 hover:text-[#3eb89a] transition-colors py-2.5 px-3 font-sans min-h-[44px] flex items-center"
+                      >
+                        {link.label}
+                      </a>
+                    )}
                   </motion.div>
                 ))}
-                <a
-                  href="#contact"
+                <Link
+                  to="/contact"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="block w-full px-6 py-3.5 bg-[#3eb89a] text-white rounded-xl font-medium text-center hover:bg-[#3eb89a]/90 transition-all font-sans mt-2 min-h-[44px]"
                 >
                   Solicită ofertă
-                </a>
+                </Link>
               </div>
             </motion.div>
           )}

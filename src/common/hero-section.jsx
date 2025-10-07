@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
 import { ArrowRight, Phone, CheckCircle, Lock, MessageCircle, DollarSign } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -72,15 +73,15 @@ export default function HeroSection() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="flex flex-col lg:flex-row gap-4 justify-center items-stretch lg:items-center mb-10"
         >
-          <a
-            href="#contact"
+          <Link
+            to="/contact"
             className="w-full lg:w-auto inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085]
                        text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg
                        transition-all duration-300 group font-sans min-h-[44px]"
           >
             Solicită ofertă gratuită
             <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-          </a>
+          </Link>
 
           <a
             href="tel:+40123456789"

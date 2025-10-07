@@ -1,6 +1,7 @@
 "use client"
 
 import { Mail, Phone, MapPin, Facebook, Music } from "lucide-react"
+import { Link } from "react-router-dom"
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -60,19 +61,29 @@ export default function Footer() {
             <h3 className="font-bold text-lg mb-6 text-white font-serif">Navigare rapidă</h3>
             <ul className="space-y-3">
               {[
-                { href: "#acasa", label: "Acasă" },
-                { href: "#servicii", label: "Servicii" },
-                { href: "#despre", label: "Despre noi" },
-                { href: "#contact", label: "Contact" },
+                { href: "#acasa", label: "Acasă", isHash: true },
+                { href: "#servicii", label: "Servicii", isHash: true },
+                { href: "#despre", label: "Despre noi", isHash: true },
+                { href: "/contact", label: "Contact", isHash: false },
               ].map((link) => (
                 <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="text-white/70 hover:text-[#3eb89a] transition-colors text-base inline-flex items-center group font-sans min-h-[44px]"
-                  >
-                    <span className="w-0 h-px bg-[#3eb89a] transition-all duration-300 group-hover:w-4 group-hover:mr-2" />
-                    {link.label}
-                  </a>
+                  {link.isHash ? (
+                    <a
+                      href={link.href}
+                      className="text-white/70 hover:text-[#3eb89a] transition-colors text-base inline-flex items-center group font-sans min-h-[44px]"
+                    >
+                      <span className="w-0 h-px bg-[#3eb89a] transition-all duration-300 group-hover:w-4 group-hover:mr-2" />
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      to={link.href}
+                      className="text-white/70 hover:text-[#3eb89a] transition-colors text-base inline-flex items-center group font-sans min-h-[44px]"
+                    >
+                      <span className="w-0 h-px bg-[#3eb89a] transition-all duration-300 group-hover:w-4 group-hover:mr-2" />
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>

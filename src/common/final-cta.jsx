@@ -1,6 +1,7 @@
 "use client"
 
 import { ArrowRight, MessageCircle } from "lucide-react"
+import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 
 export default function FinalCTA() {
@@ -47,21 +48,21 @@ export default function FinalCTA() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="flex flex-col lg:flex-row gap-4 justify-center items-stretch lg:items-center"
         >
-          <a
-            href="#contact"
+          <Link
+            to="/contact"
             className="w-full lg:w-auto inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-10 py-4 rounded-lg text-lg shadow-xl transition-all duration-300 group font-sans min-h-[44px]"
           >
             Solicită consultație gratuită
             <ArrowRight className="ml-2 h-6 w-6 transition-transform group-hover:translate-x-1" />
-          </a>
+          </Link>
 
-          <a
-            href="#contact"
+          <Link
+            to="/contact"
             className="w-full lg:w-auto inline-flex items-center justify-center border-2 border-white/30 text-white hover:bg-white/10 hover:border-white font-semibold px-10 py-4 rounded-lg text-lg transition-all duration-300 font-sans min-h-[44px]"
           >
             <MessageCircle className="mr-2 h-5 w-5" />
             Trimite mesaj WhatsApp
-          </a>
+          </Link>
         </motion.div>
 
         <motion.p

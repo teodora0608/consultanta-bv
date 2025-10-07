@@ -1,6 +1,7 @@
 "use client"
 
-import { Building2, Scale, XCircle, Home, User, AlertTriangle } from "lucide-react"
+import { Building2, Scale, XCircle, Home, User, AlertTriangle, ArrowRight } from "lucide-react"
+import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 
 const services = [
@@ -91,6 +92,22 @@ function ServicesSection() {
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.7 }}
+          className="mt-12 text-center"
+        >
+          <Link
+            to="/servicii"
+            className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg hover:shadow-xl transition-all duration-300 group font-sans"
+          >
+            Vezi toate serviciile
+            <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </motion.div>
       </div>
     </section>
   )

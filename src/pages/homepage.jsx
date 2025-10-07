@@ -1,8 +1,8 @@
 import Navbar from "../components/navbar"
 import HeroSection from "../common/hero-section"
-import DespreNoiSection from "../common/despre-noi"
 import ServicesSection from "../common/services-section"
-import USPSection from "../common/usp-section"
+import AboutWhySection from "../common/about-why-section"
+import FAQSection from "../common/faq-section"
 import FinalCTA from "../common/final-cta"
 import Footer from "../components/footer"
 
@@ -11,9 +11,9 @@ export default function HomePage() {
     <main className="min-h-screen">
       <Navbar />
       <HeroSection />
-      <DespreNoiSection />
       <ServicesSection />
-      <USPSection />
+      <AboutWhySection />
+      <FAQSection />
       <FinalCTA />
       <Footer />
     </main>
