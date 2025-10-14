@@ -7,16 +7,16 @@ export default function AboutWhySection() {
   const team = [
     {
       name: "Diana Milotin",
-      role: "LEGAL CONSULTANT",
+      role: "CONSULTANT JURIDIC",
       description:
-        "Provides confidence and clarity every step of the way. Explains options plainly and moves fast to a solution.",
+        "Oferă încredere și claritate la fiecare pas. Explică opțiunile pe înțelesul tău și ajunge rapid la o soluție.",
       image: "/images/diana.jpeg",
     },
     {
       name: "Teodora Croitoru",
-      role: "LEGAL CONSULTANT",
+      role: "CONSULTANT JURIDIC",
       description:
-        "Finds clear solutions even in complex situations. Keeps you informed and removes unnecessary friction.",
+        "Găsește soluții clare chiar și în situații complexe. Te ține informat și elimină orice complicație inutilă.",
       image: "/images/teodora.jpeg",
     },
   ]
@@ -24,18 +24,18 @@ export default function AboutWhySection() {
   const steps = [
     {
       number: "1",
-      title: "Fill out the form",
-      description: "Simple and quick, in just a few minutes.",
+      title: "Completează formularul",
+      description: "Simplu și rapid — durează doar câteva minute.",
     },
     {
       number: "2",
-      title: "We contact you in under 2 hours",
-      description: "Fast and personalized response.",
+      title: "Te contactăm în mai puțin de 2 ore",
+      description: "Răspuns rapid și personalizat.",
     },
     {
       number: "3",
-      title: "You receive your legal solution",
-      description: "Clear, complete, and professional.",
+      title: "Primești soluția ta juridică",
+      description: "Clară, completă și profesionistă.",
     },
   ]
 
@@ -55,7 +55,7 @@ export default function AboutWhySection() {
               transition={{ duration: 0.6 }}
               className="text-4xl md:text-5xl font-bold mb-6 text-white font-serif"
             >
-              Our Team
+              Echipa noastră
             </motion.h2>
 
             <motion.p
@@ -65,8 +65,8 @@ export default function AboutWhySection() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-base md:text-lg leading-relaxed text-white/80 mb-12 font-sans max-w-3xl mx-auto"
             >
-              We're a small, detail-oriented team that explains things clearly and guides you step by step toward
-              results. We work transparently and with care, so you always know where you are and what comes next.
+              Suntem o echipă atentă la detalii care explică lucrurile clar și te ghidează pas cu pas spre rezultat.
+              Lucrăm transparent și cu grijă, ca să știi mereu unde te afli și ce urmează.
             </motion.p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 mt-10 items-stretch mb-12">
@@ -85,7 +85,7 @@ export default function AboutWhySection() {
                     <div className="mb-6">
                       <img
                         src={member.image || "/placeholder.svg"}
-                        alt={`${member.name} - Legal Consultant at ConsultantABV`}
+                        alt={`${member.name} – Consultant juridic la Consultant ABV`}
                         className="w-30 h-30 rounded-full object-cover shadow-md"
                         width="120"
                         height="120"
@@ -114,7 +114,7 @@ export default function AboutWhySection() {
                 href="#contact"
                 className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg hover:shadow-xl transition-all duration-300 group font-sans"
               >
-                Let's discuss your case
+                Hai să discutăm cazul tău
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </a>
             </motion.div>
@@ -132,7 +132,7 @@ export default function AboutWhySection() {
               transition={{ duration: 0.6 }}
               className="text-2xl md:text-3xl font-serif font-bold text-[#0a2540] text-center mb-10"
             >
-              How We Work
+              Cum lucrăm
             </motion.h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 items-start relative">
