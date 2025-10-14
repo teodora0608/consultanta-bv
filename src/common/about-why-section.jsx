@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
+import { Link } from "react-router-dom"
 
 export default function AboutWhySection() {
   const team = [
@@ -40,129 +41,116 @@ export default function AboutWhySection() {
   ]
 
   return (
-    <>
-      <section
-        id="despre"
-        className="py-16 md:py-20 bg-[radial-gradient(ellipse_at_top,_#0b2a3a_0%,_#0f3546_40%,_#0f3a4b_100%)] relative overflow-hidden"
-      >
-        <div className="page-container">
-          <div className="max-w-5xl mx-auto text-center">
-            {/* Title */}
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-4xl md:text-5xl font-bold mb-6 text-white font-serif"
-            >
-              Echipa noastră
-            </motion.h2>
+    <section
+      id="despre"
+      className="py-16 md:py-20 bg-[radial-gradient(ellipse_at_top,_#0b2a3a_0%,_#0f3546_40%,_#0f3a4b_100%)] relative overflow-hidden"
+    >
+      <div className="page-container">
+        <div className="max-w-5xl mx-auto text-center">
+          {/* Titlu */}
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl md:text-5xl font-bold mb-6 text-white font-serif"
+          >
+            Echipa noastră
+          </motion.h2>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-base md:text-lg leading-relaxed text-white/80 mb-12 font-sans max-w-3xl mx-auto"
-            >
-              Suntem o echipă atentă la detalii care explică lucrurile clar și te ghidează pas cu pas spre rezultat.
-              Lucrăm transparent și cu grijă, ca să știi mereu unde te afli și ce urmează.
-            </motion.p>
+          {/* Descriere */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-base md:text-lg leading-relaxed text-white/80 mb-12 font-sans max-w-3xl mx-auto"
+          >
+            Suntem o echipă atentă la detalii care explică lucrurile clar și te ghidează pas cu pas spre rezultat.
+            Lucrăm transparent și cu grijă, ca să știi mereu unde te afli și ce urmează.
+          </motion.p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 mt-10 items-stretch mb-12">
-              {team.map((member, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.2 }}
-                  className="group relative h-full"
-                >
-                  <div className="absolute -inset-[2px] bg-gradient-to-br from-[#3eb89a] via-[#0a2540] to-[#3eb89a] rounded-2xl opacity-0 group-hover:opacity-30 blur-sm transition-opacity duration-300" />
-
-                  <div className="relative bg-white rounded-2xl p-8 h-full flex flex-col items-center text-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-[1.01]">
-                    <div className="mb-6">
-                      <img
-                        src={member.image || "/placeholder.svg"}
-                        alt={`${member.name} – Consultant juridic la Consultant ABV`}
-                        className="w-30 h-30 rounded-full object-cover shadow-md"
-                        width="120"
-                        height="120"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </div>
-
-                    <h3 className="text-xl font-serif font-semibold text-[#0a2540] mb-1">{member.name}</h3>
-
-                    <p className="text-xs uppercase tracking-wider text-gray-500 mb-3 font-sans">{member.role}</p>
-
-                    <p className="text-sm text-gray-600 leading-relaxed font-sans">{member.description}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-            >
-              <a
-                href="contact"
-                className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg hover:shadow-xl transition-all duration-300 group font-sans"
+          {/* Carduri echipă */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 mt-10 items-stretch mb-16">
+            {team.map((member, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.2 }}
+                className="group relative h-full"
               >
-                Hai să discutăm cazul tău
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </a>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-12 md:py-16 bg-gray-50">
-        <div className="page-container">
-          <div className="max-w-6xl mx-auto">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-2xl md:text-3xl font-serif font-bold text-[#0a2540] text-center mb-10"
-            >
-              Cum lucrăm
-            </motion.h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 items-start relative">
-              {steps.map((step, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.15 }}
-                  className="relative flex flex-col items-center text-center"
-                >
-                  {index < steps.length - 1 && (
-                    <div className="hidden md:block absolute top-5 left-[calc(100%+0.75rem)] text-[#3eb89a]/40">
-                      <ArrowRight className="w-6 h-6" />
-                    </div>
-                  )}
-
-                  <div className="w-10 h-10 rounded-full bg-[#3eb89a] text-white font-bold flex items-center justify-center mb-4 mx-auto text-sm">
-                    {step.number}
+                <div className="absolute -inset-[2px] bg-gradient-to-br from-[#3eb89a] via-[#0a2540] to-[#3eb89a] rounded-2xl opacity-0 group-hover:opacity-30 blur-sm transition-opacity duration-300" />
+                <div className="relative bg-white rounded-2xl p-8 h-full flex flex-col items-center text-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-[1.01]">
+                  <div className="mb-6">
+                    <img
+                      src={member.image || "/placeholder.svg"}
+                      alt={`${member.name} - Consultant juridic la ConsultantABV`}
+                      className="w-[120px] h-[120px] rounded-full object-cover shadow-md"
+                      width="120"
+                      height="120"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
-
-                  <h3 className="text-lg font-semibold text-[#0a2540] mb-2 font-serif">{step.title}</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed font-sans">{step.description}</p>
-                </motion.div>
-              ))}
-            </div>
+                  <h3 className="text-xl font-serif font-semibold text-[#0a2540] mb-1">{member.name}</h3>
+                  <p className="text-xs uppercase tracking-wider text-gray-500 mb-3 font-sans">{member.role}</p>
+                  <p className="text-sm text-gray-600 leading-relaxed font-sans">{member.description}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
+
+          {/* Secțiunea “Cum lucrăm” */}
+          <motion.h3
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-2xl md:text-3xl font-serif font-bold text-white text-center mb-10"
+          >
+            Cum lucrăm
+          </motion.h3>
+
+          {/* Pașii fără săgeți */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 items-start relative max-w-5xl mx-auto">
+            {steps.map((step, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.15 }}
+                className="relative flex flex-col items-center text-center"
+              >
+                <div className="w-10 h-10 rounded-full bg-[#3eb89a] text-white font-bold flex items-center justify-center mb-4 mx-auto text-sm">
+                  {step.number}
+                </div>
+                <h4 className="text-lg font-semibold text-white mb-2 font-serif">{step.title}</h4>
+                <p className="text-sm text-white/70 leading-relaxed font-sans">{step.description}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Buton CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mt-12"
+          >
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+            >
+              Hai să discutăm cazul tău
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </motion.div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   )
 }
