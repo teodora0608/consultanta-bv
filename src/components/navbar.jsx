@@ -33,7 +33,7 @@ export default function Navbar() {
   }, [isMobileMenuOpen])
 
   const navLinks = [
-    { href: "#servicii", label: "Servicii", hasSubmenu: true },
+    { href: "/servicii", label: "Servicii", hasSubmenu: true, isRoute: true },
     { href: "#despre", label: "Despre" },
     { href: "/contact", label: "Contact", isRoute: true },
   ]
