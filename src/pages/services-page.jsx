@@ -7,7 +7,6 @@ import Navbar from "../components/navbar"
 import Footer from "../components/footer"
 import MainServicesGrid from "../components/MainServicesGrid"
 import SecondaryServicesSection from "../components/SecondaryServicesSection"
-import FinalCTA from "../common/final-cta"
 import { mainServices } from "../data/mainServices"
 import { serviceGroups } from "../data/secondaryServices"
 
@@ -44,7 +43,8 @@ export default function ServicesPage() {
 
         <div className="page-container relative z-10">
           <div className="flex flex-col items-center text-center max-w-5xl mx-auto">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-serif bg-gradient-to-r from-[#ffffff] via-[#e0f2f1] to-[#3eb89a] bg-clip-text text-transparent">
+            {/* Reduced title size to match "Echipa noastră" */}
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 font-serif bg-gradient-to-r from-[#ffffff] via-[#e0f2f1] to-[#3eb89a] bg-clip-text text-transparent">
               Toate serviciile
             </h1>
             <p className="text-lg md:text-xl text-white/90 mb-10 font-sans max-w-4xl leading-relaxed">
@@ -82,6 +82,7 @@ export default function ServicesPage() {
         items={mainServices}
       />
 
+      {/* Secondary Services Sections */}
       <SecondaryServicesSection
         title="Înființare & înregistrare"
         subtitle="Servicii complementare pentru înființarea firmei."
@@ -99,16 +100,37 @@ export default function ServicesPage() {
         columns={3}
         bgColor="bg-white"
       />
-<SecondaryServicesSection
-  title="Documente & autorizații"
-  subtitle="Documente și autorizații necesare pentru activitate."
-  services={serviceGroups.documente}
-  onServiceClick={openModal}
-  bgColor="bg-gray-50"
-  lgCols={2}                         // 2×2 la desktop
-  containerMax="lg:max-w-[900px] mx-auto"  // 👈 ÎNGUSTĂ containerul doar aici
-/>
-<FinalCTA />
+
+      <SecondaryServicesSection
+        title="Documente & autorizații"
+        subtitle="Documente și autorizații necesare pentru activitate."
+        services={serviceGroups.documente}
+        onServiceClick={openModal}
+        bgColor="bg-gray-50"
+        lgCols={2} // 2×2 la desktop
+        containerMax="lg:max-w-[1000px] mx-auto" // Increased container width from 900px to 1000px for better spacing
+      />
+
+      {/* Final CTA */}
+      <section className="py-16 md:py-20 bg-white">
+        <div className="page-container">
+          <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0a2540] mb-6 font-serif">
+              Nu știi ce ți se potrivește?
+            </h2>
+            <p className="text-lg md:text-xl text-gray-600 mb-8 font-sans">
+              Îți recomandăm varianta corectă după un scurt apel.
+            </p>
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 font-sans min-h-[56px]"
+            >
+              Solicită ofertă
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* Modal */}
       {selectedService && (

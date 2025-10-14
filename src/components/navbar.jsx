@@ -1,15 +1,16 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Link, useLocation, useNavigate } from "react-router-dom"
-import { Menu, X } from "lucide-react"
+import { Link, useLocation } from "react-router-dom"
+import { Menu, X, ChevronDown, ChevronRight } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
+import { mainServices } from "../data/mainServices"
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isServicesOpen, setIsServicesOpen] = useState(false)
   const location = useLocation()
-  const navigate = useNavigate()
   const isHomePage = location.pathname === "/"
 
   useEffect(() => {
@@ -21,35 +22,19 @@ export default function Navbar() {
   }, [])
 
   useEffect(() => {
-    document.body.style.overflow = isMobileMenuOpen ? "hidden" : ""
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = ""
+    }
     return () => {
       document.body.style.overflow = ""
     }
   }, [isMobileMenuOpen])
 
-  // Funcție care gestionează click pe "Despre"
-  const handleAboutClick = (e) => {
-    e.preventDefault()
-    setIsMobileMenuOpen(false)
-
-    if (isHomePage) {
-      const section = document.getElementById("despre")
-      if (section) {
-        section.scrollIntoView({ behavior: "smooth" })
-      }
-    } else {
-      // navighează spre homepage și setează un hash pentru scroll automat
-      navigate("/#despre")
-      setTimeout(() => {
-        const section = document.getElementById("despre")
-        if (section) section.scrollIntoView({ behavior: "smooth" })
-      }, 400)
-    }
-  }
-
   const navLinks = [
-    { href: "/servicii", label: "Servicii", isRoute: true },
-    { href: "#despre", label: "Despre", isRoute: false, onClick: handleAboutClick },
+    { href: "#servicii", label: "Servicii", hasSubmenu: true },
+    { href: "#despre", label: "Despre" },
     { href: "/contact", label: "Contact", isRoute: true },
   ]
 
@@ -78,14 +63,12 @@ export default function Navbar() {
             />
           </Link>
 
-          {/* Desktop menu */}
           <div className="hidden lg:flex items-center gap-6">
             {navLinks.map((link) =>
               link.isRoute ? (
                 <Link
                   key={link.href}
                   to={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
                   className={`text-sm font-medium transition-all duration-200 relative group py-2 font-sans ${
                     isScrolled ? "text-gray-700 hover:text-[#3eb89a]" : "text-white hover:text-[#3eb89a]"
                   }`}
@@ -97,26 +80,24 @@ export default function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={link.onClick}
-                  className={`text-sm font-medium transition-all duration-200 relative group py-2 font-sans cursor-pointer ${
+                  className={`text-sm font-medium transition-all duration-200 relative group py-2 font-sans ${
                     isScrolled ? "text-gray-700 hover:text-[#3eb89a]" : "text-white hover:text-[#3eb89a]"
                   }`}
                 >
                   {link.label}
                   <span className="absolute -bottom-0 left-0 w-0 h-0.5 bg-[#3eb89a] transition-all duration-200 group-hover:w-full" />
                 </a>
-              )
+              ),
             )}
-
             <Link
               to="/contact"
               className="px-5 py-2.5 bg-[#3eb89a] text-white rounded-xl font-medium text-sm hover:bg-[#3eb89a]/90 transition-all duration-200 hover:shadow-lg hover:shadow-[#3eb89a]/20 font-sans"
+              aria-label="Request a quote"
             >
               Solicită ofertă
             </Link>
           </div>
 
-          {/* Mobile toggle */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={`lg:hidden p-2 transition-colors duration-200 ${isScrolled ? "text-gray-700" : "text-white"}`}
@@ -127,7 +108,6 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
@@ -135,40 +115,101 @@ export default function Navbar() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2 }}
-              className="lg:hidden overflow-hidden bg-white"
+              className="lg:hidden overflow-hidden bg-white shadow-lg"
             >
-              <div className="pt-4 pb-6 space-y-3 px-2">
-                {navLinks.map((link, index) => (
-                  <motion.div
-                    key={link.href}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.08, duration: 0.2 }}
+              <div className="pt-4 pb-6 space-y-1 px-2 max-h-[calc(100vh-80px)] overflow-y-auto">
+                {/* Services with submenu */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0, duration: 0.2 }}
+                >
+                  <button
+                    onClick={() => setIsServicesOpen(!isServicesOpen)}
+                    className="w-full flex items-center justify-between text-base font-medium text-gray-700 hover:text-[#3eb89a] transition-colors py-2.5 px-3 font-sans min-h-[44px]"
                   >
-                    {link.isRoute ? (
-                      <Link
-                        to={link.href}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="block text-base font-medium text-gray-700 hover:text-[#3eb89a] transition-colors py-2.5 px-3 font-sans min-h-[44px]"
-                      >
-                        {link.label}
-                      </Link>
-                    ) : (
-                      <a
-                        href={link.href}
-                        onClick={link.onClick}
-                        className="block text-base font-medium text-gray-700 hover:text-[#3eb89a] transition-colors py-2.5 px-3 font-sans min-h-[44px]"
-                      >
-                        {link.label}
-                      </a>
-                    )}
-                  </motion.div>
-                ))}
+                    <span>Servicii</span>
+                    <ChevronDown
+                      className={`h-5 w-5 transition-transform duration-200 ${isServicesOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
 
+                  <AnimatePresence>
+                    {isServicesOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden bg-gray-50 rounded-lg ml-2 mt-1"
+                      >
+                        <div className="py-2 space-y-1">
+                          {mainServices.map((service, index) => (
+                            <Link
+                              key={index}
+                              to={service.link}
+                              onClick={() => {
+                                setIsMobileMenuOpen(false)
+                                setIsServicesOpen(false)
+                              }}
+                              className="flex items-center gap-3 text-sm font-medium text-gray-600 hover:text-[#3eb89a] hover:bg-white transition-all py-2.5 px-3 rounded font-sans min-h-[44px]"
+                            >
+                              <service.icon className="h-4 w-4 text-[#3eb89a] flex-shrink-0" />
+                              <span>{service.title}</span>
+                            </Link>
+                          ))}
+                          <Link
+                            to="/servicii"
+                            onClick={() => {
+                              setIsMobileMenuOpen(false)
+                              setIsServicesOpen(false)
+                            }}
+                            className="flex items-center justify-between text-sm font-semibold text-[#3eb89a] hover:bg-white transition-all py-2.5 px-3 rounded font-sans min-h-[44px] mt-2 border-t border-gray-200"
+                          >
+                            <span>Vezi toate serviciile</span>
+                            <ChevronRight className="h-4 w-4" />
+                          </Link>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+
+                {/* Despre */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.08, duration: 0.2 }}
+                >
+                  <a
+                    href="#despre"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block text-base font-medium text-gray-700 hover:text-[#3eb89a] transition-colors py-2.5 px-3 font-sans min-h-[44px] flex items-center"
+                  >
+                    Despre
+                  </a>
+                </motion.div>
+
+                {/* Contact */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.16, duration: 0.2 }}
+                >
+                  <Link
+                    to="/contact"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block text-base font-medium text-gray-700 hover:text-[#3eb89a] transition-colors py-2.5 px-3 font-sans min-h-[44px] flex items-center"
+                  >
+                    Contact
+                  </Link>
+                </motion.div>
+
+                {/* CTA Button */}
                 <Link
                   to="/contact"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="block w-full px-6 py-3.5 bg-[#3eb89a] text-white rounded-xl font-medium text-center hover:bg-[#3eb89a]/90 transition-all font-sans mt-2 min-h-[44px]"
+                  className="block w-full px-6 py-3.5 bg-[#3eb89a] text-white rounded-xl font-medium text-center hover:bg-[#3eb89a]/90 transition-all font-sans mt-4 min-h-[44px]"
                 >
                   Solicită ofertă
                 </Link>

@@ -33,12 +33,15 @@ export default function HeroSection() {
         <img
           src="/images/hero-mobile.jpg"
           alt="Hero background"
-          className="w-full h-full object-cover object-center md:object-center lg:object-[right_center] select-none"
+          className="w-full h-full object-cover object-center md:object-center lg:object-[right_center] select-none brightness-[0.65]"
         />
       </picture>
 
-      {/* Overlay pentru contrast text */}
-      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 via-black/20 to-transparent z-[5]" />
+      {/* Base gradient - darker at bottom where CTAs are */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a2540]/45 via-[#0f2f3f]/55 to-[#0a2540]/70 z-[5]" />
+
+      {/* Radial gradient overlay for center focus and additional depth */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(10,37,64,0.4)_100%)] z-[6]" />
 
       {/* Conținutul – neschimbat */}
       <div className="page-container relative z-10 text-center py-32">

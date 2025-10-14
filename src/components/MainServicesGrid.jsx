@@ -9,8 +9,12 @@ export default function MainServicesGrid({ items, title, subtitle, cta, classNam
       <div className="page-container">
         {(title || subtitle) && (
           <div className="mb-12 text-center">
-            {title && <h2 className="text-3xl md:text-4xl font-bold text-[#0a2540] mb-3 font-serif">{title}</h2>}
-            {subtitle && <p className="text-lg text-gray-600 font-sans max-w-3xl mx-auto">{subtitle}</p>}
+            {title && (
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 font-serif bg-gradient-to-r from-[#0f3a52] via-[#1a5c6b] to-[#3eb89a] bg-clip-text text-transparent max-w-5xl mx-auto leading-tight">
+                {title}
+              </h2>
+            )}
+            {subtitle && <p className="text-lg md:text-xl text-gray-600 font-sans max-w-3xl mx-auto">{subtitle}</p>}
           </div>
         )}
 
