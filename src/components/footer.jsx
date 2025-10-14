@@ -1,6 +1,6 @@
 "use client"
 
-import { Mail, Phone, MapPin, Facebook, Music } from "lucide-react"
+import { Mail, Phone, MapPin, Facebook, Instagram, Music } from "lucide-react"
 import { Link } from "react-router-dom"
 
 export default function Footer() {
@@ -19,7 +19,7 @@ export default function Footer() {
       </div>
 
       <div className="page-container py-16 relative">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 lg:gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Logo and description */}
           <div className="lg:col-span-2">
             <img
@@ -28,27 +28,43 @@ export default function Footer() {
               className="h-14 w-auto mb-6 brightness-0 invert"
             />
             <p className="text-white/80 text-base leading-relaxed mb-6 max-w-md font-sans">
-              Consultanță juridică premium pentru firme și antreprenori. Soluții rapide, transparente și sigure,
+              Consultanță juridică pentru firme și antreprenori. Soluții rapide, transparente și sigure,
               adaptate nevoilor tale.
             </p>
             <div className="flex items-center gap-4">
               <a
-                href="#"
-                className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a] min-h-[44px] min-w-[44px] flex items-center justify-center"
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a] flex items-center justify-center"
                 aria-label="Facebook"
               >
                 <Facebook className="h-5 w-5" />
               </a>
+
               <a
-                href="#"
-                className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a] min-h-[44px] min-w-[44px] flex items-center justify-center"
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a] flex items-center justify-center"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-5 w-5" />
+              </a>
+
+              <a
+                href="https://tiktok.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a] flex items-center justify-center"
                 aria-label="TikTok"
               >
                 <Music className="h-5 w-5" />
               </a>
+
               <a
                 href="mailto:contact@consultantabv.ro"
-                className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a] min-h-[44px] min-w-[44px] flex items-center justify-center"
+                className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a] flex items-center justify-center"
                 aria-label="Email"
               >
                 <Mail className="h-5 w-5" />
@@ -60,32 +76,42 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-6 text-white font-serif">Navigare rapidă</h3>
             <ul className="space-y-3">
-              {[
-                { href: "#acasa", label: "Acasă", isHash: true },
-                { href: "#servicii", label: "Servicii", isHash: true },
-                { href: "#despre", label: "Despre noi", isHash: true },
-                { href: "/contact", label: "Contact", isHash: false },
-              ].map((link) => (
-                <li key={link.href}>
-                  {link.isHash ? (
-                    <a
-                      href={link.href}
-                      className="text-white/70 hover:text-[#3eb89a] transition-colors text-base inline-flex items-center group font-sans min-h-[44px]"
-                    >
-                      <span className="w-0 h-px bg-[#3eb89a] transition-all duration-300 group-hover:w-4 group-hover:mr-2" />
-                      {link.label}
-                    </a>
-                  ) : (
-                    <Link
-                      to={link.href}
-                      className="text-white/70 hover:text-[#3eb89a] transition-colors text-base inline-flex items-center group font-sans min-h-[44px]"
-                    >
-                      <span className="w-0 h-px bg-[#3eb89a] transition-all duration-300 group-hover:w-4 group-hover:mr-2" />
-                      {link.label}
-                    </Link>
-                  )}
-                </li>
-              ))}
+              <li>
+                <Link
+                  to="/"
+                  className="text-white/70 hover:text-[#3eb89a] transition-colors text-base inline-flex items-center group font-sans"
+                >
+                  <span className="w-0 h-px bg-[#3eb89a] transition-all duration-300 group-hover:w-4 group-hover:mr-2" />
+                  Acasă
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/servicii"
+                  className="text-white/70 hover:text-[#3eb89a] transition-colors text-base inline-flex items-center group font-sans"
+                >
+                  <span className="w-0 h-px bg-[#3eb89a] transition-all duration-300 group-hover:w-4 group-hover:mr-2" />
+                  Servicii
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/#despre"
+                  className="text-white/70 hover:text-[#3eb89a] transition-colors text-base inline-flex items-center group font-sans"
+                >
+                  <span className="w-0 h-px bg-[#3eb89a] transition-all duration-300 group-hover:w-4 group-hover:mr-2" />
+                  Despre noi
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/contact"
+                  className="text-white/70 hover:text-[#3eb89a] transition-colors text-base inline-flex items-center group font-sans"
+                >
+                  <span className="w-0 h-px bg-[#3eb89a] transition-all duration-300 group-hover:w-4 group-hover:mr-2" />
+                  Contact
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -96,7 +122,7 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:contact@consultantabv.ro"
-                  className="flex items-start gap-3 text-white/70 hover:text-[#3eb89a] transition-colors text-base group font-sans min-h-[44px]"
+                  className="flex items-start gap-3 text-white/70 hover:text-[#3eb89a] transition-colors text-base group font-sans"
                 >
                   <Mail className="h-5 w-5 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-transform" />
                   <span>contact@consultantabv.ro</span>
@@ -105,16 +131,16 @@ export default function Footer() {
               <li>
                 <a
                   href="tel:+40123456789"
-                  className="flex items-start gap-3 text-white/70 hover:text-[#3eb89a] transition-colors text-base group font-sans min-h-[44px]"
+                  className="flex items-start gap-3 text-white/70 hover:text-[#3eb89a] transition-colors text-base group font-sans"
                 >
                   <Phone className="h-5 w-5 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-transform" />
                   <span>+40 123 456 789</span>
                 </a>
               </li>
               <li>
-                <div className="flex items-start gap-3 text-white/70 text-base font-sans min-h-[44px]">
+                <div className="flex items-start gap-3 text-white/70 text-base font-sans">
                   <MapPin className="h-5 w-5 mt-0.5 flex-shrink-0" />
-                  <span>Brașov, România</span>
+                  <span>Strada Nicolae Pop nr. 13, etaj 1, ap. 7, Brașov, România</span>
                 </div>
               </li>
             </ul>
@@ -125,16 +151,16 @@ export default function Footer() {
         <div className="border-t border-white/10 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/60 font-sans">
             <p>© {currentYear} consultantabv.ro – Toate drepturile rezervate.</p>
-            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
-              <a href="#" className="hover:text-[#3eb89a] transition-colors min-h-[44px] flex items-center">
+            <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6">
+              <Link to="/politica-confidentialitate" className="hover:text-[#3eb89a] transition-colors">
                 Politică de confidențialitate
-              </a>
-              <a href="#" className="hover:text-[#3eb89a] transition-colors min-h-[44px] flex items-center">
+              </Link>
+              <Link to="/termeni-conditii" className="hover:text-[#3eb89a] transition-colors">
                 Termeni și condiții
-              </a>
-              <a href="#" className="hover:text-[#3eb89a] transition-colors min-h-[44px] flex items-center">
+              </Link>
+              <Link to="/politica-cookies" className="hover:text-[#3eb89a] transition-colors">
                 Cookies
-              </a>
+              </Link>
             </div>
           </div>
         </div>

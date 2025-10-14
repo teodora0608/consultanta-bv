@@ -1,7 +1,9 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
+import { Link } from "react-router-dom"                // 👈 pentru link intern
 import { CheckCircle2, ChevronDown } from "lucide-react"
+import { gtagSafe } from "../lib/gaSafe"               // 👈 opțional: doar dacă vrei eveniment GA
 
 export default function ContactForm({
   title = "Trimite cererea ta",
@@ -31,15 +33,19 @@ export default function ContactForm({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const dropdownRef = useRef(null)
 
-  const serviceOptions = [
-    { value: "", label: "Selectează un serviciu", disabled: true },
-    { value: "consultanta-rapida", label: "Consultanță rapidă" },
-    { value: "contracte-documente", label: "Contracte & documente" },
-    { value: "litigii-reprezentare", label: "Litigii / reprezentare" },
-    { value: "dreptul-muncii", label: "Dreptul muncii" },
-    { value: "drept-comercial", label: "Drept comercial" },
-    { value: "alte-servicii", label: "Alte servicii" },
-  ]
+const serviceOptions = [
+  { value: "", label: "Selectează un serviciu", disabled: true },
+
+  { value: "infiintare-srl",        label: "Înființare SRL" },
+  { value: "infiintare-pfa",        label: "Înființare PFA" },
+  { value: "consultanta-juridica",  label: "Consultanță juridică" },
+  { value: "inchidere-firma",       label: "Închidere firmă" },
+  { value: "preluare-firma",        label: "Preluare firmă cu datorii" },
+  { value: "insolventa-firma",      label: "Insolvență firmă" },
+
+  // păstrată pentru câmpul condițional "otherService"
+  { value: "alte-servicii",         label: "Altă solicitare" },
+]
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -47,7 +53,6 @@ export default function ContactForm({
         setIsDropdownOpen(false)
       }
     }
-
     document.addEventListener("mousedown", handleClickOutside)
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
@@ -97,8 +102,22 @@ export default function ContactForm({
 
     setFormState({ isSubmitting: true, isSuccess: false, isError: false })
 
+    // 👉 aici ai plasa request-ul real către backend
     setTimeout(() => {
       setFormState({ isSubmitting: false, isSuccess: true, isError: false })
+
+      // 🔔 GA4 event – DOAR dacă există consimțământ & gtag
+      const selectedService =
+        formData.serviceType === "alte-servicii"
+          ? (formData.otherService || "altele")
+          : (serviceOptions.find(s => s.value === formData.serviceType)?.label || "n/a")
+
+      gtagSafe("event", "generate_lead", {
+        method: "contact_form",
+        service: selectedService,
+      })
+
+      // reset form după câteva secunde
       setTimeout(() => {
         setFormData({
           fullName: "",
@@ -125,6 +144,7 @@ export default function ContactForm({
       <p className="text-gray-600 mb-8 font-sans">{subtitle}</p>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+        {/* Nume */}
         <div className="relative">
           <input
             type="text"
@@ -144,6 +164,7 @@ export default function ContactForm({
           </label>
         </div>
 
+        {/* Email */}
         <div className="relative">
           <input
             type="email"
@@ -163,6 +184,7 @@ export default function ContactForm({
           </label>
         </div>
 
+        {/* Telefon */}
         <div className="flex flex-col gap-2">
           <label htmlFor="phone" className="text-sm font-semibold text-[#0a2540] font-sans">
             Telefon <span className="text-red-500">*</span>
@@ -179,6 +201,7 @@ export default function ContactForm({
           />
         </div>
 
+        {/* Tip serviciu */}
         {showServiceType && (
           <div className="flex flex-col gap-2">
             <label htmlFor="serviceType" className="text-sm font-semibold text-[#0a2540] font-sans">
@@ -229,6 +252,7 @@ export default function ContactForm({
           </div>
         )}
 
+        {/* Alte servicii */}
         {showOtherService && (
           <div className="flex flex-col gap-2">
             <label htmlFor="otherService" className="text-sm font-semibold text-[#0a2540] font-sans">
@@ -247,6 +271,7 @@ export default function ContactForm({
           </div>
         )}
 
+        {/* Note */}
         <div className="flex flex-col gap-2">
           <label htmlFor="notes" className="text-sm font-semibold text-[#0a2540] font-sans">
             Notițe
@@ -263,6 +288,7 @@ export default function ContactForm({
           <p className="text-xs text-gray-500 font-sans">Opțional: adaugă detalii utile.</p>
         </div>
 
+        {/* GDPR consent + link către Politica de confidențialitate */}
         <div className="flex items-start gap-3">
           <input
             type="checkbox"
@@ -275,13 +301,14 @@ export default function ContactForm({
           />
           <label htmlFor="gdprConsent" className="text-sm text-gray-700 font-sans">
             Sunt de acord cu{" "}
-            <a href="#" className="text-[#3eb89a] hover:underline">
-              politica de confidențialitate
-            </a>
+            <Link to="/politica-confidentialitate" className="text-[#3eb89a] hover:underline">
+              Politica de confidențialitate
+            </Link>
             . <span className="text-red-500">*</span>
           </label>
         </div>
 
+        {/* Honeypot */}
         <input
           type="text"
           name="honeypot"
@@ -292,6 +319,7 @@ export default function ContactForm({
           autoComplete="off"
         />
 
+        {/* Submit */}
         <button
           type="submit"
           disabled={formState.isSubmitting}
@@ -300,6 +328,7 @@ export default function ContactForm({
           {formState.isSubmitting ? "Se trimite..." : "Trimite cererea"}
         </button>
 
+        {/* Alerts */}
         {formState.isSuccess && (
           <div className="flex items-center gap-2 p-4 bg-green-50 border border-green-200 rounded-lg">
             <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />

@@ -111,7 +111,7 @@ export default function AboutWhySection() {
               transition={{ duration: 0.6, delay: 0.5 }}
             >
               <a
-                href="#contact"
+                href="contact"
                 className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg hover:shadow-xl transition-all duration-300 group font-sans"
               >
                 Hai să discutăm cazul tău
