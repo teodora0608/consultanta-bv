@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -139,6 +140,26 @@
   h5,
   h6 {
     @apply font-serif;
+  }
+
+  /* Modern typography rules to prevent widows and improve text rendering */
+  /* Balanced text wrapping for headings */
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  /* Pretty text wrapping and word breaking for body text */
+  p,
+  li {
+    text-wrap: pretty;
+    overflow-wrap: break-word;
+  }
+
+  /* Automatic hyphenation for Romanian content */
+  html[lang="ro"] body {
+    hyphens: auto;
   }
 
   /* Scroll margin for anchor links to account for sticky header */

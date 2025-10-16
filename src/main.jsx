@@ -3,8 +3,14 @@ import { createRoot } from "react-dom/client"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import "./global.css"
 
-import ScrollToTop from "./components/ScrollToTop.jsx"  // 👈 adaugă asta
+// Componentă scroll top automat
+import ScrollToTop from "./components/ScrollToTop.jsx"
+// Banner cookies
+import CookieConsent from "./components/CookieConsent.jsx"
+// Anti “widow” — text fallback
+import NoWidowProvider from "./providers/NoWidowProvider.jsx"
 
+// Pagini
 import HomePage from "./pages/homepage.jsx"
 import ContactPage from "./pages/contactpage.jsx"
 import NotFound from "./pages/not-found.jsx"
@@ -18,13 +24,14 @@ import ServiceInsolventaFirma from "./pages/service-insolventa-firma.jsx"
 import PoliticaConfidentialitate from "./pages/politica-confidentialitate.jsx"
 import TermeniConditii from "./pages/termeni-conditii.jsx"
 import PoliticaCookies from "./pages/politica-cookies.jsx"
-import CookieConsent from "./components/CookieConsent.jsx"
 
+// ✅ Root render
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <ScrollToTop />            {/* 👈 asta forțează top la fiecare schimbare de rută */}
-      <CookieConsent />
+      <ScrollToTop />          {/* Reveniți automat sus la fiecare rută */}
+      <CookieConsent />        {/* Banner cookies */}
+      <NoWidowProvider />      {/* Protecție anti “widow words” */}
 
       <Routes>
         <Route path="/" element={<HomePage />} />
