@@ -21,7 +21,7 @@ export default function ServiceInfiintareSRL() {
 
   // ✅ SEO tags handled natively by React (no Helmet)
   useEffect(() => {
-    document.title = "Înființare SRL Online Brașov | Consultant ABV - 3–5 Zile Lucrătoare"
+    document.title = "Înființare SRL Online Brașov | ConsultantaBV - 3–5 Zile Lucrătoare"
 
     const metaDescription =
       "Înființare SRL 100% online în Brașov și în toată România. Consultanță juridică, redactare acte, depunere ONRC. Livrare documente în 3–5 zile lucrătoare."

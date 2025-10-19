@@ -192,10 +192,10 @@ export default function ContactPage() {
                       <Phone className="w-5 h-5 text-[#3eb89a]" />
                     </div>
                     <a
-                      href="tel:+40123456789"
+                      href="tel:+40730140766" 
                       className="text-base text-gray-700 hover:text-[#3eb89a] transition-colors font-sans"
                     >
-                      +40 123 456 789
+                    0730140766
                     </a>
                   </div>
                   <div className="flex items-start gap-3">

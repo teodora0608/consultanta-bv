@@ -21,7 +21,7 @@ export default function ServiceConsultantaJuridica() {
 
   // SEO tags handled natively by React (no Helmet)
   useEffect(() => {
-    document.title = "Consultanță juridică pentru SRL, SA și PFA | Consultant ABV"
+    document.title = "Consultanță juridică pentru SRL, SA și PFA | ConsultantaBV"
 
     const metaDescription =
       "Consultanță juridică completă pentru SRL, SA și PFA: acte, modificări ONRC, contracte comerciale, litigii, drept comercial și civil. Rapid, clar, adaptat afacerii tale."
@@ -268,7 +268,7 @@ export default function ServiceConsultantaJuridica() {
         <div className="page-container max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 font-serif">
-              De ce să alegi Consultant ABV
+              De ce să alegi ConsultantaBV
             </h2>
             <p className="text-base sm:text-lg text-white/80 mt-6 max-w-3xl mx-auto leading-relaxed">
               Experiență practică în drept comercial și civil, termene rapide și comunicare clară – oferim consultanță

@@ -21,7 +21,7 @@ export default function ServiceInchidereFirma() {
 
   // ✅ SEO tags handled natively by React (no Helmet)
   useEffect(() => {
-    document.title = "Închidere firmă (lichidare voluntară) | Consultant ABV – legal și sigur"
+    document.title = "Închidere firmă (lichidare voluntară) | ConsultantaBV – legal și sigur"
 
     const metaDescription =
       "Închidere firmă 100% online. Dizolvare, lichidare și radiere conform legii. Documente, depuneri ONRC, Monitorul Oficial. Suport complet, în Brașov și în toată țara."

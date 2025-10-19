@@ -8,12 +8,12 @@ export default function TermeniConditii() {
   const updated = "octombrie 2025"
 
   useEffect(() => {
-    document.title = "Termeni și condiții | Consultant ABV"
+    document.title = "Termeni și condiții | ConsultantaBV"
     const metaDescription = document.querySelector('meta[name="description"]')
     if (metaDescription) {
       metaDescription.setAttribute(
         "content",
-        "Termeni și condiții de utilizare a site-ului Consultant ABV. Reguli de utilizare și condițiile în care prestăm serviciile noastre de consultanță.",
+        "Termeni și condiții de utilizare a site-ului ConsultantaBV. Reguli de utilizare și condițiile în care prestăm serviciile noastre de consultanță.",
       )
     }
   }, [])
@@ -62,14 +62,14 @@ export default function TermeniConditii() {
             1. Cine suntem
           </h2>
           <p className="text-gray-700 mb-8 sm:mb-10 font-sans leading-relaxed text-base sm:text-lg">
-            <strong className="text-[#0a2540]">Consultant ABV</strong>, cu sediul în{" "}
+            <strong className="text-[#0a2540]">ConsultantaBV</strong>, cu sediul în{" "}
             <strong>Strada Nicolae Pop nr. 13, etaj 1, ap. 7, Brașov, România</strong>, e-mail:{" "}
             <a href="mailto:contact@consultantabv.ro" className="text-[#3eb89a] hover:underline break-all">
               contact@consultantabv.ro
             </a>
             , telefon:{" "}
             <a href="tel:+40123456789" className="text-[#3eb89a] hover:underline">
-              +40 123 456 789
+            0730140766
             </a>
             , oferă servicii de <em>consultanță juridică administrativă</em>
             și operațiuni conexe (ex. pregătire documente, depuneri la ONRC/ANAF, monitorizare dosare), conform
@@ -234,7 +234,7 @@ export default function TermeniConditii() {
             11. Contact
           </h2>
           <p className="text-gray-700 mb-8 sm:mb-10 font-sans leading-relaxed text-base sm:text-lg">
-            <strong className="text-[#0a2540]">Consultant ABV</strong>
+            <strong className="text-[#0a2540]">ConsultantaBV</strong>
             <br />
             Strada Nicolae Pop nr. 13, etaj 1, ap. 7, Brașov, România
             <br />
@@ -245,7 +245,7 @@ export default function TermeniConditii() {
             <br />
             Telefon:{" "}
             <a href="tel:+40123456789" className="text-[#3eb89a] hover:underline">
-              +40 123 456 789
+              0730140766
             </a>
           </p>
         </div>
@@ -270,7 +270,7 @@ export default function TermeniConditii() {
       {/* Minimal Footer */}
       <footer className="py-6 sm:py-8 text-center text-xs sm:text-sm text-gray-500 border-t border-gray-200">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <p>© {new Date().getFullYear()} Consultant ABV. Toate drepturile rezervate.</p>
+          <p>© {new Date().getFullYear()} ConsultantaBV. Toate drepturile rezervate.</p>
           <div className="mt-2 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
             <Link to="/politica-cookies" className="hover:text-[#3eb89a] transition-colors">
               Politica cookies
@@ -290,14 +290,14 @@ export default function TermeniConditii() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "TermsOfService",
-            name: "Termeni și condiții - Consultant ABV",
+            name: "Termeni și condiții - ConsultantaBV",
             inLanguage: "ro-RO",
             url: "https://consultantabv.ro/termeni-conditii",
             publisher: {
               "@type": "Organization",
-              name: "Consultant ABV",
+              name: "ConsultantaBV",
               email: "contact@consultantabv.ro",
-              telephone: "+40 123 456 789",
+              telephone: "+40730140766",
               address: {
                 "@type": "PostalAddress",
                 streetAddress: "Strada Nicolae Pop nr. 13, etaj 1, ap. 7",

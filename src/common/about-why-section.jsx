@@ -8,16 +8,16 @@ export default function AboutWhySection() {
   const team = [
     {
       name: "Diana Milotin",
-      role: "CONSULTANT JURIDIC",
+      role: "Specialist servicii juridice",
       description:
-        "Oferă încredere și claritate la fiecare pas. Explică opțiunile pe înțelesul tău și ajunge rapid la o soluție.",
+        "Oferă sprijin pas cu pas și explică procedurile pe înțelesul fiecărui client. Se asigură că fiecare etapă este clară și ușor de urmat.",
       image: "/images/diana.jpeg",
     },
     {
       name: "Teodora Croitoru",
-      role: "CONSULTANT JURIDIC",
+      role: "Specialist servicii juridice",
       description:
-        "Găsește soluții clare chiar și în situații complexe. Te ține informat și elimină orice complicație inutilă.",
+        "Organizează și verifică fiecare detaliu pentru ca procesul să decurgă simplu și fără întârzieri. Menține o comunicare clară și eficientă.",
       image: "/images/teodora.jpeg",
     },
   ]
@@ -30,13 +30,13 @@ export default function AboutWhySection() {
     },
     {
       number: "2",
-      title: "Te contactăm în mai puțin de 2 ore",
-      description: "Răspuns rapid și personalizat.",
+      title: "Te contactăm în < 24 ore",
+      description: "Primești o analiză inițială și lista documentelor necesare.",
     },
     {
       number: "3",
       title: "Primești soluția ta juridică",
-      description: "Clară, completă și profesionistă.",
+      description: "Ghidare clară până la finalizarea procedurilor.",
     },
   ]
 
@@ -66,8 +66,8 @@ export default function AboutWhySection() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-base md:text-lg leading-relaxed text-white/80 mb-12 font-sans max-w-3xl mx-auto"
           >
-            Suntem o echipă atentă la detalii care explică lucrurile clar și te ghidează pas cu pas spre rezultat.
-            Lucrăm transparent și cu grijă, ca să știi mereu unde te afli și ce urmează.
+            Suntem o echipă dedicată, atentă la detalii și mereu aproape de clienți.
+            Oferim ghidare clară și sprijin în toate etapele procedurilor juridice, cu accent pe transparență, seriozitate și comunicare eficientă — online și în Brașov.
           </motion.p>
 
           {/* Carduri echipă */}
@@ -86,7 +86,7 @@ export default function AboutWhySection() {
                   <div className="mb-6">
                     <img
                       src={member.image || "/placeholder.svg"}
-                      alt={`${member.name} - Consultant juridic la ConsultantABV`}
+                      alt={`${member.name} — Specialist servicii juridice, Brașov`}
                       className="w-[120px] h-[120px] rounded-full object-cover shadow-md"
                       width="120"
                       height="120"
@@ -113,7 +113,7 @@ export default function AboutWhySection() {
             Cum lucrăm
           </motion.h3>
 
-          {/* Pașii fără săgeți */}
+          {/* Pașii */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 items-start relative max-w-5xl mx-auto">
             {steps.map((step, index) => (
               <motion.div

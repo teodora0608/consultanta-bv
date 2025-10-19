@@ -6,12 +6,12 @@ import { Link } from "react-router-dom"
 
 export default function PoliticaCookies() {
   useEffect(() => {
-    document.title = "Politica privind modulele cookie | Consultant ABV"
+    document.title = "Politica privind modulele cookie | ConsultantaBV"
     const metaDescription = document.querySelector('meta[name="description"]')
     if (metaDescription) {
       metaDescription.setAttribute(
         "content",
-        "Politica privind modulele cookie a Consultant ABV. Află cum folosim cookie-urile pentru a îmbunătăți experiența ta pe site.",
+        "Politica privind modulele cookie a ConsultantaBV. Află cum folosim cookie-urile pentru a îmbunătăți experiența ta pe site.",
       )
     }
   }, [])
@@ -130,7 +130,7 @@ export default function PoliticaCookies() {
             <br />
             <strong className="text-[#0a2540]">Telefon:</strong>{" "}
             <a href="tel:+40123456789" className="text-[#3eb89a] hover:underline">
-              +40 123 456 789
+              0730140766
             </a>
             <br />
             <strong className="text-[#0a2540]">Adresă:</strong> Strada Nicolae Pop nr. 13, etaj 1, ap. 7, Brașov,
@@ -162,7 +162,7 @@ export default function PoliticaCookies() {
       {/* Minimal Footer */}
       <footer className="py-6 sm:py-8 text-center text-xs sm:text-sm text-gray-500 border-t border-gray-200">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <p>© {new Date().getFullYear()} Consultant ABV. Toate drepturile rezervate.</p>
+          <p>© {new Date().getFullYear()} ConsultantaBV. Toate drepturile rezervate.</p>
           <div className="mt-2 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
             <Link to="/politica-confidentialitate" className="hover:text-[#3eb89a] transition-colors">
               Politica de confidențialitate

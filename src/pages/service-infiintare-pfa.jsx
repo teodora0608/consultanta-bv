@@ -11,7 +11,7 @@ import FinalCTA from "../common/final-cta"
 export default function ServiceInfiintarePFA() {
   // ───────────────────────────────── SEO (no Helmet) ────────────────────────────────
   useEffect(() => {
-    document.title = "Înființare PFA Online Brașov | Consultant ABV – Rapid & 100% Online"
+    document.title = "Înființare PFA Online Brașov | ConsultantaBV – Rapid & 100% Online"
 
     const setMeta = (name, content) => {
       let tag = document.querySelector(`meta[name="${name}"]`)
@@ -270,7 +270,7 @@ export default function ServiceInfiintarePFA() {
 
           <div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 font-serif">
-              De ce să alegi Consultant ABV
+              De ce să alegi ConsultantaBV
             </h2>
             <p className="text-base sm:text-lg text-white/80 mt-6 mb-12 leading-relaxed">
               Experiență dedicată în înființări PFA, redactare corectă a documentelor și comunicare clară – te ghidăm

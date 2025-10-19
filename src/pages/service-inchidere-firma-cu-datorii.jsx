@@ -21,7 +21,7 @@ export default function ServiceInchidereFirmaCuDatorii() {
 
   // ✅ SEO tags handled natively by React (no Helmet)
   useEffect(() => {
-    document.title = "Închidere / Preluare firmă cu datorii | Consultant ABV"
+    document.title = "Închidere / Preluare firmă cu datorii | ConsultantaBV"
 
     const metaDescription =
       "Preluare sau închidere firmă cu datorii: analiză juridică și fiscală, soluții legale (cesiune părți sociale, insolvență, faliment), documente, depuneri și reprezentare."

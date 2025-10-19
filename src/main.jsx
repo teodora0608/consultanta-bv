@@ -24,6 +24,14 @@ import ServiceInsolventaFirma from "./pages/service-insolventa-firma.jsx"
 import PoliticaConfidentialitate from "./pages/politica-confidentialitate.jsx"
 import TermeniConditii from "./pages/termeni-conditii.jsx"
 import PoliticaCookies from "./pages/politica-cookies.jsx"
+// GHIDURI 2026
+import ResursePage from "./pages/resurse-page.jsx"
+import GhidInfiintareSRL2026 from "./pages/ghid/infiintare-srl-2026.jsx";
+import GhidInchidereFirma2026 from "./pages/ghid/inchidere-firma-2026.jsx";
+import GhidInsolventa2026 from "./pages/ghid/insolventa-firma-2026.jsx";
+import GhidModificareSediu2026 from "./pages/ghid/modificare-sediu-social-2026.jsx";
+import GhidModificariONRC2026 from "./pages/ghid/modificari-onrc-2026.jsx";
+import SRLvsPFA2026 from "./pages/ghid/srl-vs-pfa-2026.jsx";
 
 // ✅ Root render
 createRoot(document.getElementById("root")).render(
@@ -46,7 +54,14 @@ createRoot(document.getElementById("root")).render(
         <Route path="/politica-confidentialitate" element={<PoliticaConfidentialitate />} />
         <Route path="/termeni-conditii" element={<TermeniConditii />} />
         <Route path="/politica-cookies" element={<PoliticaCookies />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/resurse" element={<ResursePage />} />
+        {/* GHIDURI 2026 – slugs CONSISTENTE */}
+        <Route path="/ghid/infiintare-srl-2026" element={<GhidInfiintareSRL2026 />} />
+        <Route path="/ghid/inchidere-firma-2026" element={<GhidInchidereFirma2026 />} />
+        <Route path="/ghid/insolventa-firma-2026" element={<GhidInsolventa2026 />} />
+        <Route path="/ghid/modificare-sediu-social-2026" element={<GhidModificareSediu2026 />} />
+        <Route path="/ghid/modificari-onrc-2026" element={<GhidModificariONRC2026 />} />
+        <Route path="/ghid/srl-vs-pfa-2026" element={<SRLvsPFA2026 />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

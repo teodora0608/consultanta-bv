@@ -52,11 +52,11 @@ export default function Navbar() {
           <Link
             to="/"
             className="flex items-center group relative transition-transform hover:scale-[1.04] active:scale-[0.97]"
-            aria-label="Consultant ABV Home"
+            aria-label="ConsultantaBV Home"
           >
             <img
               src="/images/logo.png"
-              alt="Consultant ABV Logo"
+              alt="ConsultantaBV Logo"
               className={`w-[70px] md:w-[75px] h-auto transition-all duration-200 ${
                 isScrolled ? "opacity-100" : "brightness-0 invert"
               }`}

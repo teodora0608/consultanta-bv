@@ -8,12 +8,12 @@ export default function PoliticaConfidentialitate() {
   const updated = "octombrie 2025"
 
   useEffect(() => {
-    document.title = "Politica de Confidențialitate | Consultant ABV"
+    document.title = "Politica de Confidențialitate | ConsultantaBV"
     const metaDescription = document.querySelector('meta[name="description"]')
     if (metaDescription) {
       metaDescription.setAttribute(
         "content",
-        "Politica de confidențialitate a Consultant ABV. Află cum colectăm, folosim și protejăm datele tale personale conform GDPR.",
+        "Politica de confidențialitate a ConsultantaBV. Află cum colectăm, folosim și protejăm datele tale personale conform GDPR.",
       )
     }
   }, [])
@@ -63,14 +63,14 @@ export default function PoliticaConfidentialitate() {
             Cine suntem?
           </h2>
           <p className="text-gray-700 mb-8 sm:mb-10 font-sans leading-relaxed text-base sm:text-lg">
-            <strong className="text-[#0a2540]">Consultant ABV</strong>, cu sediul în{" "}
+            <strong className="text-[#0a2540]">ConsultantaBV</strong>, cu sediul în{" "}
             <strong>Strada Nicolae Pop nr. 13, etaj 1, ap. 7, România</strong>, e-mail:{" "}
             <a href="mailto:contact@consultantabv.ro" className="text-[#3eb89a] hover:underline break-all">
               contact@consultantabv.ro
             </a>
             , telefon:{" "}
             <a href="tel:+40123456789" className="text-[#3eb89a] hover:underline">
-              +40 123 456 789
+              0730140766
             </a>
             , prelucrează datele tale cu caracter personal în calitate de
             <em> operator</em> (GDPR). Suntem responsabili pentru modul în care colectăm, folosim și protejăm aceste
@@ -195,7 +195,7 @@ export default function PoliticaConfidentialitate() {
             Contact & operator
           </h2>
           <p className="text-gray-700 mb-8 sm:mb-10 font-sans leading-relaxed text-base sm:text-lg">
-            Operator: <strong className="text-[#0a2540]">Consultant ABV</strong>
+            Operator: <strong className="text-[#0a2540]">ConsultantaBV</strong>
             <br />
             Adresă: Strada Nicolae Pop nr. 13, etaj 1, ap. 7, România
             <br />
@@ -206,7 +206,7 @@ export default function PoliticaConfidentialitate() {
             <br />
             Telefon:{" "}
             <a href="tel:+40123456789" className="text-[#3eb89a] hover:underline">
-              +40 123 456 789
+              0730140766
             </a>
           </p>
         </div>
@@ -231,7 +231,7 @@ export default function PoliticaConfidentialitate() {
       {/* Minimal Footer */}
       <footer className="py-6 sm:py-8 text-center text-xs sm:text-sm text-gray-500 border-t border-gray-200">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <p>© {new Date().getFullYear()} Consultant ABV. Toate drepturile rezervate.</p>
+          <p>© {new Date().getFullYear()} ConsultantaBV. Toate drepturile rezervate.</p>
           <div className="mt-2 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
             <Link to="/politica-cookies" className="hover:text-[#3eb89a] transition-colors">
               Politica cookies
@@ -251,12 +251,12 @@ export default function PoliticaConfidentialitate() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "PrivacyPolicy",
-            name: "Politica de Confidențialitate - Consultant ABV",
+            name: "Politica de Confidențialitate - ConsultantaBV",
             publisher: {
               "@type": "Organization",
-              name: "Consultant ABV",
+              name: "ConsultantaBV",
               email: "contact@consultantabv.ro",
-              telephone: "+40 123 456 789",
+              telephone: "+40730140766",
               address: {
                 "@type": "PostalAddress",
                 streetAddress: "Strada Nicolae Pop nr. 13, etaj 1, ap. 7",

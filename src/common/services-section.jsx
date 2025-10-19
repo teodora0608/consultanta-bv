@@ -4,8 +4,8 @@ import { mainServices } from "../data/mainServices"
 function ServicesSection() {
   return (
     <MainServicesGrid
-      title="Servicii juridice complete"
-      subtitle="De la înființare la consultanță și insolvență – te susținem în fiecare etapă."
+      title="Servicii juridice"
+      subtitle="De la înființare SRL sau PFA, la consultanță juridică, preluare sau închidere firmă și până la insolvență – te susținem în fiecare etapă, online și în Brașov."
       items={mainServices}
       cta={{ label: "Vezi toate serviciile", to: "/servicii" }}
     />
