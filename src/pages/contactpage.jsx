@@ -1,11 +1,21 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
-// ❌ import { motion } from "framer-motion"
-import { Mail, Phone, Clock, CheckCircle2, MapPin, CalendarCheck } from "lucide-react"
+import { useState, useEffect } from "react"
+import {
+  MailIcon,
+  PhoneIcon,
+  ClockIcon,
+  CheckCircle2Icon,
+  MapPinIcon,
+  CalendarCheckIcon,
+} from "../icons"
 import Navbar from "../components/navbar"
 import Footer from "../components/footer"
 import ContactForm from "../components/ContactForm"
+
+// ✅ SEO
+import { setMetaTags } from "../seo/meta"
+import JsonLd from "../components/JsonLd"
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -16,7 +26,7 @@ export default function ContactPage() {
     otherService: "",
     notes: "",
     gdprConsent: false,
-    honeypot: "", // Anti-spam field
+    honeypot: "",
   })
 
   const [formState, setFormState] = useState({
@@ -26,8 +36,6 @@ export default function ContactPage() {
   })
 
   const [showOtherService, setShowOtherService] = useState(false)
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const dropdownRef = useRef(null)
 
   const serviceOptions = [
     { value: "", label: "Selectează un serviciu", disabled: true },
@@ -39,15 +47,74 @@ export default function ContactPage() {
     { value: "alte-servicii", label: "Alte servicii" },
   ]
 
+  // ───────────── SEO CONSTS ─────────────
+  const origin =
+    (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
+  const path = "/contact"
+  const canonical = `${origin}${path}`
+
+  const title = "Contact ConsultantaBV | Asistență juridică rapidă și profesionistă"
+  const description =
+    "Contactează echipa ConsultantaBV pentru soluții juridice rapide, transparente și sigure. Răspundem în mai puțin de 2 ore – online sau la sediu, în Brașov."
+  const ogImage = `${origin}/images/hero-tablet.jpg`
+
+  // ───────────── META la mount (idempotent) ─────────────
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false)
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [])
+    setMetaTags({
+      title,
+      description,
+      canonical,
+      image: ogImage,
+      siteName: "ConsultantaBV",
+      ogType: "website",
+      locale: "ro_RO",
+    })
+  }, [title, description, canonical, ogImage])
+
+  // ───────────── JSON-LD (în JSX) ─────────────
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Acasă", item: origin },
+      { "@type": "ListItem", position: 2, name: "Contact", item: canonical },
+    ],
+  }
+
+  const webPageLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${canonical}#webpage`,
+    url: canonical,
+    name: title,
+    description,
+    isPartOf: { "@type": "WebSite", url: origin, name: "ConsultantaBV" },
+    primaryImageOfPage: ogImage,
+    inLanguage: "ro-RO",
+  }
+
+  const contactPageLd = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: title,
+    description,
+    url: canonical,
+    image: ogImage,
+    mainEntity: {
+      "@type": "Organization",
+      "@id": `${origin}#organization`,
+      name: "ConsultantaBV",
+      email: "contact@consultantabv.ro",
+      telephone: "+40730140766",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Strada Nicolae Pop nr 13, etaj 1, ap 7",
+        addressLocality: "Brașov",
+        addressCountry: "RO",
+      },
+      openingHours: "Mo-Fr 09:00-17:00",
+    },
+  }
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -55,22 +122,13 @@ export default function ContactPage() {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }))
-
     if (name === "serviceType") {
-      setShowOtherService(value === "alte-servicii")
-      if (value !== "alte-servicii") {
+      const isOther = value === "alte-servicii"
+      setShowOtherService(isOther)
+      if (!isOther) {
         setFormData((prev) => ({ ...prev, otherService: "" }))
       }
     }
-  }
-
-  const handleServiceSelect = (value) => {
-    setFormData((prev) => ({ ...prev, serviceType: value }))
-    setShowOtherService(value === "alte-servicii")
-    if (value !== "alte-servicii") {
-      setFormData((prev) => ({ ...prev, otherService: "" }))
-    }
-    setIsDropdownOpen(false)
   }
 
   const validateForm = () => {
@@ -80,21 +138,18 @@ export default function ContactPage() {
     if (!formData.serviceType) return false
     if (showOtherService && !formData.otherService.trim()) return false
     if (!formData.gdprConsent) return false
-    if (formData.honeypot) return false // Bot detection
+    if (formData.honeypot) return false
     return true
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-
     if (!validateForm()) {
       setFormState({ isSubmitting: false, isSuccess: false, isError: true })
       return
     }
 
     setFormState({ isSubmitting: true, isSuccess: false, isError: false })
-
-    // Simulare apel API
     setTimeout(() => {
       setFormState({ isSubmitting: false, isSuccess: true, isError: false })
       setTimeout(() => {
@@ -120,15 +175,15 @@ export default function ContactPage() {
     "Te ghidăm pas cu pas până la rezultat",
   ]
 
-  const selectedServiceLabel =
-    serviceOptions.find((opt) => opt.value === formData.serviceType)?.label || "Selectează un serviciu"
-
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-gray-50" itemScope itemType="https://schema.org/ContactPage">
+      {/* JSON-LD (idempotent) */}
+      <JsonLd data={[webPageLd, breadcrumbLd, contactPageLd]} />
+
       <Navbar />
 
+      {/* HERO */}
       <section className="py-20 md:py-24 bg-gradient-to-br from-[#0a2540] via-[#0d3a52] to-[#1a5c6b] relative overflow-hidden">
-        {/* Subtle overlay pattern */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(62,184,154,0.1),transparent_50%)]" />
         <div className="page-container relative z-10">
           <div className="text-center max-w-3xl mx-auto">
@@ -141,19 +196,19 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="py-16 md:py-20 bg-gray-50">
+      {/* CONTACT SECTION */}
+      <section className="py-16 md:py-20 bg-gray-50" aria-labelledby="contact-info-heading">
         <div className="page-container">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch">
-            {/* Col stânga */}
+            {/* Stânga */}
             <div className="w-full lg:w-1/2 flex flex-col gap-6">
-              {/* Notă: întâlniri la sediu doar cu programare */}
               <div
                 role="status"
                 aria-live="polite"
                 className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-start gap-3 shadow-sm"
               >
                 <div className="w-9 h-9 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
-                  <CalendarCheck className="w-5 h-5 text-amber-700" />
+                  <CalendarCheckIcon className="w-5 h-5 text-amber-700" />
                 </div>
                 <p className="text-amber-900 text-sm md:text-base font-sans leading-relaxed">
                   Întâlnirile la sediu se fac <span className="font-semibold">doar pe bază de programare prealabilă</span>.
@@ -162,23 +217,26 @@ export default function ContactPage() {
               </div>
 
               <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-                <h3 className="text-2xl font-bold text-[#0a2540] mb-6 font-serif">Cum te ajutăm</h3>
-                <div className="flex flex-col gap-4">
+                <h3 id="contact-info-heading" className="text-2xl font-bold text-[#0a2540] mb-6 font-serif">
+                  Cum te ajutăm
+                </h3>
+                <ul className="flex flex-col gap-4">
                   {infoBullets.map((bullet, index) => (
-                    <div key={index} className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-[#3eb89a] flex-shrink-0 mt-0.5" />
+                    <li key={index} className="flex items-start gap-3">
+                      <CheckCircle2Icon className="w-5 h-5 text-[#3eb89a] flex-shrink-0 mt-0.5" />
                       <span className="text-base text-gray-700 font-sans">{bullet}</span>
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
 
+              {/* Contact direct */}
               <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
                 <h4 className="text-lg font-bold text-[#0a2540] mb-4 font-serif">Contact direct</h4>
-                <div className="flex flex-col gap-4">
+                <address className="flex flex-col gap-4 not-italic">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-[#3eb89a]/10 flex items-center justify-center flex-shrink-0">
-                      <Mail className="w-5 h-5 text-[#3eb89a]" />
+                      <MailIcon className="w-5 h-5 text-[#3eb89a]" />
                     </div>
                     <a
                       href="mailto:contact@consultantabv.ro"
@@ -189,31 +247,31 @@ export default function ContactPage() {
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-[#3eb89a]/10 flex items-center justify-center flex-shrink-0">
-                      <Phone className="w-5 h-5 text-[#3eb89a]" />
+                      <PhoneIcon className="w-5 h-5 text-[#3eb89a]" />
                     </div>
                     <a
-                      href="tel:+40730140766" 
+                      href="tel:+40730140766"
                       className="text-base text-gray-700 hover:text-[#3eb89a] transition-colors font-sans"
                     >
-                    0730140766
+                      0730 140 766
                     </a>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-full bg-[#3eb89a]/10 flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-5 h-5 text-[#3eb89a]" />
+                      <MapPinIcon className="w-5 h-5 text-[#3eb89a]" />
                     </div>
                     <div className="text-base text-gray-700 font-sans">
-                      Strada Nicolae Pop nr 13,
+                      Strada Nicolae Pop nr 13, etaj 1, ap 7
                       <br />
-                      etaj 1, ap 7
+                      Brașov, România
                     </div>
                   </div>
-                </div>
+                </address>
               </div>
 
               <div className="bg-gradient-to-br from-[#0a2540] to-[#0d3a5c] rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
                 <div className="flex items-center gap-3 mb-4">
-                  <Clock className="w-6 h-6 text-[#3eb89a]" />
+                  <ClockIcon className="w-6 h-6 text-[#3eb89a]" />
                   <h4 className="text-lg font-bold text-white font-serif">Program</h4>
                 </div>
                 <p className="text-white/90 font-sans text-base">
@@ -224,9 +282,19 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Col dreapta */}
+            {/* Dreapta (formular) */}
             <div className="w-full lg:w-1/2 flex flex-col">
-              <ContactForm className="flex-1" />
+              <ContactForm
+                className="flex-1"
+                formData={formData}
+                setFormData={setFormData}
+                formState={formState}
+                setFormState={setFormState}
+                handleSubmit={handleSubmit}
+                handleInputChange={handleInputChange}
+                showOtherService={showOtherService}
+                serviceOptions={serviceOptions}
+              />
             </div>
           </div>
         </div>

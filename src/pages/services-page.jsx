@@ -1,21 +1,26 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Link } from "react-router-dom"
-import { FileCheck, MessageCircle, ArrowRight, X, Clock } from "lucide-react"
+import { FileCheckIcon, MessageCircleIcon, ArrowRightIcon, XIcon, ClockIcon } from "../icons"
 import Navbar from "../components/navbar"
 import Footer from "../components/footer"
-import MainServicesGrid from "../components/MainServicesGrid"
-import SecondaryServicesSection from "../components/SecondaryServicesSection"
-import { mainServices } from "../data/mainServices"
-import { serviceGroups } from "../data/secondaryServices"
+import MainServicesGrid, { mainServices } from "../components/MainServicesGrid"
+import SecondaryServicesSection, { serviceGroups } from "../components/SecondaryServicesSection"
+
+// ✅ SEO
+import { setMetaTags } from "../seo/meta";
+import JsonLd from "../components/JsonLd"
 
 export default function ServicesPage() {
   const [selectedService, setSelectedService] = useState(null)
+  const closeBtnRef = useRef(null)
 
   const openModal = (service) => {
     setSelectedService(service)
     document.body.style.overflow = "hidden"
+    // focus pe butonul de închidere după render
+    setTimeout(() => closeBtnRef.current?.focus(), 0)
   }
 
   const closeModal = () => {
@@ -25,16 +30,99 @@ export default function ServicesPage() {
 
   useEffect(() => {
     const handleEscape = (e) => {
-      if (e.key === "Escape" && selectedService) {
-        closeModal()
-      }
+      if (e.key === "Escape" && selectedService) closeModal()
     }
     window.addEventListener("keydown", handleEscape)
     return () => window.removeEventListener("keydown", handleEscape)
   }, [selectedService])
 
+  // ───────────── SEO VARS ─────────────
+  const origin =
+    (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
+  const path = "/servicii"
+  const canonical = `${origin}${path}`
+
+  const title = "Servicii | ConsultantaBV"
+  const description =
+    "Toate serviciile ConsultantaBV: înființare SRL/PFA, modificări ONRC/ANAF, documente, autorizații și închidere firmă. Soluții rapide, 100% online, în toată țara."
+  const ogImage = `${origin}/images/og/default.jpg`
+
+  // ───────────── META la mount (idempotent) ─────────────
+  useEffect(() => {
+    setMetaTags({
+      title,
+      description,
+      canonical,
+      image: ogImage,
+      siteName: "ConsultantaBV",
+    })
+  }, [title, description, canonical, ogImage])
+
+  // ───────────── JSON-LD ─────────────
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Acasă", item: origin },
+      { "@type": "ListItem", position: 2, name: "Servicii", item: canonical },
+    ],
+  }
+
+  const webPageLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${canonical}#webpage`,
+    url: canonical,
+    name: title,
+    description,
+    isPartOf: { "@type": "WebSite", url: origin, name: "ConsultantaBV" },
+    primaryImageOfPage: ogImage,
+    inLanguage: "ro-RO",
+  }
+
+  // Colectăm toate item-urile de listă pentru ItemList (fără să atingem UI)
+  const allListItems =
+    [
+      ...(Array.isArray(mainServices) ? mainServices : []),
+      ...(serviceGroups?.infiintare || []),
+      ...(serviceGroups?.modificari || []),
+      ...(serviceGroups?.documente || []),
+    ].filter(Boolean) || []
+
+  const itemListLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Lista serviciilor",
+    itemListElement: allListItems.map((it, idx) => {
+      const name = it?.title || it?.name || "Serviciu"
+      const summary =
+        it?.summary || it?.description || it?.subtitle || it?.details?.ceEste || description
+      const url = it?.link ? `${origin}${it.link}` : canonical
+      return {
+        "@type": "ListItem",
+        position: idx + 1,
+        item: {
+          "@type": "Service",
+          name,
+          description: summary,
+          url,
+          areaServed: "RO",
+          provider: {
+            "@type": "Organization",
+            name: "ConsultantaBV",
+            url: origin,
+            logo: `${origin}/images/logo.png`,
+          },
+        },
+      }
+    }),
+  }
+
   return (
     <main className="min-h-screen bg-white">
+      {/* JSON-LD sus în JSX (idempotent, fără dubluri) */}
+      <JsonLd data={[webPageLd, breadcrumbLd, itemListLd]} />
+
       <Navbar />
 
       {/* Hero Section */}
@@ -43,10 +131,9 @@ export default function ServicesPage() {
 
         <div className="page-container relative z-10">
           <div className="flex flex-col items-center text-center max-w-5xl mx-auto">
-            {/* Reduced title size to match "Echipa noastră" */}
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 font-serif bg-gradient-to-r from-[#ffffff] via-[#e0f2f1] to-[#3eb89a] bg-clip-text text-transparent">
-              Toate serviciile
-            </h1>
+<h1 className="text-4xl md:text-5xl font-bold mb-6 font-serif text-white/90">
+  Toate serviciile
+</h1>
             <p className="text-lg md:text-xl text-white/90 mb-10 font-sans max-w-4xl leading-relaxed">
               De la înființare și modificări până la închidere, insolvență și documente conexe. 100% online, simplu și
               rapid. Lucrăm în toată țara, cu redactare corectă a actelor, depunere la ONRC/ANAF și urmărirea statusului
@@ -59,19 +146,31 @@ export default function ServicesPage() {
                 className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 font-sans min-h-[56px]"
               >
                 Solicită ofertă
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRightIcon className="ml-2 h-5 w-5" aria-hidden />
               </Link>
               <a
-                href="https://wa.me/40123456789"
+                href="https://wa.me/40730140766"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 font-sans min-h-[56px]"
               >
-                <MessageCircle className="mr-2 h-5 w-5" />
+                <MessageCircleIcon className="mr-2 h-5 w-5" aria-hidden />
                 Întrebări? WhatsApp
               </a>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* BREADCRUMB */}
+      <section className="py-4 bg-gray-50 border-b border-gray-200">
+        <div className="page-container">
+          <nav className="flex items-center gap-2 text-sm font-sans" aria-label="breadcrumb">
+            <Link to="/" className="text-gray-600 hover:text-[#3eb89a] flex items-center gap-1">
+              Acasă <ArrowRightIcon className="w-4 h-4" aria-hidden />
+            </Link>
+            <span className="text-[#0a2540]" aria-current="page">Servicii</span>
+          </nav>
         </div>
       </section>
 
@@ -93,7 +192,7 @@ export default function ServicesPage() {
       />
 
       <SecondaryServicesSection
-        title="Modificări & actualizări (ONRC/ANAF)"
+        title="Modificări & actualizări"
         subtitle="Actualizează datele firmei rapid și conform legii."
         services={serviceGroups.modificari}
         onServiceClick={openModal}
@@ -107,8 +206,8 @@ export default function ServicesPage() {
         services={serviceGroups.documente}
         onServiceClick={openModal}
         bgColor="bg-gray-50"
-        lgCols={2} // 2×2 la desktop
-        containerMax="lg:max-w-[1000px] mx-auto" // Increased container width from 900px to 1000px for better spacing
+        lgCols={2}
+        containerMax="lg:max-w-[1000px] mx-auto"
       />
 
       {/* Final CTA */}
@@ -126,7 +225,7 @@ export default function ServicesPage() {
               className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 font-sans min-h-[56px]"
             >
               Solicită ofertă
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <ArrowRightIcon className="ml-2 h-5 w-5" aria-hidden />
             </Link>
           </div>
         </div>
@@ -147,17 +246,18 @@ export default function ServicesPage() {
           >
             <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between z-10">
               <div className="flex items-center gap-3">
-                {selectedService.icon && <selectedService.icon className="w-6 h-6 text-[#3eb89a]" />}
+                {selectedService.icon && <selectedService.icon className="w-6 h-6 text-[#3eb89a]" aria-hidden />}
                 <h3 id="modal-title" className="text-2xl font-bold text-[#0a2540] font-serif">
                   {selectedService.title}
                 </h3>
               </div>
               <button
+                ref={closeBtnRef}
                 onClick={closeModal}
-                className="w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors"
+                className="w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-[#3eb89a] focus:ring-offset-2"
                 aria-label="Închide"
               >
-                <X className="w-5 h-5 text-gray-500" />
+                <XIcon className="w-5 h-5 text-gray-500" aria-hidden />
               </button>
             </div>
 
@@ -225,14 +325,14 @@ export default function ServicesPage() {
 
                         <div className="flex flex-col gap-3">
                           <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
-                            <Clock className="w-5 h-5 text-[#3eb89a] flex-shrink-0" />
+                            <ClockIcon className="w-5 h-5 text-[#3eb89a] flex-shrink-0" aria-hidden />
                             <div>
                               <span className="font-bold text-[#0a2540] font-serif">Durată: </span>
                               <span className="text-gray-700 font-sans">{selectedService.details.durata}</span>
                             </div>
                           </div>
                           <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
-                            <FileCheck className="w-5 h-5 text-[#3eb89a] flex-shrink-0" />
+                            <FileCheckIcon className="w-5 h-5 text-[#3eb89a] flex-shrink-0" aria-hidden />
                             <div>
                               <span className="font-bold text-[#0a2540] font-serif">Livrabile: </span>
                               <span className="text-gray-700 font-sans">{selectedService.details.livrabile}</span>
@@ -247,7 +347,7 @@ export default function ServicesPage() {
                     className="w-full inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg hover:shadow-xl transition-all duration-300 font-sans focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3eb89a] focus-visible:ring-offset-2"
                   >
                     Solicită ofertă
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    <ArrowRightIcon className="ml-2 h-5 w-5" aria-hidden />
                   </Link>
                 </div>
               )}
@@ -260,40 +360,17 @@ export default function ServicesPage() {
 
       <style>{`
         @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
-
         @keyframes scaleIn {
-          from {
-            opacity: 0;
-            transform: scale(0.95);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
+          from { opacity: 0; transform: scale(0.95); }
+          to { opacity: 1; transform: scale(1); }
         }
-
-        .animate-fadeIn {
-          animation: fadeIn 0.2s ease-out;
-        }
-
-        .animate-scaleIn {
-          animation: scaleIn 0.2s ease-out;
-        }
-
+        .animate-fadeIn { animation: fadeIn 0.2s ease-out; }
+        .animate-scaleIn { animation: scaleIn 0.2s ease-out; }
         @media (prefers-reduced-motion: reduce) {
-          .animate-fadeIn,
-          .animate-scaleIn {
-            animation: none;
-            opacity: 1;
-            transform: none;
-          }
+          .animate-fadeIn, .animate-scaleIn { animation: none; opacity: 1; transform: none; }
         }
       `}</style>
     </main>

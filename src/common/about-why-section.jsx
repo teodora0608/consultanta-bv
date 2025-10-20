@@ -1,10 +1,15 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { ArrowRight } from "lucide-react"
+import { ArrowRightIcon } from "../icons"
 import { Link } from "react-router-dom"
+import JsonLd from "../components/JsonLd"
 
 export default function AboutWhySection() {
+  const origin =
+    (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
+  const canonical = `${origin}/#despre` // ancoră stabilă către secțiune
+
   const team = [
     {
       name: "Diana Milotin",
@@ -12,6 +17,7 @@ export default function AboutWhySection() {
       description:
         "Oferă sprijin pas cu pas și explică procedurile pe înțelesul fiecărui client. Se asigură că fiecare etapă este clară și ușor de urmat.",
       image: "/images/diana.jpeg",
+      url: `${origin}/#diana-milotin`,
     },
     {
       name: "Teodora Croitoru",
@@ -19,19 +25,16 @@ export default function AboutWhySection() {
       description:
         "Organizează și verifică fiecare detaliu pentru ca procesul să decurgă simplu și fără întârzieri. Menține o comunicare clară și eficientă.",
       image: "/images/teodora.jpeg",
+      url: `${origin}/#teodora-croitoru`,
     },
   ]
 
   const steps = [
-    {
-      number: "1",
-      title: "Completează formularul",
-      description: "Simplu și rapid — durează doar câteva minute.",
-    },
+    { number: "1", title: "Completează formularul", description: "Simplu și rapid — durează doar câteva minute." },
     {
       number: "2",
       title: "Te contactăm în < 24 ore",
-      description: "Primești o analiză inițială și lista documentelor necesare.",
+      description: "Primești analiza inițială și lista documentelor necesare.",
     },
     {
       number: "3",
@@ -40,15 +43,75 @@ export default function AboutWhySection() {
     },
   ]
 
+  // ---------- JSON-LD (idempotent, fără duplicate) ----------
+  const organizationLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "ConsultantaBV",
+    url: origin,
+    logo: `${origin}/images/logo.png`,
+    sameAs: [
+      "https://www.facebook.com/consultantabv",
+      "https://www.linkedin.com/company/consultantabv",
+    ],
+    employee: team.map((m) => ({
+      "@type": "Person",
+      name: m.name,
+      jobTitle: m.role,
+      description: m.description,
+      image: `${origin}${m.image}`,
+      url: m.url,
+      worksFor: { "@type": "Organization", name: "ConsultantaBV" },
+    })),
+  }
+
+  const teamItemListLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Echipa ConsultantaBV",
+    itemListElement: team.map((m, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Person",
+        name: m.name,
+        jobTitle: m.role,
+        description: m.description,
+        image: `${origin}${m.image}`,
+        url: m.url,
+      },
+    })),
+  }
+
+  const howToLd = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "Cum lucrăm la ConsultantaBV",
+    description:
+      "Etapele prin care clienții obțin soluția juridică: completare formular, contact în < 24h și livrarea soluției.",
+    url: canonical,
+    step: steps.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: s.title,
+      text: s.description,
+    })),
+  }
+
   return (
     <section
       id="despre"
+      aria-labelledby="about-heading"
       className="py-16 md:py-20 bg-[radial-gradient(ellipse_at_top,_#0b2a3a_0%,_#0f3546_40%,_#0f3a4b_100%)] relative overflow-hidden"
     >
+      {/* JSON-LD injectat aici, fără a afecta UI-ul */}
+      <JsonLd data={[organizationLd, teamItemListLd, howToLd]} />
+
       <div className="page-container">
         <div className="max-w-5xl mx-auto text-center">
           {/* Titlu */}
           <motion.h2
+            id="about-heading"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -66,19 +129,19 @@ export default function AboutWhySection() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-base md:text-lg leading-relaxed text-white/80 mb-12 font-sans max-w-3xl mx-auto"
           >
-            Suntem o echipă dedicată, atentă la detalii și mereu aproape de clienți.
-            Oferim ghidare clară și sprijin în toate etapele procedurilor juridice, cu accent pe transparență, seriozitate și comunicare eficientă — online și în Brașov.
+            Suntem o echipă dedicată, atentă la detalii și mereu aproape de clienți. Oferim ghidare clară și sprijin în
+            toate etapele procedurilor juridice — cu accent pe transparență, seriozitate și comunicare eficientă.
           </motion.p>
 
           {/* Carduri echipă */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 mt-10 items-stretch mb-16">
-            {team.map((member, index) => (
+            {team.map((member, i) => (
               <motion.div
-                key={index}
+                key={i}
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
+                transition={{ duration: 0.5, delay: i * 0.2 }}
                 className="group relative h-full"
               >
                 <div className="absolute -inset-[2px] bg-gradient-to-br from-[#3eb89a] via-[#0a2540] to-[#3eb89a] rounded-2xl opacity-0 group-hover:opacity-30 blur-sm transition-opacity duration-300" />
@@ -86,7 +149,7 @@ export default function AboutWhySection() {
                   <div className="mb-6">
                     <img
                       src={member.image || "/placeholder.svg"}
-                      alt={`${member.name} — Specialist servicii juridice, Brașov`}
+                      alt={`${member.name} — ${member.role}`}
                       className="w-[120px] h-[120px] rounded-full object-cover shadow-md"
                       width="120"
                       height="120"
@@ -94,15 +157,21 @@ export default function AboutWhySection() {
                       decoding="async"
                     />
                   </div>
-                  <h3 className="text-xl font-serif font-semibold text-[#0a2540] mb-1">{member.name}</h3>
-                  <p className="text-xs uppercase tracking-wider text-gray-500 mb-3 font-sans">{member.role}</p>
-                  <p className="text-sm text-gray-600 leading-relaxed font-sans">{member.description}</p>
+                  <h3 className="text-xl font-serif font-semibold text-[#0a2540] mb-1">
+                    {member.name}
+                  </h3>
+                  <p className="text-xs uppercase tracking-wider text-gray-500 mb-3 font-sans">
+                    {member.role}
+                  </p>
+                  <p className="text-sm text-gray-600 leading-relaxed font-sans">
+                    {member.description}
+                  </p>
                 </div>
               </motion.div>
             ))}
           </div>
 
-          {/* Secțiunea “Cum lucrăm” */}
+          {/* Cum lucrăm */}
           <motion.h3
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -127,8 +196,12 @@ export default function AboutWhySection() {
                 <div className="w-10 h-10 rounded-full bg-[#3eb89a] text-white font-bold flex items-center justify-center mb-4 mx-auto text-sm">
                   {step.number}
                 </div>
-                <h4 className="text-lg font-semibold text-white mb-2 font-serif">{step.title}</h4>
-                <p className="text-sm text-white/70 leading-relaxed font-sans">{step.description}</p>
+                <h4 className="text-lg font-semibold text-white mb-2 font-serif">
+                  {step.title}
+                </h4>
+                <p className="text-sm text-white/70 leading-relaxed font-sans">
+                  {step.description}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -143,10 +216,11 @@ export default function AboutWhySection() {
           >
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+              className="inline-flex items-center gap-2 bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg transition-all durata
+              tion-300 shadow-lg hover:shadow-xl hover:scale-105"
             >
               Hai să discutăm cazul tău
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRightIcon className="w-5 h-5" />
             </Link>
           </motion.div>
         </div>

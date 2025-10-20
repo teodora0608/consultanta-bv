@@ -4,24 +4,73 @@
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
 
+// ✅ SEO helpers
+import { setMetaTags } from "../seo/meta"
+import JsonLd from "../components/JsonLd"
+
 export default function PoliticaCookies() {
+  // ───────────── SEO VARS ─────────────
+  const origin =
+    (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
+  const path = "/politica-cookies"
+  const canonical = `${origin}${path}`
+
+  const pageTitle = "Politica privind modulele cookie | ConsultantaBV"
+  const pageDescr =
+    "Politica privind modulele cookie a ConsultantaBV. Află cum folosim cookie-urile pentru a îmbunătăți experiența ta pe site."
+  const ogImage = `${origin}/images/og/default.jpg`
+
+  // ───────────── META la mount (idempotent) ─────────────
   useEffect(() => {
-    document.title = "Politica privind modulele cookie | ConsultantaBV"
-    const metaDescription = document.querySelector('meta[name="description"]')
-    if (metaDescription) {
-      metaDescription.setAttribute(
-        "content",
-        "Politica privind modulele cookie a ConsultantaBV. Află cum folosim cookie-urile pentru a îmbunătăți experiența ta pe site.",
-      )
-    }
-  }, [])
+    setMetaTags({
+      title: pageTitle,
+      description: pageDescr,
+      canonical,
+      image: ogImage,
+      siteName: "ConsultantaBV",
+    })
+  }, [pageTitle, pageDescr, canonical, ogImage])
+
+  // ───────────── JSON-LD ─────────────
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Acasă", item: origin },
+      { "@type": "ListItem", position: 2, name: "Politica cookies", item: canonical },
+    ],
+  }
+
+  // Notă: nu definim Organization/WebSite aici (ca să evităm duplicate site-wide).
+  const webPageLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${canonical}#webpage`,
+    url: canonical,
+    name: pageTitle,
+    description: pageDescr,
+    isPartOf: { "@type": "WebSite", url: origin, name: "ConsultantaBV" },
+    primaryImageOfPage: ogImage,
+    inLanguage: "ro-RO",
+  }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
+    <main id="main-content" className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
+      {/* JSON-LD */}
+      <JsonLd data={[webPageLd, breadcrumbLd]} />
+
+      {/* Skip link pentru a11y */}
+      <a
+        href="#cookies-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white text-[#0a2540] px-3 py-2 rounded"
+      >
+        Sari la conținut
+      </a>
+
       {/* Hero Section */}
       <section className="relative py-12 sm:py-16 md:py-20 lg:py-28">
         {/* Subtle background pattern */}
-        <div className="absolute inset-0 opacity-[0.03]">
+        <div className="absolute inset-0 opacity-[0.03]" aria-hidden="true">
           <div
             className="absolute inset-0"
             style={{
@@ -47,8 +96,19 @@ export default function PoliticaCookies() {
         </div>
       </section>
 
+      {/* Breadcrumb */}
+      <section className="py-3 bg-white/60 border-y border-gray-100">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <nav className="text-sm text-gray-600 flex items-center gap-2" aria-label="breadcrumb">
+            <Link to="/" className="hover:text-[#3eb89a]">Acasă</Link>
+            <span aria-hidden="true">/</span>
+            <span className="text-[#0a2540]" aria-current="page">Politica cookies</span>
+          </nav>
+        </div>
+      </section>
+
       {/* Content Section */}
-      <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pb-12 sm:pb-16 md:pb-20">
+      <section id="cookies-content" className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pb-12 sm:pb-16 md:pb-20">
         <div className="bg-white/60 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8 md:p-10 lg:p-12">
           <p className="mb-8 sm:mb-10 text-gray-700 leading-relaxed font-sans text-base sm:text-lg">
             Prezenta Politică privind modulele cookie explică modul în care{" "}
@@ -129,7 +189,7 @@ export default function PoliticaCookies() {
             </a>
             <br />
             <strong className="text-[#0a2540]">Telefon:</strong>{" "}
-            <a href="tel:+40123456789" className="text-[#3eb89a] hover:underline">
+            <a href="tel:+40730140766" className="text-[#3eb89a] hover:underline">
               0730140766
             </a>
             <br />
@@ -146,13 +206,13 @@ export default function PoliticaCookies() {
         <div className="mt-8 sm:mt-10 md:mt-12 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4">
           <Link
             to="/contact"
-            className="inline-flex items-center justify-center rounded-xl bg-[#3eb89a] px-6 py-3 text-white font-medium shadow-sm hover:bg-[#35a085] transition-colors text-center"
+            className="inline-flex items-center justify-center rounded-xl bg-[#3eb89a] px-6 py-3 text-white font-medium shadow-sm hover:bg-[#35a085] transition-colors text-center focus:outline-none focus:ring-2 focus:ring-[#3eb89a] focus:ring-offset-2"
           >
             Ai întrebări? Contactează-ne
           </Link>
           <Link
             to="/"
-            className="inline-flex items-center justify-center rounded-xl border border-gray-300 bg-white px-6 py-3 text-[#0a2540] font-medium hover:border-gray-400 transition-colors text-center"
+            className="inline-flex items-center justify-center rounded-xl border border-gray-300 bg-white px-6 py-3 text-[#0a2540] font-medium hover:border-gray-400 transition-colors text-center focus:outline-none focus:ring-2 focus:ring-[#0a2540] focus:ring-offset-2"
           >
             Înapoi la pagina principală
           </Link>

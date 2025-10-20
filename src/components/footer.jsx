@@ -1,6 +1,6 @@
 "use client"
 
-import { Mail, Phone, MapPin, Facebook, Instagram, Music } from "lucide-react"
+import { MailIcon, PhoneIcon, MapPinIcon, FacebookIcon, InstagramIcon } from "../icons"
 import { Link } from "react-router-dom"
 
 export default function Footer() {
@@ -31,8 +31,8 @@ export default function Footer() {
             />
 
             <p className="text-white/80 text-base leading-relaxed mb-6 max-w-md font-sans">
-              Consultanță juridică pentru firme și antreprenori. Soluții rapide, transparente și sigure,
-              adaptate nevoilor tale.
+              Consultanță juridică pentru firme și antreprenori. Soluții rapide, transparente și sigure, adaptate
+              nevoilor tale.
             </p>
 
             <div className="flex items-center gap-4">
@@ -43,7 +43,7 @@ export default function Footer() {
                 className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a]"
                 aria-label="Facebook"
               >
-                <Facebook className="h-5 w-5" />
+                <FacebookIcon className="h-5 w-5" />
               </a>
               <a
                 href="https://instagram.com/consultantabv.ro"
@@ -52,7 +52,7 @@ export default function Footer() {
                 className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a]"
                 aria-label="Instagram"
               >
-                <Instagram className="h-5 w-5" />
+                <InstagramIcon className="h-5 w-5" />
               </a>
               <a
                 href="https://www.tiktok.com/@consultantabv.ro"
@@ -61,20 +61,16 @@ export default function Footer() {
                 className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a]"
                 aria-label="TikTok"
               >
-                <svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 448 512"
-  className="h-5 w-5 fill-current"
->
-  <path d="M448,209.9a210.1,210.1,0,0,1-122.2-39.2V349.4a162.9,162.9,0,1,1-145.3-161.7v82.2a81.2,81.2,0,1,0,58.5,78.4V0h86.8A122.3,122.3,0,0,0,448,122.3Z" />
-</svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="h-5 w-5 fill-current">
+                  <path d="M448,209.9a210.1,210.1,0,0,1-122.2-39.2V349.4a162.9,162.9,0,1,1-145.3-161.7v82.2a81.2,81.2,0,1,0,58.5,78.4V0h86.8A122.3,122.3,0,0,0,448,122.3Z" />
+                </svg>
               </a>
               <a
                 href="mailto:contact@consultantabv.ro"
                 className="p-2.5 rounded-lg bg-white/5 hover:bg-[#3eb89a] text-white/80 hover:text-white transition-all duration-300 border border-white/10 hover:border-[#3eb89a]"
                 aria-label="Email"
               >
-                <Mail className="h-5 w-5" />
+                <MailIcon className="h-5 w-5" />
               </a>
             </div>
           </div>
@@ -84,10 +80,7 @@ export default function Footer() {
             <h3 className="font-bold text-lg mb-6 text-white font-serif">Navigare rapidă</h3>
             <ul className="space-y-3">
               <li>
-                <Link
-                  to="/"
-                  className="text-white/70 hover:text-[#3eb89a] transition-colors text-base font-sans"
-                >
+                <Link to="/" className="text-white/70 hover:text-[#3eb89a] transition-colors text-base font-sans">
                   Acasă
                 </Link>
               </li>
@@ -127,22 +120,22 @@ export default function Footer() {
                   href="mailto:contact@consultantabv.ro"
                   className="flex items-start gap-3 text-white/70 hover:text-[#3eb89a] transition-colors text-base font-sans"
                 >
-                  <Mail className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                  <MailIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
                   <span>contact@consultantabv.ro</span>
                 </a>
               </li>
               <li>
                 <a
-                  href="tel:+40123456789"
+                  href="tel:+40730140766"
                   className="flex items-start gap-3 text-white/70 hover:text-[#3eb89a] transition-colors text-base font-sans"
                 >
-                  <Phone className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                  <PhoneIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
                   <span>+40730140766</span>
                 </a>
               </li>
               <li>
                 <div className="flex items-start gap-3 text-white/70 text-base font-sans">
-                  <MapPin className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                  <MapPinIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
                   <span>Strada Nicolae Pop nr. 13, etaj 1, ap. 7, Brașov, România</span>
                 </div>
               </li>
@@ -155,10 +148,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/60 font-sans">
             <p>© {currentYear} consultantabv.ro – Toate drepturile rezervate.</p>
             <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6">
-              <Link
-                to="/politica-confidentialitate"
-                className="hover:text-[#3eb89a] transition-colors"
-              >
+              <Link to="/politica-confidentialitate" className="hover:text-[#3eb89a] transition-colors">
                 Politică de confidențialitate
               </Link>
               <Link to="/termeni-conditii" className="hover:text-[#3eb89a] transition-colors">

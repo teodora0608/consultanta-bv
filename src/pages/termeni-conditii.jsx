@@ -68,7 +68,7 @@ export default function TermeniConditii() {
               contact@consultantabv.ro
             </a>
             , telefon:{" "}
-            <a href="tel:+40123456789" className="text-[#3eb89a] hover:underline">
+            <a href="tel:+40730140766" className="text-[#3eb89a] hover:underline">
             0730140766
             </a>
             , oferă servicii de <em>consultanță juridică administrativă</em>
@@ -244,7 +244,7 @@ export default function TermeniConditii() {
             </a>
             <br />
             Telefon:{" "}
-            <a href="tel:+40123456789" className="text-[#3eb89a] hover:underline">
+            <a href="tel:+40730140766" className="text-[#3eb89a] hover:underline">
               0730140766
             </a>
           </p>

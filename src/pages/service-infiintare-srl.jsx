@@ -1,12 +1,19 @@
+// src/pages/service-infiintare-srl.jsx
 "use client"
 
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { CheckCircle2, ArrowRight, MessageCircle, ChevronRight } from "lucide-react"
 import Navbar from "../components/navbar"
 import Footer from "../components/footer"
 import FAQSection from "../components/FAQSection"
 import FinalCTA from "../common/final-cta"
+
+// ✅ icons proprii (fără lucide-react)
+import { ArrowRightIcon, ChevronRightIcon, CheckCircle2Icon, MessageCircleIcon } from "../icons"
+
+// ✅ SEO helpers
+import { setMetaTags } from "../seo/meta"
+import JsonLd from "../components/JsonLd"
 
 export default function ServiceInfiintareSRL() {
   const [openFaqIndex, setOpenFaqIndex] = useState(null)
@@ -14,49 +21,59 @@ export default function ServiceInfiintareSRL() {
   const scrollToForm = () => {
     document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })
   }
+  const toggleFaq = (index) => setOpenFaqIndex(openFaqIndex === index ? null : index)
 
-  const toggleFaq = (index) => {
-    setOpenFaqIndex(openFaqIndex === index ? null : index)
+  // --- SEO constants ---
+  const origin =
+    (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
+  const canonical = `${origin}/servicii/infiintare-srl`
+  const pageTitle = "Înființare SRL Online Brașov | ConsultantaBV - 3–5 Zile Lucrătoare"
+  const pageDescr =
+    "Înființare SRL 100% online în Brașov și în toată România. Consultanță juridică, redactare acte, depunere ONRC. Livrare documente în 3–5 zile lucrătoare."
+  const ogImage = `${origin}/images/hero-tablet.jpg`
+
+  // --- JSON-LD data ---
+  const jsonLdService = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Înființare SRL",
+    description: pageDescr,
+    url: canonical,
+    image: ogImage,
+    provider: {
+      "@type": "Organization",
+      name: "ConsultantaBV",
+      url: origin,
+      logo: `${origin}/images/logo.png`,
+    },
+    areaServed: { "@type": "Country", name: "România" },
+    serviceType: "Înființare SRL și consultanță juridică",
   }
 
-  // ✅ SEO tags handled natively by React (no Helmet)
+  const jsonLdBreadcrumbs = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Acasă", item: origin },
+      { "@type": "ListItem", position: 2, name: "Servicii", item: `${origin}/servicii` },
+      { "@type": "ListItem", position: 3, name: "Înființare SRL", item: canonical },
+    ],
+  }
+
+  // --- META on mount (idempotent) ---
   useEffect(() => {
-    document.title = "Înființare SRL Online Brașov | ConsultantaBV - 3–5 Zile Lucrătoare"
+    setMetaTags({
+      title: pageTitle,
+      description: pageDescr,
+      canonical,
+      image: ogImage,
+      siteName: "ConsultantaBV",
+      ogType: "article",
+      locale: "ro_RO",
+    })
+  }, [pageTitle, pageDescr, canonical, ogImage])
 
-    const metaDescription =
-      "Înființare SRL 100% online în Brașov și în toată România. Consultanță juridică, redactare acte, depunere ONRC. Livrare documente în 3–5 zile lucrătoare."
-    const metaKeywords =
-      "înființare SRL, înființare firmă Brașov, consultant juridic Brașov, înființare SRL online, deschidere firmă, ONRC, coduri CAEN"
-    const canonicalUrl = "https://consultantabv.ro/servicii/infiintare-srl"
-
-    const setMeta = (name, content) => {
-      if (!content) return
-      let tag = document.querySelector(`meta[name='${name}']`)
-      if (!tag) {
-        tag = document.createElement("meta")
-        tag.setAttribute("name", name)
-        document.head.appendChild(tag)
-      }
-      tag.setAttribute("content", content)
-    }
-
-    const setCanonical = (href) => {
-      if (!href) return
-      let link = document.querySelector("link[rel='canonical']")
-      if (!link) {
-        link = document.createElement("link")
-        link.setAttribute("rel", "canonical")
-        document.head.appendChild(link)
-      }
-      link.setAttribute("href", href)
-    }
-
-    setMeta("description", metaDescription)
-    setMeta("keywords", metaKeywords)
-    setCanonical(canonicalUrl)
-  }, [])
-
-  // Content arrays
+  // --- Content arrays ---
   const ceIncludem = [
     "Consultanță pentru coduri CAEN (principal + secundare)",
     "Redactarea Actului Constitutiv și a documentației SRL",
@@ -114,6 +131,9 @@ export default function ServiceInfiintareSRL() {
 
   return (
     <main className="min-h-screen bg-white">
+      {/* ✅ JSON-LD idempotent */}
+      <JsonLd data={[jsonLdService, jsonLdBreadcrumbs]} />
+
       <Navbar />
 
       {/* HERO */}
@@ -135,15 +155,15 @@ export default function ServiceInfiintareSRL() {
                 className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300"
               >
                 Solicită ofertă
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRightIcon className="ml-2 h-5 w-5" />
               </button>
               <a
-                href="https://wa.me/40123456789"
+                href="https://wa.me/40730140766"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300"
               >
-                <MessageCircle className="mr-2 h-5 w-5" />
+                <MessageCircleIcon className="mr-2 h-5 w-5" />
                 Întrebări? WhatsApp
               </a>
             </div>
@@ -156,12 +176,12 @@ export default function ServiceInfiintareSRL() {
         <div className="page-container">
           <nav className="flex items-center gap-2 text-sm font-sans">
             <Link to="/" className="text-gray-600 hover:text-[#3eb89a] flex items-center gap-1">
-              Acasă <ArrowRight className="w-4 h-4" />
+              Acasă <ArrowRightIcon className="w-4 h-4" />
             </Link>
             <Link to="/servicii" className="text-gray-600 hover:text-[#3eb89a]">
               Servicii
             </Link>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
+            <ChevronRightIcon className="w-4 h-4 text-gray-400" />
             <span className="text-[#0a2540] font-semibold">Înființare SRL</span>
           </nav>
         </div>
@@ -186,7 +206,7 @@ export default function ServiceInfiintareSRL() {
                 key={idx}
                 className="flex items-start gap-3 p-6 bg-gray-50 border border-gray-200 rounded-xl hover:shadow-md transition-all"
               >
-                <CheckCircle2 className="w-5 h-5 text-[#3eb89a] flex-shrink-0 mt-0.5" />
+                <CheckCircle2Icon className="w-5 h-5 text-[#3eb89a] flex-shrink-0 mt-0.5" />
                 <span className="text-base text-gray-700 font-sans leading-relaxed">{item}</span>
               </div>
             ))}
@@ -287,7 +307,7 @@ export default function ServiceInfiintareSRL() {
         </div>
       </section>
 
-      {/* FAQ (fără titlu dublat) */}
+      {/* FAQ */}
       <section className="py-20 md:py-28 bg-gray-50">
         <div className="page-container max-w-4xl mx-auto">
           <FAQSection faqs={faqItems} />

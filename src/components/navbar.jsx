@@ -1,10 +1,8 @@
-"use client"
-
 import { useState, useEffect } from "react"
 import { Link, useLocation } from "react-router-dom"
-import { Menu, X, ChevronDown, ChevronRight } from "lucide-react"
+import { MenuIcon, XIcon, ChevronDownIcon, ChevronRightIcon } from "../icons"
 import { motion, AnimatePresence } from "framer-motion"
-import { mainServices } from "../data/mainServices"
+import { mainServices } from "./MainServicesGrid" // păstrează importul tău existent
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -34,7 +32,8 @@ export default function Navbar() {
 
   const navLinks = [
     { href: "/servicii", label: "Servicii", hasSubmenu: true, isRoute: true },
-    { href: "#despre", label: "Despre" },
+    { href: "/resurse", label: "Ghiduri Juridice", isRoute: true }, // ✅ nou
+    { href: "/despre-noi", label: "Despre", isRoute: true },         // ✅ rută
     { href: "/contact", label: "Contact", isRoute: true },
   ]
 
@@ -52,17 +51,18 @@ export default function Navbar() {
           <Link
             to="/"
             className="flex items-center group relative transition-transform hover:scale-[1.04] active:scale-[0.97]"
-            aria-label="ConsultantaBV Home"
+            aria-label="Consultant ABV Home"
           >
             <img
               src="/images/logo.png"
-              alt="ConsultantaBV Logo"
+              alt="Consultant ABV Logo"
               className={`w-[70px] md:w-[75px] h-auto transition-all duration-200 ${
                 isScrolled ? "opacity-100" : "brightness-0 invert"
               }`}
             />
           </Link>
 
+          {/* Desktop navigation */}
           <div className="hidden lg:flex items-center gap-6">
             {navLinks.map((link) =>
               link.isRoute ? (
@@ -89,6 +89,7 @@ export default function Navbar() {
                 </a>
               ),
             )}
+
             <Link
               to="/contact"
               className="px-5 py-2.5 bg-[#3eb89a] text-white rounded-xl font-medium text-sm hover:bg-[#3eb89a]/90 transition-all duration-200 hover:shadow-lg hover:shadow-[#3eb89a]/20 font-sans"
@@ -98,16 +99,18 @@ export default function Navbar() {
             </Link>
           </div>
 
+          {/* Mobile burger */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={`lg:hidden p-2 transition-colors duration-200 ${isScrolled ? "text-gray-700" : "text-white"}`}
             aria-label="Toggle menu"
             aria-expanded={isMobileMenuOpen}
           >
-            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {isMobileMenuOpen ? <XIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
           </button>
         </div>
 
+        {/* Mobile dropdown */}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
@@ -118,7 +121,7 @@ export default function Navbar() {
               className="lg:hidden overflow-hidden bg-white shadow-lg"
             >
               <div className="pt-4 pb-6 space-y-1 px-2 max-h-[calc(100vh-80px)] overflow-y-auto">
-                {/* Services with submenu */}
+                {/* Servicii cu submenu */}
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -129,7 +132,7 @@ export default function Navbar() {
                     className="w-full flex items-center justify-between text-base font-medium text-gray-700 hover:text-[#3eb89a] transition-colors py-2.5 px-3 font-sans min-h-[44px]"
                   >
                     <span>Servicii</span>
-                    <ChevronDown
+                    <ChevronDownIcon
                       className={`h-5 w-5 transition-transform duration-200 ${isServicesOpen ? "rotate-180" : ""}`}
                     />
                   </button>
@@ -158,6 +161,7 @@ export default function Navbar() {
                               <span>{service.title}</span>
                             </Link>
                           ))}
+
                           <Link
                             to="/servicii"
                             onClick={() => {
@@ -167,7 +171,7 @@ export default function Navbar() {
                             className="flex items-center justify-between text-sm font-semibold text-[#3eb89a] hover:bg-white transition-all py-2.5 px-3 rounded font-sans min-h-[44px] mt-2 border-t border-gray-200"
                           >
                             <span>Vezi toate serviciile</span>
-                            <ChevronRight className="h-4 w-4" />
+                            <ChevronRightIcon className="h-4 w-4" />
                           </Link>
                         </div>
                       </motion.div>
@@ -181,13 +185,13 @@ export default function Navbar() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.08, duration: 0.2 }}
                 >
-                  <a
-                    href="#despre"
+                  <Link
+                    to="/despre-noi"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="block text-base font-medium text-gray-700 hover:text-[#3eb89a] transition-colors py-2.5 px-3 font-sans min-h-[44px] flex items-center"
                   >
                     Despre
-                  </a>
+                  </Link>
                 </motion.div>
 
                 {/* Contact */}
@@ -205,7 +209,22 @@ export default function Navbar() {
                   </Link>
                 </motion.div>
 
-                {/* CTA Button */}
+                                {/* Ghiduri Juridice */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.12, duration: 0.2 }}
+                >
+                  <Link
+                    to="/resurse"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block text-base font-medium text-gray-700 hover:text-[#3eb89a] transition-colors py-2.5 px-3 font-sans min-h-[44px] flex items-center"
+                  >
+                    Ghiduri Juridice
+                  </Link>
+                </motion.div>
+
+                {/* CTA */}
                 <Link
                   to="/contact"
                   onClick={() => setIsMobileMenuOpen(false)}

@@ -2,11 +2,116 @@
 
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { CheckCircle2, ArrowRight, MessageCircle, ChevronRight } from "lucide-react"
+
+// ✅ folosește-ți setul local de icon-uri, nu lucide-react
+import {
+  CheckCircle2Icon,
+  ArrowRightIcon,
+  MessageCircleIcon,
+  ChevronRightIcon,
+} from "../icons"
+
 import Navbar from "../components/navbar"
 import Footer from "../components/footer"
 import FAQSection from "../components/FAQSection"
 import FinalCTA from "../common/final-cta"
+
+// ✅ SEO
+import { setMetaTags } from "../seo/meta"
+import JsonLd from "../components/JsonLd"
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Date statice (liste/arrays) 
+// ─────────────────────────────────────────────────────────────────────────────
+
+const ceIncludem = [
+  "Analiză inițială a situației și recomandări rapide",
+  "Consultanță scrisă (rezumat + pași) pe e-mail",
+  "Redactare/revizuire contracte comerciale",
+  "Asistență la ONRC: mențiuni, modificări, dosare",
+  "Recomandări pentru conformitate (GDPR, sancțiuni, fiscal)",
+  "Suport în relația cu banca/ANAF/parteneri (explicații/confirmări)",
+]
+
+const tipuriConsultanta = [
+  {
+    title: "Pentru SRL/SA",
+    description:
+      "Modificări statutare, administratori/asociați, obiecte CAEN, puncte de lucru, cesiuni părți sociale, contracte, conformitate și strategie.",
+  },
+  {
+    title: "Pentru PFA/II",
+    description:
+      "Înființare, autorizări, schimbare activități, suspendare/reactivare, relația cu ANAF, obligații fiscale și documente uzuale.",
+  },
+  {
+    title: "Drept comercial",
+    description:
+      "Negociere și redactare contracte, termeni și condiții, clauze de confidențialitate, penalități, răspundere și managementul riscului.",
+  },
+  {
+    title: "Drept civil",
+    description:
+      "Contracte civile, răspundere contractuală/delictuală, recuperare creanțe, notificări, puneri în întârziere, conciliere.",
+  },
+]
+
+const pasi = [
+  { number: "1", title: "Ne trimiți pe scurt situația (formular sau WhatsApp)" },
+  { number: "2", title: "Primești analiza inițială + opțiuni și cost (24h)" },
+  { number: "3", title: "Redactăm/rezolvăm documentele și depunem unde e cazul" },
+  { number: "4", title: "Livrăm soluția și ghid pentru pașii următori" },
+]
+
+const deCeABV = [
+  {
+    title: "Rapid și clar",
+    description:
+      "Răspuns inițial în < 24h. Explicăm simplu, pe pași, fără limbaj juridic complicat.",
+  },
+  {
+    title: "Experiență practică",
+    description:
+      "Proiecte zilnice cu ONRC/ANAF, contracte și situații comerciale reale, în toată țara.",
+  },
+  {
+    title: "100% online sau la sediu",
+    description:
+      "Semnături electronice, documente PDF semnate și traseu complet digital – sau întâlnire la sediu (cu programare).",
+  },
+  {
+    title: "Prețuri corecte",
+    description:
+      "Tarife fixe, comunicate de la început. Fără costuri ascunse sau surprize.",
+  },
+]
+
+const faqItems = [
+  {
+    question: "În cât timp primesc răspunsul?",
+    answer:
+      "Răspuns inițial în < 24 de ore. Pentru proiecte complexe, stabilim împreună termene și pași.",
+  },
+  {
+    question: "Cum lucrăm la distanță?",
+    answer:
+      "100% online: schimb de documente, semnături electronice, ședințe pe telefon/meet. La nevoie, depunem noi actele la ONRC/ANAF.",
+  },
+  {
+    question: "Pot primi un cost clar dinainte?",
+    answer:
+      "Da. Îți dăm tariful fix înainte să începem. Dacă apar extra-pași, te informăm înainte.",
+  },
+  {
+    question: "Facem și reprezentare în instanță?",
+    answer:
+      "În mod curent oferim consultanță și pregătire documente. Pentru litigii, te putem pune în legătură cu un avocat partener.",
+  },
+]
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Pagina: Consultanță juridică
+// ─────────────────────────────────────────────────────────────────────────────
 
 export default function ServiceConsultantaJuridica() {
   const [openFaqIndex, setOpenFaqIndex] = useState(null)
@@ -19,116 +124,75 @@ export default function ServiceConsultantaJuridica() {
     setOpenFaqIndex(openFaqIndex === index ? null : index)
   }
 
-  // SEO tags handled natively by React (no Helmet)
+  // SEO VARS
+  const origin =
+    (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
+  const path = "/servicii/consultanta-juridica"
+  const canonical = `${origin}${path}`
+
+  const pageTitle = "Consultanță juridică pentru SRL, SA și PFA | ConsultantaBV"
+  const pageDescr =
+    "Consultanță juridică completă pentru SRL, SA și PFA: acte, modificări ONRC, contracte comerciale, litigii, drept comercial și civil. Rapid, clar, adaptat afacerii tale."
+  const ogImage = `${origin}/images/hero-tablet.jpg`
+
+  // META la mount
   useEffect(() => {
-    document.title = "Consultanță juridică pentru SRL, SA și PFA | ConsultantaBV"
+    setMetaTags({
+      title: pageTitle,
+      description: pageDescr,
+      canonical,
+      image: ogImage,
+      siteName: "ConsultantaBV",
+      ogType: "article",
+      locale: "ro_RO",
+    })
+  }, [pageTitle, pageDescr, canonical, ogImage])
 
-    const metaDescription =
-      "Consultanță juridică completă pentru SRL, SA și PFA: acte, modificări ONRC, contracte comerciale, litigii, drept comercial și civil. Rapid, clar, adaptat afacerii tale."
-    const metaKeywords =
-      "consultanta juridica, avocati, drept comercial, modificari ONRC, contracte comerciale, consultanta SRL, consultanta SA, consultanta PFA"
-    const canonicalUrl = "https://consultantabv.ro/servicii/consultanta-juridica"
+  // JSON-LD
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Acasă", item: origin },
+      { "@type": "ListItem", position: 2, name: "Servicii", item: `${origin}/servicii` },
+      { "@type": "ListItem", position: 3, name: "Consultanță juridică", item: canonical },
+    ],
+  }
 
-    const setMeta = (name, content) => {
-      if (!content) return
-      let tag = document.querySelector(`meta[name='${name}']`)
-      if (!tag) {
-        tag = document.createElement("meta")
-        tag.setAttribute("name", name)
-        document.head.appendChild(tag)
-      }
-      tag.setAttribute("content", content)
-    }
+  const webPageLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${canonical}#webpage`,
+    url: canonical,
+    name: pageTitle,
+    description: pageDescr,
+    isPartOf: { "@type": "WebSite", url: origin, name: "ConsultantaBV" },
+    primaryImageOfPage: ogImage,
+    inLanguage: "ro-RO",
+  }
 
-    const setCanonical = (href) => {
-      if (!href) return
-      let link = document.querySelector("link[rel='canonical']")
-      if (!link) {
-        link = document.createElement("link")
-        link.setAttribute("rel", "canonical")
-        document.head.appendChild(link)
-      }
-      link.setAttribute("href", href)
-    }
-
-    setMeta("description", metaDescription)
-    setMeta("keywords", metaKeywords)
-    setCanonical(canonicalUrl)
-  }, [])
-
-  // Content arrays
-  const ceIncludem = [
-    "Consultanță pentru redactarea și revizuirea actelor constitutive",
-    "Înregistrări și modificări la Registrul Comerțului (sediu, asociați, obiecte de activitate)",
-    "Redactare și negociere contracte comerciale",
-    "Asistență juridică în reorganizări, fuziuni sau lichidări",
-    "Reprezentare și corespondență cu autoritățile",
-    "Consultanță în drept comercial și civil",
-  ]
-
-  const tipuriConsultanta = [
-    {
-      title: "Consultanță pentru SRL",
-      description:
-        "Asistență la înființare, modificări statutare, transmitere părți sociale, contracte, reorganizări și soluționarea litigiilor.",
+  const serviceLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Consultanță juridică pentru SRL, SA și PFA",
+    description: pageDescr,
+    url: canonical,
+    image: ogImage,
+    serviceType: "Consultanță juridică",
+    areaServed: { "@type": "Country", name: "România" },
+    provider: {
+      "@type": "Organization",
+      name: "ConsultantaBV",
+      url: origin,
+      logo: `${origin}/images/logo.png`,
     },
-    {
-      title: "Consultanță pentru SA",
-      description:
-        "Sprijin pentru adunări generale, conformitate, raportare și relația cu autoritățile; obligații specifice companiilor pe acțiuni.",
-    },
-    {
-      title: "Consultanță pentru PFA",
-      description:
-        "Înființare, actualizări CAEN, contracte de prestări servicii și consultanță fiscal-juridică pentru conformitate.",
-    },
-    {
-      title: "Consultanță generală",
-      description:
-        "Conformitate (GDPR, muncă, fiscalitate), mediere conflicte, strategie juridică, reorganizare și optimizare.",
-    },
-  ]
-
-  const pasi = [
-    { number: "1", title: "Analiză inițială și înțelegerea obiectivelor" },
-    { number: "2", title: "Colectarea informațiilor și a documentelor" },
-    { number: "3", title: "Redactare / revizuire documente și propuneri" },
-    { number: "4", title: "Depuneri, reprezentare și implementare" },
-    { number: "5", title: "Follow-up și suport continuu" },
-  ]
-
-  const deCeABV = [
-    { title: "Profesionalism și claritate", description: "Comunicare transparentă și soluții juridice adaptate" },
-    { title: "Termene rapide și comunicare eficientă", description: "Răspundem prompt și respectăm deadlineurile" },
-    { title: "Documente corecte, fără erori", description: "Verificare atentă înainte de depunere" },
-    { title: "Suport complet după implementare", description: "Te asistăm și după finalizarea proiectului" },
-  ]
-
-  const faqItems = [
-    {
-      question: "Ce tipuri de firme pot beneficia de consultanță juridică?",
-      answer:
-        "Oferim consultanță pentru SRL, SA, PFA și alte forme de organizare. Adaptăm serviciile în funcție de nevoile specifice ale fiecărei afaceri.",
-    },
-    {
-      question: "Puteți reprezenta firma la ONRC sau alte autorități?",
-      answer:
-        "Da, oferim reprezentare completă la Registrul Comerțului, ANAF și alte instituții, inclusiv depuneri online și urmărirea dosarelor.",
-    },
-    {
-      question: "Cât durează redactarea unui contract comercial?",
-      answer:
-        "Depinde de complexitate, dar de obicei livrăm contracte simple în 2-3 zile lucrătoare. Pentru contracte complexe, discutăm termene personalizate.",
-    },
-    {
-      question: "Oferiți consultanță și după finalizarea proiectului?",
-      answer:
-        "Da, rămânem disponibili pentru întrebări ulterioare, actualizări de documente și orice alte nevoi juridice care apar în activitatea firmei.",
-    },
-  ]
+  }
 
   return (
     <main className="min-h-screen bg-white">
+      {/* JSON-LD inline (idempotent) */}
+      <JsonLd data={[webPageLd, breadcrumbLd, serviceLd]} />
+
       <Navbar />
 
       {/* HERO */}
@@ -141,8 +205,7 @@ export default function ServiceConsultantaJuridica() {
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-white/90 mb-8 font-sans max-w-3xl leading-relaxed">
               Oferim servicii juridice complete pentru antreprenori și persoane juridice – redactare acte, asistență
-              ONRC, modificări statutare, contracte comerciale, litigii și consultanță în drept comercial sau civil, în
-              Brașov și în toată țara.
+              ONRC, modificări statutare, contracte comerciale, consultanță în drept comercial și civil, în Brașov și în toată țara.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
@@ -150,15 +213,15 @@ export default function ServiceConsultantaJuridica() {
                 className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300"
               >
                 Solicită ofertă
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRightIcon className="ml-2 h-5 w-5" />
               </button>
               <a
-                href="https://wa.me/40123456789"
+                href="https://wa.me/40730140766"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300"
               >
-                <MessageCircle className="mr-2 h-5 w-5" />
+                <MessageCircleIcon className="mr-2 h-5 w-5" />
                 Întrebări? WhatsApp
               </a>
             </div>
@@ -171,12 +234,12 @@ export default function ServiceConsultantaJuridica() {
         <div className="page-container">
           <nav className="flex items-center gap-2 text-sm font-sans">
             <Link to="/" className="text-gray-600 hover:text-[#3eb89a] flex items-center gap-1">
-              Acasă <ArrowRight className="w-4 h-4" />
+              Acasă <ArrowRightIcon className="w-4 h-4" />
             </Link>
             <Link to="/servicii" className="text-gray-600 hover:text-[#3eb89a]">
               Servicii
             </Link>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
+            <ChevronRightIcon className="w-4 h-4 text-gray-400" />
             <span className="text-[#0a2540] font-semibold">Consultanță juridică</span>
           </nav>
         </div>
@@ -192,7 +255,7 @@ export default function ServiceConsultantaJuridica() {
             <div className="h-1 w-24 bg-[#3eb89a] mx-auto mt-3 rounded-full" />
             <p className="text-base sm:text-lg text-gray-600 mt-6 max-w-3xl mx-auto leading-relaxed">
               Serviciile noastre acoperă toate etapele legale din viața unei firme – de la înființare și modificări
-              statutare până la reprezentare juridică și redactare contracte.
+              statutare până la redactare contracte și conformitate.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -201,7 +264,7 @@ export default function ServiceConsultantaJuridica() {
                 key={idx}
                 className="flex items-start gap-3 p-6 bg-gray-50 border border-gray-200 rounded-xl hover:shadow-md transition-all"
               >
-                <CheckCircle2 className="w-5 h-5 text-[#3eb89a] flex-shrink-0 mt-0.5" />
+                <CheckCircle2Icon className="w-5 h-5 text-[#3eb89a] flex-shrink-0 mt-0.5" />
                 <span className="text-base text-gray-700 font-sans leading-relaxed">{item}</span>
               </div>
             ))}
@@ -268,11 +331,10 @@ export default function ServiceConsultantaJuridica() {
         <div className="page-container max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 font-serif">
-              De ce să alegi ConsultantaBV
+              De ce noi?
             </h2>
             <p className="text-base sm:text-lg text-white/80 mt-6 max-w-3xl mx-auto leading-relaxed">
-              Experiență practică în drept comercial și civil, termene rapide și comunicare clară – oferim consultanță
-              la nivel național, inclusiv online.
+              Experiență practică, termene rapide și comunicare clară – consultanță la nivel național, inclusiv online.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

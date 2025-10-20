@@ -1,123 +1,95 @@
+// src/pages/ghid/infiintare-srl-2026.jsx
 "use client"
 
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
-import { ArrowRight, ChevronRight, AlertCircle } from "lucide-react"
+import {
+  ArrowRightIcon,
+  ChevronRightIcon,
+  AlertCircleIcon,
+} from "../../icons"
 import Navbar from "../../components/navbar"
 import Footer from "../../components/footer"
 
+// ✅ SEO helpers
+import { setMetaTags } from "../../seo/meta"
+import JsonLd from "../../components/JsonLd"
+
 export default function GhidInfiintareSRL2026() {
+  // ─────────────── SEO VARS ───────────────
+  const origin =
+    (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
+  const path = "/ghid/infiintare-srl-2026"
+  const canonical = `${origin}${path}`
+
+  const title =
+    "Acte necesare pentru înființare SRL în 2026 – Ghid complet | ConsultantaBV"
+  const description =
+    "Ghid complet 2026 pentru înființarea unui SRL: pași ONRC, acte necesare, costuri, termene, condiții legale, CAEN, sediu social, UBO. Totul explicat clar, pas cu pas."
+  const ogImage = `${origin}/images/ghiduri/infiintare-srl-2026.jpg`
+
+  // ─────────────── META (idempotent) ───────────────
   useEffect(() => {
-    // META
-    document.title = "Acte necesare pentru înființare SRL în 2026 – Ghid complet | ConsultantaBV"
-    const metaDescription =
-      "Ghid complet 2026 pentru înființarea unui SRL: pași ONRC, acte necesare, costuri, termene, condiții legale, CAEN, sediu social, UBO. Totul explicat clar, pas cu pas."
-
-    // ✅ helper pt. meta/link
-    const ensureMeta = (sel, attrs) => {
-      let el = document.querySelector(sel)
-      if (!el) {
-        el = document.createElement("meta")
-        document.head.appendChild(el)
-      }
-      Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v))
-    }
-    const ensureLink = (rel, href) => {
-      let el = document.querySelector(`link[rel='${rel}']`)
-      if (!el) {
-        el = document.createElement("link")
-        el.setAttribute("rel", rel)
-        document.head.appendChild(el)
-      }
-      el.setAttribute("href", href)
-    }
-
-    // description
-    let tag = document.querySelector("meta[name='description']")
-    if (!tag) {
-      tag = document.createElement("meta")
-      tag.setAttribute("name", "description")
-      document.head.appendChild(tag)
-    }
-    tag.setAttribute("content", metaDescription)
-
-    // ✅ OG/Twitter + canonical
-    const ogUrl = "https://consultantabv.ro/ghid/infiintare-srl-2026"
-    const ogTitle = "Acte necesare pentru înființarea unui SRL în 2026 – Ghid complet"
-    const ogImage = "https://consultantabv.ro/images/ghiduri/infiintare-srl-2026.jpg" // <- din public/images/ghiduri/
-
-    ensureMeta("meta[property='og:type']", { property: "og:type", content: "article" })
-    ensureMeta("meta[property='og:title']", { property: "og:title", content: ogTitle })
-    ensureMeta("meta[property='og:description']", { property: "og:description", content: metaDescription })
-    ensureMeta("meta[property='og:url']", { property: "og:url", content: ogUrl })
-    ensureMeta("meta[property='og:image']", { property: "og:image", content: ogImage })
-
-    ensureMeta("meta[name='twitter:card']", { name: "twitter:card", content: "summary_large_image" })
-    ensureMeta("meta[name='twitter:title']", { name: "twitter:title", content: ogTitle })
-    ensureMeta("meta[name='twitter:description']", { name: "twitter:description", content: metaDescription })
-    ensureMeta("meta[name='twitter:image']", { name: "twitter:image", content: ogImage })
-
-    ensureLink("canonical", ogUrl)
-
-    // JSON-LD: Breadcrumbs + Article + ✅ ImageObject
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Acasă", item: "https://consultantabv.ro" },
-        { "@type": "ListItem", position: 2, name: "Resurse", item: "https://consultantabv.ro/resurse" },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "Înființare SRL 2026",
-          item: ogUrl,
-        },
-      ],
-    }
-
-    const articleSchema = {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      headline: ogTitle,
-      description: metaDescription,
-      author: { "@type": "Organization", name: "ConsultantaBV" },
-      publisher: { "@type": "Organization", name: "ConsultantaBV" },
-      datePublished: "2026-01-01",
-      mainEntityOfPage: ogUrl,
+    setMetaTags({
+      title,
+      description,
+      canonical,
       image: ogImage,
-      articleSection: ["Înființare SRL", "Acte necesare", "ONRC", "Sediu social", "UBO", "CAEN"],
-    }
+      siteName: "ConsultantaBV",
+      ogType: "article",
+      locale: "ro_RO",
+    })
+  }, [title, description, canonical, ogImage])
 
-    const imgSchema = {
-      "@context": "https://schema.org",
-      "@type": "ImageObject",
-      contentUrl: ogImage,
-      representativeOfPage: true,
-    }
+  // ─────────────── JSON-LD ───────────────
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Acasă", item: origin },
+      { "@type": "ListItem", position: 2, name: "Resurse", item: `${origin}/resurse` },
+      { "@type": "ListItem", position: 3, name: "Înființare SRL 2026", item: canonical },
+    ],
+  }
 
-    const s1 = document.createElement("script")
-    s1.type = "application/ld+json"
-    s1.text = JSON.stringify(breadcrumbSchema)
-    document.head.appendChild(s1)
+  const webPageLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${canonical}#webpage`,
+    url: canonical,
+    name: title,
+    description,
+    isPartOf: { "@type": "WebSite", url: origin, name: "ConsultantaBV" },
+    primaryImageOfPage: ogImage,
+    inLanguage: "ro-RO",
+  }
 
-    const s2 = document.createElement("script")
-    s2.type = "application/ld+json"
-    s2.text = JSON.stringify(articleSchema)
-    document.head.appendChild(s2)
+  const articleLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: "Acte necesare pentru înființarea unui SRL în 2026 – Ghid complet",
+    description,
+    mainEntityOfPage: canonical,
+    image: ogImage,
+    author: { "@type": "Organization", name: "ConsultantaBV", url: origin },
+    publisher: {
+      "@type": "Organization",
+      name: "ConsultantaBV",
+      url: origin,
+      logo: { "@type": "ImageObject", url: `${origin}/images/logo.png` },
+    },
+    datePublished: "2026-01-01",
+    articleSection: ["Înființare SRL", "Acte necesare", "ONRC", "Sediu social", "UBO", "CAEN"],
+  }
 
-    const s3 = document.createElement("script") // ✅ ImageObject
-    s3.type = "application/ld+json"
-    s3.text = JSON.stringify(imgSchema)
-    document.head.appendChild(s3)
+  const imageLd = {
+    "@context": "https://schema.org",
+    "@type": "ImageObject",
+    contentUrl: ogImage,
+    representativeOfPage: true,
+  }
 
-    return () => {
-      document.head.removeChild(s1)
-      document.head.removeChild(s2)
-      document.head.removeChild(s3)
-    }
-  }, [])
-
-  // ACTE necesare
+  // ─────────────── Conținut ───────────────
   const acte = [
     {
       title: "Rezervare denumire firmă",
@@ -151,7 +123,6 @@ export default function GhidInfiintareSRL2026() {
     },
   ]
 
-  // PAȘI ONRC 2026
   const pasi = [
     {
       title: "Alege denumirea și codurile CAEN",
@@ -185,7 +156,6 @@ export default function GhidInfiintareSRL2026() {
     },
   ]
 
-  // COSTURI + TERMENE (orientative, pentru 2026)
   const costuri = [
     {
       title: "Taxe ONRC",
@@ -209,7 +179,6 @@ export default function GhidInfiintareSRL2026() {
     },
   ]
 
-  // FAQ
   const faq = [
     {
       q: "Care este capitalul social minim pentru un SRL în 2026?",
@@ -235,6 +204,9 @@ export default function GhidInfiintareSRL2026() {
 
   return (
     <main className="min-h-screen bg-white">
+      {/* JSON-LD (idempotent) */}
+      <JsonLd data={[webPageLd, breadcrumbLd, articleLd, imageLd]} />
+
       <Navbar />
 
       {/* HERO */}
@@ -246,39 +218,42 @@ export default function GhidInfiintareSRL2026() {
               Înființare SRL în 2026 – Acte, pași, costuri
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-white/90 font-sans leading-relaxed">
-              Ghid complet pentru deschiderea unui SRL: ce documente îți trebuie, cum depui dosarul la ONRC,
-              cât costă și cât durează. Totul explicat clar, pas cu pas.
+              Ghid complet pentru deschiderea unui SRL: ce documente îți trebuie, cum depui dosarul la ONRC, cât costă
+              și cât durează. Totul explicat clar, pas cu pas.
             </p>
           </div>
-        </div>
-      </section>
-
-      {/* ✅ COVER IMAGE din public/images/ghiduri/ */}
-      <section className="py-8 bg-white">
-        <div className="page-container max-w-4xl mx-auto">
-          <img
-            src="/images/ghiduri/infiintare-srl-2026.jpg"
-            alt="Înființare SRL 2026 – acte necesare, pași ONRC, costuri și termene"
-            className="cover-image"
-            width="1200"
-            height="675"
-            loading="lazy"
-            decoding="async"
-            fetchPriority="low"
-          />
         </div>
       </section>
 
       {/* BREADCRUMBS */}
       <section className="py-4 bg-gray-50 border-b border-gray-200">
         <div className="page-container">
-          <nav className="flex items-center gap-2 text-sm font-sans flex-wrap">
+          <nav className="flex items-center gap-2 text-sm font-sans flex-wrap" aria-label="breadcrumb">
             <Link to="/" className="text-gray-600 hover:text-[#3eb89a]">Acasă</Link>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
+            <ChevronRightIcon className="w-4 h-4 text-gray-400" aria-hidden="true" />
             <Link to="/resurse" className="text-gray-600 hover:text-[#3eb89a]">Resurse</Link>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
+            <ChevronRightIcon className="w-4 h-4 text-gray-400" aria-hidden="true" />
             <span className="text-[#0a2540] font-semibold">Înființare SRL 2026</span>
           </nav>
+        </div>
+      </section>
+
+      {/* COVER (picture + source) din /public/images/ghiduri */}
+      <section className="py-8 bg-white">
+        <div className="page-container max-w-4xl mx-auto">
+          <picture>
+            <source srcSet="/images/ghiduri/infiintare-srl-2026.webp" type="image/webp" />
+            <img
+              src="/images/ghiduri/infiintare-srl-2026.jpg"
+              alt="Înființare SRL 2026 – acte necesare, pași ONRC, costuri și termene"
+              className="w-full h-auto rounded-xl border border-gray-200 shadow-sm cover-image"
+              width="1200"
+              height="675"
+              loading="lazy"
+              decoding="async"
+              fetchPriority="low"
+            />
+          </picture>
         </div>
       </section>
 
@@ -286,7 +261,7 @@ export default function GhidInfiintareSRL2026() {
       <section className="py-12 md:py-16 bg-white">
         <div className="page-container max-w-4xl mx-auto">
           <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 mb-8 flex items-start gap-3">
-            <AlertCircle className="w-6 h-6 text-emerald-700 flex-shrink-0 mt-0.5" />
+            <AlertCircleIcon className="w-6 h-6 text-emerald-700 flex-shrink-0 mt-0.5" aria-hidden="true" />
             <p className="text-gray-700 font-sans leading-relaxed">
               <strong>Important:</strong> în 2026, înmatricularea unui SRL se poate face integral online în portalul
               ONRC (RECOM), cu semnătură electronică. Taxele de înmatriculare sunt 0 lei. Capital social: minim 1 leu.
@@ -312,7 +287,8 @@ export default function GhidInfiintareSRL2026() {
             ))}
           </div>
           <p className="text-sm text-gray-500 mt-4">
-            * Cerințele privind acordurile din condominiu pot varia în funcție de regimul imobilului și de activitatea declarată.
+            * Cerințele privind acordurile din condominiu pot varia în funcție de regimul imobilului și de activitatea
+            declarată.
           </p>
         </div>
       </section>
@@ -320,7 +296,9 @@ export default function GhidInfiintareSRL2026() {
       {/* PAȘI ONRC */}
       <section className="py-16 md:py-20 bg-white">
         <div className="page-container max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0a2540] mb-12 font-serif">Pași pentru înființarea SRL</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#0a2540] mb-12 font-serif">
+            Pași pentru înființarea SRL
+          </h2>
           <div className="space-y-6">
             {pasi.map((pas, idx) => (
               <div key={idx} className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
@@ -384,7 +362,7 @@ export default function GhidInfiintareSRL2026() {
               className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 font-sans"
             >
               Solicită ofertă
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <ArrowRightIcon className="ml-2 h-5 w-5" aria-hidden="true" />
             </Link>
           </div>
         </div>

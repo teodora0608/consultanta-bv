@@ -32,6 +32,7 @@ import GhidInsolventa2026 from "./pages/ghid/insolventa-firma-2026.jsx";
 import GhidModificareSediu2026 from "./pages/ghid/modificare-sediu-social-2026.jsx";
 import GhidModificariONRC2026 from "./pages/ghid/modificari-onrc-2026.jsx";
 import SRLvsPFA2026 from "./pages/ghid/srl-vs-pfa-2026.jsx";
+import DespreNoiPage from "./pages/despre-noi-page.jsx"
 
 // ✅ Root render
 createRoot(document.getElementById("root")).render(
@@ -55,6 +56,8 @@ createRoot(document.getElementById("root")).render(
         <Route path="/termeni-conditii" element={<TermeniConditii />} />
         <Route path="/politica-cookies" element={<PoliticaCookies />} />
         <Route path="/resurse" element={<ResursePage />} />
+        <Route path="/despre-noi" element={<DespreNoiPage />} />
+       
         {/* GHIDURI 2026 – slugs CONSISTENTE */}
         <Route path="/ghid/infiintare-srl-2026" element={<GhidInfiintareSRL2026 />} />
         <Route path="/ghid/inchidere-firma-2026" element={<GhidInchidereFirma2026 />} />

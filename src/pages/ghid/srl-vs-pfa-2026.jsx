@@ -1,121 +1,93 @@
+// src/pages/ghid/srl-vs-pfa-2026.jsx
 "use client"
 
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
-import { ArrowRight, ChevronRight, AlertCircle } from "lucide-react"
+import {
+  ArrowRightIcon as ArrowRight,
+  ChevronRightIcon as ChevronRight,
+  AlertCircleIcon as AlertCircle,
+} from "../../icons"
 import Navbar from "../../components/navbar"
 import Footer from "../../components/footer"
 
+// ✅ SEO
+import { setMetaTags } from "../../seo/meta"
+import JsonLd from "../../components/JsonLd"
+
 export default function GhidSRLvsPFA2026() {
+  // ─────────────── SEO VARS ───────────────
+  const origin =
+    (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
+  const path = "/ghid/srl-vs-pfa-2026"
+  const canonical = `${origin}${path}`
+
+  const title =
+    "SRL sau PFA în 2026 – Care ți se potrivește? Avantaje, costuri și obligații | ConsultantaBV"
+  const description =
+    "Comparație SRL vs PFA în 2026: avantaje, dezavantaje, costuri, taxe, contribuții, răspundere și când să alegi fiecare formă. Ghid actualizat, cu pași rapizi pentru înființare."
+  const ogImage = `${origin}/images/ghiduri/srl-vs-pfa-2026.jpg`
+
+  // ─────────────── META (idempotent) ───────────────
   useEffect(() => {
-    // META
-    document.title = "SRL sau PFA în 2026 – Care ți se potrivește? Avantaje, costuri și obligații | ConsultantaBV"
+    setMetaTags({
+      title,
+      description,
+      canonical,
+      image: ogImage,
+      siteName: "ConsultantaBV",
+      ogType: "article",
+      locale: "ro_RO",
+    })
+  }, [title, description, canonical, ogImage])
 
-    const metaDescription =
-      "Comparație SRL vs PFA în 2026: avantaje, dezavantaje, costuri, taxe, contribuții, răspundere și când să alegi fiecare formă. Ghid actualizat, cu pași rapizi pentru înființare."
+  // ─────────────── JSON-LD ───────────────
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Acasă", item: origin },
+      { "@type": "ListItem", position: 2, name: "Resurse", item: `${origin}/resurse` },
+      { "@type": "ListItem", position: 3, name: "SRL vs PFA 2026", item: canonical },
+    ],
+  }
 
-    let tag = document.querySelector("meta[name='description']")
-    if (!tag) {
-      tag = document.createElement("meta")
-      tag.setAttribute("name", "description")
-      document.head.appendChild(tag)
-    }
-    tag.setAttribute("content", metaDescription)
+  const webPageLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${canonical}#webpage`,
+    url: canonical,
+    name: title,
+    description,
+    isPartOf: { "@type": "WebSite", url: origin, name: "ConsultantaBV" },
+    primaryImageOfPage: ogImage,
+    inLanguage: "ro-RO",
+  }
 
-    // helper pentru meta/link
-    const ensure = (sel, attrs) => {
-      let el = document.querySelector(sel)
-      if (!el) {
-        el = document.createElement("meta")
-        document.head.appendChild(el)
-      }
-      Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v))
-    }
-    const ensureLink = (rel, href) => {
-      let el = document.querySelector(`link[rel='${rel}']`)
-      if (!el) {
-        el = document.createElement("link")
-        el.setAttribute("rel", rel)
-        document.head.appendChild(el)
-      }
-      el.setAttribute("href", href)
-    }
+  const articleLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: "SRL vs PFA în 2026 – Care ți se potrivește?",
+    description,
+    mainEntityOfPage: canonical,
+    image: ogImage,
+    author: { "@type": "Organization", name: "ConsultantaBV", url: origin },
+    publisher: {
+      "@type": "Organization",
+      name: "ConsultantaBV",
+      url: origin,
+      logo: { "@type": "ImageObject", url: `${origin}/images/logo.png` },
+    },
+    datePublished: "2026-01-01",
+    articleSection: ["SRL", "PFA", "Taxe", "Contribuții", "Înființare", "Contabilitate"],
+  }
 
-    // ✅ OG/Twitter + canonical
-    const ogUrl = "https://consultantabv.ro/ghid/srl-vs-pfa-2026"
-    const ogTitle = "SRL vs PFA în 2026 – Care ți se potrivește?"
-    const ogImage = "https://consultantabv.ro/images/ghiduri/srl-vs-pfa-2026.jpg" // ✅ din public/images/ghiduri/
-
-    ensure("meta[property='og:type']", { property: "og:type", content: "article" })
-    ensure("meta[property='og:title']", { property: "og:title", content: ogTitle })
-    ensure("meta[property='og:description']", { property: "og:description", content: metaDescription })
-    ensure("meta[property='og:url']", { property: "og:url", content: ogUrl })
-    ensure("meta[property='og:image']", { property: "og:image", content: ogImage })
-
-    ensure("meta[name='twitter:card']", { name: "twitter:card", content: "summary_large_image" })
-    ensure("meta[name='twitter:title']", { name: "twitter:title", content: ogTitle })
-    ensure("meta[name='twitter:description']", { name: "twitter:description", content: metaDescription })
-    ensure("meta[name='twitter:image']", { name: "twitter:image", content: ogImage })
-
-    ensureLink("canonical", ogUrl)
-
-    // JSON-LD
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Acasă", item: "https://consultantabv.ro" },
-        { "@type": "ListItem", position: 2, name: "Resurse", item: "https://consultantabv.ro/resurse" },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "SRL vs PFA 2026",
-          item: ogUrl,
-        },
-      ],
-    }
-
-    const articleSchema = {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      headline: ogTitle,
-      description: metaDescription,
-      author: { "@type": "Organization", name: "ConsultantaBV" },
-      publisher: { "@type": "Organization", name: "ConsultantaBV" },
-      datePublished: "2026-01-01",
-      mainEntityOfPage: ogUrl,
-      image: ogImage, // ✅
-      articleSection: ["SRL", "PFA", "Taxe", "Contribuții", "Înființare", "Contabilitate"],
-    }
-
-    const imgSchema = {
-      "@context": "https://schema.org",
-      "@type": "ImageObject",
-      contentUrl: ogImage, // ✅
-      representativeOfPage: true,
-    }
-
-    const s1 = document.createElement("script")
-    s1.type = "application/ld+json"
-    s1.text = JSON.stringify(breadcrumbSchema)
-    document.head.appendChild(s1)
-
-    const s2 = document.createElement("script")
-    s2.type = "application/ld+json"
-    s2.text = JSON.stringify(articleSchema)
-    document.head.appendChild(s2)
-
-    const s3 = document.createElement("script")
-    s3.type = "application/ld+json"
-    s3.text = JSON.stringify(imgSchema)
-    document.head.appendChild(s3)
-
-    return () => {
-      document.head.removeChild(s1)
-      document.head.removeChild(s2)
-      document.head.removeChild(s3)
-    }
-  }, [])
+  const imageLd = {
+    "@context": "https://schema.org",
+    "@type": "ImageObject",
+    contentUrl: ogImage,
+    representativeOfPage: true,
+  }
 
   // ► AVANTAJE/DEZAVANTAJE
   const blocuri = [
@@ -139,32 +111,6 @@ export default function GhidSRLvsPFA2026() {
     },
   ]
 
-  const avantajeSRL = [
-    "Răspundere limitată la patrimoniul firmei.",
-    "Imagine comercială bună; ușor de lucrat cu companii mari.",
-    "Posibilitatea de a atrage asociați, investiții, credite, leasing.",
-    "Opțiuni fiscale: microîntreprindere/profit (în funcție de praguri și condiții legale).",
-  ]
-
-  const dezavantajeSRL = [
-    "Formalități mai multe: înființare, raportări, registre.",
-    "Costuri contabile și administrative mai mari decât PFA.",
-    "Retragerea banilor către asociat se face cu reguli (dividende/salariu).",
-  ]
-
-  const avantajePFA = [
-    "Înființare rapidă, costuri administrative reduse.",
-    "Contabilitate simplificată; poți lucra în sistem real sau normă de venit (unde există).",
-    "Poți folosi veniturile direct, fără dividende.",
-  ]
-
-  const dezavantajePFA = [
-    "Răspundere nelimitată: răspunzi cu bunurile personale.",
-    "Contribuțiile CAS/CASS depind de plafoane și nivelul veniturilor.",
-    "Anumite companii preferă SRL la colaborări mari/pe termen lung.",
-  ]
-
-  // ► COSTURI & OBLIGAȚII – atenționare: se pot modifica; indicăm în mod conservator
   const costuriSRL = [
     {
       title: "Taxare (în linii mari)",
@@ -184,12 +130,23 @@ export default function GhidSRLvsPFA2026() {
   ]
 
   const costuriPFA = [
-    { title: "Impozit pe venit", description: "De regulă 10% la venitul net (sistem real) sau la norma de venit (unde e disponibilă)." },
-    { title: "CAS / CASS", description: "Obligații în funcție de plafoane (ex.: 12/24 salarii minime pentru CAS; plafoane pentru CASS). Pragurile se actualizează anual – verifică nivelul 2026." },
-    { title: "Contabilitate", description: "Evidență în partidă simplă. Costuri mai mici. Poate fi necesară casă de marcat sau alte obligații, în funcție de activitate." },
+    {
+      title: "Impozit pe venit",
+      description:
+        "De regulă 10% la venitul net (sistem real) sau la norma de venit (unde e disponibilă).",
+    },
+    {
+      title: "CAS / CASS",
+      description:
+        "Obligații în funcție de plafoane (ex.: 12/24 salarii minime pentru CAS; plafoane pentru CASS). Pragurile se actualizează anual – verifică nivelul 2026.",
+    },
+    {
+      title: "Contabilitate",
+      description:
+        "Evidență în partidă simplă. Costuri mai mici. Poate fi necesară casă de marcat sau alte obligații, în funcție de activitate.",
+    },
   ]
 
-  // ► PAȘI RAPIZI (înființare)
   const pasiSRL = [
     "Rezervare denumire + alegere CAEN.",
     "Sediu social (contract/comodat/găzduire).",
@@ -205,19 +162,30 @@ export default function GhidSRLvsPFA2026() {
     "Înregistrări ANAF (după caz): vector fiscal, TVA, case de marcat etc.",
   ]
 
-  // ► FAQ
   const faq = [
     {
       q: "Din punct de vedere fiscal, ce e mai avantajos în 2026?",
       a: "Depinde de venituri, cheltuieli, tipul activității și planurile pe termen mediu. PFA poate fi avantajos la venituri moderate (normă/real), SRL devine preferabil când vrei răspundere limitată, clienți corporate sau creștere. Reglementările fiscale pot suferi modificări – verifică pragurile și condițiile în vigoare.",
     },
-    { q: "Pot trece de la PFA la SRL ulterior?", a: "Da. Mulți antreprenori pornesc ca PFA și trec la SRL când cresc volumul contractelor sau când apar nevoi de echipă/finanțare." },
-    { q: "Am nevoie de TVA de la început?", a: "Nu neapărat. Există prag de înregistrare și criterii specifice (ex. parteneri UE, achiziții intracomunitare). Discutăm și alegem varianta potrivită." },
-    { q: "Ce aleg dacă lucrez cu o singură companie pe termen lung?", a: "Juridic și fiscal poate fi sensibil. Discutăm riscurile de recalificare. Uneori SRL cu contract de prestări servicii e mai sigur pe termen lung decât PFA." },
+    {
+      q: "Pot trece de la PFA la SRL ulterior?",
+      a: "Da. Mulți antreprenori pornesc ca PFA și trec la SRL când cresc volumul contractelor sau când apar nevoi de echipă/finanțare.",
+    },
+    {
+      q: "Am nevoie de TVA de la început?",
+      a: "Nu neapărat. Există prag de înregistrare și criterii specifice (ex. parteneri UE, achiziții intracomunitare). Discutăm și alegem varianta potrivită.",
+    },
+    {
+      q: "Ce aleg dacă lucrez cu o singură companie pe termen lung?",
+      a: "Juridic și fiscal poate fi sensibil. Discutăm riscurile de recalificare. Uneori SRL cu contract de prestări servicii e mai sigur pe termen lung decât PFA.",
+    },
   ]
 
   return (
     <main className="min-h-screen bg-white">
+      {/* JSON-LD (idempotent) */}
+      <JsonLd data={[webPageLd, breadcrumbLd, articleLd, imageLd]} />
+
       <Navbar />
 
       {/* HERO */}
@@ -240,32 +208,30 @@ export default function GhidSRLvsPFA2026() {
       <section className="py-4 bg-gray-50 border-b border-gray-200">
         <div className="page-container">
           <nav className="flex items-center gap-2 text-sm font-sans flex-wrap">
-            <Link to="/" className="text-gray-600 hover:text-[#3eb89a]">
-              Acasă
-            </Link>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
-            <Link to="/resurse" className="text-gray-600 hover:text-[#3eb89a]">
-              Resurse
-            </Link>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
+            <Link to="/" className="text-gray-600 hover:text-[#3eb89a]">Acasă</Link>
+            <ChevronRight className="w-4 h-4 text-gray-400" aria-hidden="true" />
+            <Link to="/resurse" className="text-gray-600 hover:text-[#3eb89a]">Resurse</Link>
+            <ChevronRight className="w-4 h-4 text-gray-400" aria-hidden="true" />
             <span className="text-[#0a2540] font-semibold">SRL vs PFA 2026</span>
           </nav>
         </div>
       </section>
 
-      {/* ✅ COVER IMAGE din public/images/ghiduri/ */}
+      {/* COVER (picture + source) */}
       <section className="py-8 bg-white">
         <div className="page-container max-w-4xl mx-auto">
-          <img
-            src="/images/ghiduri/srl-vs-pfa-2026.jpg" // ✅ fără /assets, fără /public
-            alt="Comparație SRL vs PFA 2026 – avantaje, costuri și când să alegi fiecare formă juridică"
-            className="cover-image"
-            width="1200"
-            height="675"
-            loading="lazy"
-            decoding="async"
-            fetchPriority="low"
-          />
+          <picture>
+            <source srcSet="/images/ghiduri/srl-vs-pfa-2026.webp" type="image/webp" />
+            <img
+              src="/images/ghiduri/srl-vs-pfa-2026.jpg"
+              alt="Comparație SRL vs PFA 2026 – avantaje, costuri și când să alegi fiecare formă juridică"
+              width="1200"
+              height="675"
+              loading="lazy"
+              decoding="async"
+              className="w-full h-auto rounded-xl border border-gray-200 shadow-sm"
+            />
+          </picture>
         </div>
       </section>
 
@@ -273,7 +239,7 @@ export default function GhidSRLvsPFA2026() {
       <section className="py-12 md:py-16 bg-white">
         <div className="page-container max-w-4xl mx-auto">
           <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 mb-8 flex items-start gap-3">
-            <AlertCircle className="w-6 h-6 text-amber-700 flex-shrink-0 mt-0.5" />
+            <AlertCircle className="w-6 h-6 text-amber-700 flex-shrink-0 mt-0.5" aria-hidden="true" />
             <p className="text-gray-700 font-sans leading-relaxed">
               <strong>Atenție:</strong> regulile fiscale (praguri micro, plafoane CAS/CASS, norme de venit, TVA) pot fi
               actualizate periodic. Informațiile de mai jos sunt orientative pentru 2026. Înainte de decizie, verifică
@@ -295,32 +261,11 @@ export default function GhidSRLvsPFA2026() {
             Pe scurt: când SRL, când PFA
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              {
-                title: "Când alegi SRL",
-                bullets: [
-                  "Vrei răspundere limitată (protejezi patrimoniul personal).",
-                  "Ai clienți corporate / licitații / proiecte mari.",
-                  "Plănuiești angajați, investiții, creditare sau finanțare.",
-                  "Venituri în creștere și nevoie de optimizare fiscală pe termen mediu.",
-                ],
-              },
-              {
-                title: "Când alegi PFA",
-                bullets: [
-                  "Activitate individuală, simplă, cu costuri administrative mici.",
-                  "Începi rapid: mai puține formalități, contabilitate mai simplă.",
-                  "Normă de venit/cheltuieli deductibile reale pot fi avantajoase la venituri moderate.",
-                  "Clienți preponderent B2C sau contracte de servicii pe persoană fizică.",
-                ],
-              },
-            ].map((b, idx) => (
+            {blocuri.map((b, idx) => (
               <div key={idx} className="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
                 <h3 className="text-xl font-bold text-[#0a2540] mb-3 font-serif">{b.title}</h3>
                 <ul className="list-disc pl-5 space-y-2 text-gray-700 font-sans">
-                  {b.bullets.map((li, i) => (
-                    <li key={i}>{li}</li>
-                  ))}
+                  {b.bullets.map((li, i) => <li key={i}>{li}</li>)}
                 </ul>
               </div>
             ))}
@@ -453,7 +398,7 @@ export default function GhidSRLvsPFA2026() {
               className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 font-sans"
             >
               Programează o discuție
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
             </Link>
           </div>
         </div>

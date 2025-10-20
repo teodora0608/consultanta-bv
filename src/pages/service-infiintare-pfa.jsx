@@ -2,125 +2,161 @@
 
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
-import { CheckCircle2, ArrowRight, MessageCircle, ChevronRight } from "lucide-react"
+
+// UI
 import Navbar from "../components/navbar"
 import Footer from "../components/footer"
 import FAQSection from "../components/FAQSection"
 import FinalCTA from "../common/final-cta"
 
+// ✅ SEO helpers
+import { setMetaTags } from "../seo/meta";
+import JsonLd from "../components/JsonLd"
+
+// ✅ Iconurile interne
+import {
+  CheckCircle2Icon as CheckCircle2,
+  ArrowRightIcon as ArrowRight,
+  MessageCircleIcon as MessageCircle,
+  ChevronRightIcon as ChevronRight,
+} from "../icons"
+
 export default function ServiceInfiintarePFA() {
-  // ───────────────────────────────── SEO (no Helmet) ────────────────────────────────
+  // ─────────────── SEO VARS ───────────────
+  const origin =
+    (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
+  const path = "/servicii/infiintare-pfa"
+  const canonical = `${origin}${path}`
+
+  const pageTitle =
+    "Înființare PFA online | ConsultantaBV – rapid, legal și fără bătăi de cap"
+  const pageDescr =
+    "Deschide un PFA rapid, 100% online. Consultanță pentru coduri CAEN, dosar ONRC, rezervare denumire, declarații fiscale și depunere la Registrul Comerțului. Suport în Brașov și în toată țara."
+  const ogImage = `${origin}/images/hero-tablet.jpg`
+
+  // ─────────────── META (idempotent) ───────────────
   useEffect(() => {
-    document.title = "Înființare PFA Online Brașov | ConsultantaBV – Rapid & 100% Online"
+    setMetaTags({
+      title: pageTitle,
+      description: pageDescr,
+      canonical,
+      image: ogImage,
+    })
+  }, [pageTitle, pageDescr, canonical, ogImage])
 
-    const setMeta = (name, content) => {
-      let tag = document.querySelector(`meta[name="${name}"]`)
-      if (!tag) {
-        tag = document.createElement("meta")
-        tag.setAttribute("name", name)
-        document.head.appendChild(tag)
-      }
-      tag.setAttribute("content", content)
-    }
-
-    const setCanonical = (href) => {
-      let link = document.querySelector('link[rel="canonical"]')
-      if (!link) {
-        link = document.createElement("link")
-        link.setAttribute("rel", "canonical")
-        document.head.appendChild(link)
-      }
-      link.setAttribute("href", href)
-    }
-
-    setMeta(
-      "description",
-      "Înființare PFA 100% online în Brașov și în toată România. Consultanță pentru coduri CAEN, redactare dosar ONRC, depunere online și obținere CUI. Termen uzual 3–5 zile lucrătoare."
-    )
-    setMeta(
-      "keywords",
-      "înființare PFA, PFA online, PFA Brașov, consultant juridic Brașov, deschidere PFA, CUI, ONRC, coduri CAEN"
-    )
-    setCanonical("https://consultantabv.ro/servicii/infiintare-pfa")
-  }, [])
-
-  // ───────────────────────────────── Content ────────────────────────────────────────
+  // 📋 Content arrays
   const ceIncludem = [
-    "Consultanță pentru coduri CAEN (principal + secundare)",
-    "Redactarea dosarului PFA (cerere, declarații tip, anexe ONRC)",
-    "Împuternicire / semnătură electronică (după caz)",
-    "Depunere online la ONRC și relația cu instituțiile",
-    "Urmărirea statusului până la soluționare",
-    "CUI + Certificatul de înregistrare și rezoluția (PDF semnate)",
-  ]
-
-  const acteNecesare = [
-    { title: "Copie CI / Pașaport", description: "pentru titularul PFA" },
-    {
-      title: "Dovada sediului profesional",
-      description: "contract de comodat/închiriere + acordul proprietarului, după caz",
-    },
-    {
-      title: "Acordul vecinilor / asociației",
-      description: "dacă sediul este într-un bloc și activitatea îl necesită",
-    },
-    {
-      title: "Calificare profesională (unde e cerută de lege)",
-      description: "diplome/adeverințe pentru codurile CAEN care impun atestate",
-    },
+    "Consultanță pentru alegerea formei potrivite (PFA, II, SRL)",
+    "Rezervare denumire la Registrul Comerțului",
+    "Redactarea actelor necesare pentru înființare",
+    "Stabilirea codurilor CAEN potrivite activității",
+    "Depunerea dosarului online la ONRC",
+    "Obținerea certificatului de înregistrare și CUI",
   ]
 
   const pasi = [
-    { number: "1", title: "Consultanță inițială & alegere coduri CAEN" },
-    { number: "2", title: "Pregătirea și verificarea documentelor" },
-    { number: "3", title: "Semnare (electronic / împuternicire)" },
-    { number: "4", title: "Depunere online la ONRC & urmărire status" },
-    { number: "5", title: "Confirmare înființare & livrare documente (CUI + certificat)" },
+    { number: "1", title: "Analiză inițială – alegerea formei și activităților" },
+    { number: "2", title: "Rezervare denumire și pregătirea documentelor" },
+    { number: "3", title: "Depunerea online a dosarului la ONRC" },
+    { number: "4", title: "Aprobarea și obținerea certificatului de înregistrare" },
+    { number: "5", title: "Ghid fiscal inițial – declarații și obligații" },
   ]
 
-  const deCeCuNoi = [
-    { title: "100% online", description: "Semnături electronice și depuneri digitale" },
-    { title: "Acte curate", description: "Redactare atentă, verificare înainte de depunere" },
-    { title: "Răspuns rapid", description: "Status transparent, comunicare clară" },
-    { title: "Suport după înființare", description: "RUC, bancă, TVA (opțional)" },
+  const acteNecesare = [
+    { title: "Buletinul (CI)", desc: "copie scanată față-verso" },
+    { title: "Dovada sediului profesional", desc: "contract de comodat / proprietate" },
+    { title: "Acordul asociației de proprietari (dacă e cazul)", desc: "pentru activitate la domiciliu" },
+    { title: "Specimen semnătură", desc: "semnat olograf sau electronic" },
+    { title: "Documente calificare (dacă e necesar)", desc: "pentru anumite coduri CAEN" },
   ]
 
   const faqItems = [
     {
-      question: "Se poate face 100% online?",
-      answer:
-        "Da. Lucrăm cu semnătură electronică sau împuternicire și depunem dosarul online. Primești documentele în format PDF semnat.",
-    },
-    {
-      question: "Ce acte sunt obligatorii pentru PFA?",
-      answer:
-        "CI/Pașaport, dovada sediului profesional (contract + acord proprietar), eventual acord vecini/asociație și documente de calificare unde legea solicită. Noi îți spunem exact ce îți trebuie pentru activitățile tale.",
-    },
-    {
       question: "Cât durează înființarea unui PFA?",
-      answer:
-        "Uzual 3–5 zile lucrătoare după depunerea dosarului complet (poate varia în funcție de ONRC/observații).",
+      answer: "De obicei 2–5 zile lucrătoare din momentul depunerii online a dosarului complet la ONRC.",
     },
     {
-      question: "Pot avea mai multe coduri CAEN?",
-      answer:
-        "Da. Poți alege un cod principal și mai multe coduri secundare; pentru unele activități poate fi necesară dovedirea calificării.",
+      question: "Pot înființa PFA fără prezență fizică?",
+      answer: "Da. Tot procesul se poate face 100% online – semnare electronică și depunere digitală.",
     },
     {
-      question: "Trebuie să merg personal la Registrul Comerțului?",
+      question: "Trebuie să am un contabil?",
       answer:
-        "Nu. Ne ocupăm noi integral în baza unei împuterniciri sau prin semnătură electronică, totul 100% online.",
+        "Nu e obligatoriu, dar recomandăm colaborarea cu un contabil pentru declarațiile periodice și TVA (dacă e cazul).",
     },
     {
-      question: "Ce urmează după înființare?",
-      answer:
-        "Te ajutăm cu RUC la ANAF, deschiderea contului bancar, opțional înregistrare TVA și alte formalități.",
+      question: "Pot schimba ulterior codurile CAEN?",
+      answer: "Da, poți adăuga sau modifica coduri CAEN printr-o procedură simplă de actualizare.",
     },
   ]
 
-  // ───────────────────────────────── Render ─────────────────────────────────────────
+  // ─────────────── JSON-LD ───────────────
+  const orgId = `${origin}#organization`
+  const webSiteId = `${origin}#website`
+
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Acasă", item: origin },
+      { "@type": "ListItem", position: 2, name: "Servicii", item: `${origin}/servicii` },
+      { "@type": "ListItem", position: 3, name: "Înființare PFA", item: canonical },
+    ],
+  }
+
+  const webPageLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${canonical}#webpage`,
+    url: canonical,
+    isPartOf: { "@id": webSiteId },
+    name: pageTitle,
+    description: pageDescr,
+    primaryImageOfPage: ogImage,
+    inLanguage: "ro-RO",
+  }
+
+  const serviceLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${canonical}#service`,
+    name: "Înființare PFA online",
+    description: pageDescr,
+    url: canonical,
+    image: ogImage,
+    serviceType: "Înființare PFA",
+    areaServed: { "@type": "Country", name: "România" },
+    provider: { "@type": "Organization", "@id": orgId },
+  }
+
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((f) => ({
+      "@type": "Question",
+      name: f.question,
+      acceptedAnswer: { "@type": "Answer", text: f.answer },
+    })),
+  }
+
+  const howToLd = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "Pașii înființării unui PFA",
+    description: "Ghid succint al etapelor pentru deschiderea unui PFA.",
+    step: pasi.map((p, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: p.title,
+    })),
+  }
+
+  // 🧱 Layout
   return (
     <main className="min-h-screen bg-white">
+      {/* JSON-LD idempotent */}
+      <JsonLd data={[webPageLd, breadcrumbLd, serviceLd, faqLd, howToLd]} />
+
       <Navbar />
 
       {/* HERO */}
@@ -129,27 +165,26 @@ export default function ServiceInfiintarePFA() {
         <div className="page-container relative z-10">
           <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 font-serif leading-tight">
-              Înființare PFA – rapid, 100% online, fără drumuri inutile
+              Înființare PFA rapidă și complet online
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-white/90 mb-8 font-sans max-w-3xl leading-relaxed">
-              Îți înființăm PFA-ul în 3–5 zile lucrătoare, complet online. Te ajutăm cu alegerea codurilor CAEN,
-              redactarea dosarului și depunerea la ONRC – indiferent dacă ești în Brașov sau oriunde în țară.
+              Deschide un PFA legal și fără stres. Consultanță completă pentru coduri CAEN, documente, rezervare denumire și depunere online la Registrul Comerțului – în Brașov și în toată țara.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="#faq"
-                className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300"
+              <Link
+                to="/contact"
+                className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#3eb89a]"
               >
-                Află detalii
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
+                Începe acum
+                <ArrowRight className="ml-2 h-5 w-5" aria-hidden />
+              </Link>
               <a
-                href="https://wa.me/40123456789"
+                href="https://wa.me/40730140766"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300"
+                className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
               >
-                <MessageCircle className="mr-2 h-5 w-5" />
+                <MessageCircle className="mr-2 h-5 w-5" aria-hidden />
                 Întrebări? WhatsApp
               </a>
             </div>
@@ -160,15 +195,15 @@ export default function ServiceInfiintarePFA() {
       {/* BREADCRUMB */}
       <section className="py-4 bg-gray-50 border-b border-gray-200">
         <div className="page-container">
-          <nav className="flex items-center gap-2 text-sm font-sans">
+          <nav className="flex items-center gap-2 text-sm font-sans" aria-label="breadcrumb">
             <Link to="/" className="text-gray-600 hover:text-[#3eb89a] flex items-center gap-1">
-              Acasă <ArrowRight className="w-4 h-4" />
+              Acasă <ArrowRight className="w-4 h-4" aria-hidden />
             </Link>
             <Link to="/servicii" className="text-gray-600 hover:text-[#3eb89a]">
               Servicii
             </Link>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
-            <span className="text-[#0a2540] font-semibold">Înființare PFA</span>
+            <ChevronRight className="w-4 h-4 text-gray-400" aria-hidden />
+            <span className="text-[#0a2540] font-semibold" aria-current="page">Înființare PFA</span>
           </nav>
         </div>
       </section>
@@ -178,12 +213,11 @@ export default function ServiceInfiintarePFA() {
         <div className="page-container max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0a2540] mb-3 font-serif">
-              Ce includem în pachetul pentru înființare PFA
+              Ce includem în serviciul de înființare PFA
             </h2>
             <div className="h-1 w-24 bg-[#3eb89a] mx-auto mt-3 rounded-full" />
             <p className="text-base sm:text-lg text-gray-600 mt-6 max-w-3xl mx-auto leading-relaxed">
-              Totul pentru o înființare rapidă și sigură – consultanță, dosar complet, depunere online și livrare
-              documente digitale.
+              De la consultanță până la depunerea online, gestionăm tot procesul pentru tine.
             </p>
           </div>
 
@@ -193,7 +227,7 @@ export default function ServiceInfiintarePFA() {
                 key={idx}
                 className="flex items-start gap-3 p-6 bg-gray-50 border border-gray-200 rounded-xl hover:shadow-md transition-all"
               >
-                <CheckCircle2 className="w-5 h-5 text-[#3eb89a] flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-5 h-5 text-[#3eb89a] flex-shrink-0 mt-0.5" aria-hidden />
                 <span className="text-base text-gray-700 font-sans leading-relaxed">{item}</span>
               </div>
             ))}
@@ -201,101 +235,58 @@ export default function ServiceInfiintarePFA() {
         </div>
       </section>
 
-      {/* ACTE NECESARE */}
-      <section className="py-20 md:py-28 bg-gradient-to-br from-[#0a2540] via-[#0d3a52] to-[#1a5c6b]">
-        <div className="page-container max-w-7xl mx-auto text-white">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 font-serif">
-              Acte necesare pentru înființarea unui PFA
-            </h2>
-            <p className="text-base sm:text-lg text-white/80 mt-6 max-w-3xl mx-auto leading-relaxed">
-              Documentele standard solicitate de ONRC. Îți spunem exact ce îți trebuie în funcție de activitățile tale.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {acteNecesare.map((item, idx) => (
+      {/* PAȘII PROCEDURII */}
+      <section className="py-20 md:py-28 bg-gradient-to-br from-[#0a2540] via-[#0d3a52] to-[#1a5c6b] text-white">
+        <div className="page-container max-w-7xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-10 font-serif text-center">
+            Pașii înființării unui PFA
+          </h2>
+          <div className="flex flex-col gap-6 max-w-4xl mx-auto">
+            {pasi.map((pas, idx) => (
               <div
                 key={idx}
-                className="p-6 bg-white/10 border border-white/10 rounded-xl backdrop-blur-sm hover:bg-white/15 transition-all"
-              >
-                <h3 className="text-lg font-bold mb-2 font-serif">{item.title}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* PAȘII PROCESULUI */}
-      <section className="py-20 md:py-28 bg-white">
-        <div className="page-container max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0a2540] mb-3 font-serif">
-              Pașii procesului de înființare PFA
-            </h2>
-            <p className="text-base sm:text-lg text-gray-600 mt-6 max-w-3xl mx-auto leading-relaxed">
-              Clar și transparent, din consultanță până la confirmarea înregistrării și livrarea documentelor.
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-6 max-w-4xl mx-auto">
-            {pasi.map((pas) => (
-              <div
-                key={pas.number}
-                className="flex items-center gap-5 p-6 bg-gray-50 border border-gray-200 rounded-xl hover:shadow-md transition-all min-h-[100px]"
+                className="flex items-center gap-5 p-6 bg-white/10 border border-white/10 rounded-xl backdrop-blur-sm hover:bg-white/15 transition-all"
               >
                 <div className="w-12 h-12 rounded-full bg-[#3eb89a] text-white text-xl font-bold flex items-center justify-center font-serif shadow-md flex-shrink-0">
                   {pas.number}
                 </div>
-                <h3 className="text-base sm:text-lg font-bold text-[#0a2540] font-serif leading-relaxed">
-                  {pas.title}
-                </h3>
+                <h3 className="text-base sm:text-lg font-bold text-white font-serif">{pas.title}</h3>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* DURATĂ + DE CE NOI */}
-      <section className="py-20 md:py-28 bg-gradient-to-br from-[#0a2540] via-[#0d3a52] to-[#1a5c6b] text-white">
-        <div className="page-container max-w-7xl mx-auto">
-          <div className="mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 font-serif">Durata procesului</h2>
-            <p className="text-base sm:text-lg text-white/80 mt-6 leading-relaxed">
-              În medie, înființarea unui PFA durează 3–5 zile lucrătoare de la depunerea dosarului complet. Lucrăm cu
-              clienți din toată România – inclusiv Brașov – varianta 100% online.
+      {/* ACTE NECESARE */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="page-container max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0a2540] mb-3 font-serif">
+              Acte necesare pentru înființarea unui PFA
+            </h2>
+            <p className="text-base sm:text-lg text-gray-600 mt-6 max-w-3xl mx-auto leading-relaxed">
+              Documentele de bază pentru depunerea dosarului de înființare.
             </p>
           </div>
-
-          <div>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 font-serif">
-              De ce să alegi ConsultantaBV
-            </h2>
-            <p className="text-base sm:text-lg text-white/80 mt-6 mb-12 leading-relaxed">
-              Experiență dedicată în înființări PFA, redactare corectă a documentelor și comunicare clară – te ghidăm
-              până la final și îți oferim suport și după înregistrare.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {deCeCuNoi.map((item, idx) => (
-                <div
-                  key={idx}
-                  className="p-6 bg-white/10 border border-white/10 rounded-xl backdrop-blur-sm hover:bg-white/15 transition-all"
-                >
-                  <h3 className="text-lg font-bold mb-2 font-serif">{item.title}</h3>
-                  <p className="text-sm text-white/80 leading-relaxed">{item.description}</p>
-                </div>
-              ))}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {acteNecesare.map((a, idx) => (
+              <div
+                key={idx}
+                className="p-6 bg-gray-50 border border-gray-200 rounded-xl hover:shadow-md transition-all"
+              >
+                <h3 className="text-lg font-bold text-[#0a2540] mb-2 font-serif">{a.title}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">{a.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="py-20 md:py-28 bg-gray-50">
+      <section className="py-20 md:py-28 bg-gray-50">
         <div className="page-container max-w-4xl mx-auto">
-          <FAQSection faqs={faqItems} />
+          {/* Dacă FAQSection la tine așteaptă `faqs`, schimbă prop-ul înapoi */}
+          <FAQSection items={faqItems} />
         </div>
       </section>
 

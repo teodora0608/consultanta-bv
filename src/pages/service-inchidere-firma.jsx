@@ -1,59 +1,89 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { Link } from "react-router-dom"
-import { CheckCircle2, ArrowRight, MessageCircle, ChevronRight } from "lucide-react"
+
 import Navbar from "../components/navbar"
 import Footer from "../components/footer"
 import FAQSection from "../components/FAQSection"
 import FinalCTA from "../common/final-cta"
 
-export default function ServiceInchidereFirma() {
-  const [openFaqIndex, setOpenFaqIndex] = useState(null)
+import { setMetaTags } from "../seo/meta"
+import JsonLd from "../components/JsonLd"
 
+import {
+  ArrowRightIcon as ArrowRight,
+  MessageCircleIcon as MessageCircle,
+  ChevronRightIcon as ChevronRight,
+  CheckCircle2Icon as CheckCircle2,
+} from "../icons"
+
+export default function ServiceInchidereFirma() {
   const scrollToDeceVoluntara = () => {
     document.getElementById("de-ce-voluntara")?.scrollIntoView({ behavior: "smooth" })
   }
 
-  const toggleFaq = (index) => {
-    setOpenFaqIndex(openFaqIndex === index ? null : index)
+  // ─────────────── SEO VARS ───────────────
+  const origin =
+    (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
+  const path = "/servicii/inchidere-firma"
+  const canonical = `${origin}${path}`
+
+  const pageTitle = "Închidere firmă (lichidare voluntară) | ConsultantaBV – legal și sigur"
+  const pageDescr =
+    "Închidere firmă 100% online. Dizolvare, lichidare și radiere conform legii. Documente, depuneri ONRC, Monitorul Oficial. Suport complet, în Brașov și în toată țara."
+  const ogImage = `${origin}/images/hero-tablet.jpg`
+
+  useEffect(() => {
+    setMetaTags({
+      title: pageTitle,
+      description: pageDescr,
+      canonical,
+      image: ogImage,
+    })
+  }, [pageTitle, pageDescr, canonical, ogImage])
+
+  // ─────────────── JSON-LD ───────────────
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Acasă", item: origin },
+      { "@type": "ListItem", position: 2, name: "Servicii", item: `${origin}/servicii` },
+      { "@type": "ListItem", position: 3, name: "Închidere firmă", item: canonical },
+    ],
   }
 
-  // ✅ SEO tags handled natively by React (no Helmet)
-  useEffect(() => {
-    document.title = "Închidere firmă (lichidare voluntară) | ConsultantaBV – legal și sigur"
+  const webPageLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${canonical}#webpage`,
+    url: canonical,
+    name: pageTitle,
+    description: pageDescr,
+    isPartOf: { "@type": "WebSite", url: origin, name: "ConsultantaBV" },
+    primaryImageOfPage: ogImage,
+    inLanguage: "ro-RO",
+  }
 
-    const metaDescription =
-      "Închidere firmă 100% online. Dizolvare, lichidare și radiere conform legii. Documente, depuneri ONRC, Monitorul Oficial. Suport complet, în Brașov și în toată țara."
-    const canonicalUrl = "https://consultantabv.ro/servicii/inchidere-firma"
+  const serviceLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Închidere firmă (lichidare voluntară)",
+    description: pageDescr,
+    url: canonical,
+    image: ogImage,
+    serviceType: "Dizolvare, lichidare și radiere firme",
+    areaServed: { "@type": "Country", name: "România" },
+    provider: {
+      "@type": "Organization",
+      name: "ConsultantaBV",
+      url: origin,
+      logo: `${origin}/images/logo.png`,
+    },
+  }
 
-    const setMeta = (name, content) => {
-      if (!content) return
-      let tag = document.querySelector(`meta[name='${name}']`)
-      if (!tag) {
-        tag = document.createElement("meta")
-        tag.setAttribute("name", name)
-        document.head.appendChild(tag)
-      }
-      tag.setAttribute("content", content)
-    }
-
-    const setCanonical = (href) => {
-      if (!href) return
-      let link = document.querySelector("link[rel='canonical']")
-      if (!link) {
-        link = document.createElement("link")
-        link.setAttribute("rel", "canonical")
-        document.head.appendChild(link)
-      }
-      link.setAttribute("href", href)
-    }
-
-    setMeta("description", metaDescription)
-    setCanonical(canonicalUrl)
-  }, [])
-
-  // Content arrays
+  // ─────────────── Content ───────────────
   const ceIncludem = [
     "Consultanță juridică privind închiderea societății",
     "Redactarea hotărârii de dizolvare și a documentelor necesare",
@@ -72,16 +102,10 @@ export default function ServiceInchidereFirma() {
   ]
 
   const deCeVoluntara = [
-    { title: "Procedură reglementată, transparentă", description: "Proces clar și previzibil conform legislației" },
-    {
-      title: "Eviti costurile și riscurile închiderilor forțate",
-      description: "Soluție controlată, fără surprize neplăcute",
-    },
-    {
-      title: "Documente verificate înainte de depunere",
-      description: "Redactare atentă pentru evitarea respingerilor",
-    },
-    { title: "Suport până la finalizare", description: "Te asistăm la fiecare etapă până la radiere" },
+    { title: "Procedură reglementată, transparentă", description: "Proces clar și previzibil conform legislației." },
+    { title: "Eviți costurile și riscurile închiderilor forțate", description: "Soluție controlată, fără surprize." },
+    { title: "Documente verificate înainte de depunere", description: "Redactare atentă, fără respingeri." },
+    { title: "Suport până la finalizare", description: "Te asistăm la fiecare etapă până la radiere." },
   ]
 
   const faqItems = [
@@ -97,16 +121,26 @@ export default function ServiceInchidereFirma() {
     {
       question: "Ce se întâmplă cu datoriile?",
       answer:
-        "Lichidarea voluntară este adecvată dacă nu există datorii restante; dacă apar obligații, îți recomandăm opțiunea legală potrivită.",
+        "Lichidarea voluntară e adecvată dacă nu există datorii; dacă apar obligații, îți recomandăm varianta corectă legal.",
     },
     {
-      question: "Aveți servicii și pentru închidere cu datorii / insolvență?",
-      answer: "Oferim consultanță separată pentru scenarii cu datorii; îți propunem traseul corect legal după analiză.",
+      question: "Oferiți servicii și pentru firme cu datorii / insolvență?",
+      answer: "Da, oferim consultanță separată pentru cazuri cu datorii sau insolvență.",
     },
   ]
 
+  // ─────────────── Layout ───────────────
   return (
-    <main className="min-h-screen bg-white">
+    <main id="main-content" className="min-h-screen bg-white">
+      <JsonLd data={[webPageLd, breadcrumbLd, serviceLd]} />
+
+      <a
+        href="#content-start"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white text-[#0a2540] px-3 py-2 rounded"
+      >
+        Sari la conținut
+      </a>
+
       <Navbar />
 
       {/* HERO */}
@@ -118,25 +152,24 @@ export default function ServiceInchidereFirma() {
               Închidere firmă (lichidare voluntară) – procedură legală, clară și sigură
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-white/90 mb-8 font-sans max-w-3xl leading-relaxed">
-              Îți închidem firma 100% online, în condiții legale și transparente. Te ajutăm cu redactarea hotărârii de
-              dizolvare, pregătirea dosarului, publicitatea în Monitorul Oficial și depunerile la ONRC – până la
-              radierea societății. Fără drumuri inutile, cu ghidaj clar, în Brașov și în toată țara.
+              Îți închidem firma 100% online, legal și transparent. Te ajutăm cu redactarea hotărârii de dizolvare,
+              depunerile ONRC și publicitatea în Monitorul Oficial – până la radierea finală. Totul fără drumuri inutile.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 onClick={scrollToDeceVoluntara}
-                className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300"
+                className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#3eb89a]"
               >
                 Află detalii
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRight className="icon ml-2" aria-hidden />
               </button>
               <a
-                href="https://wa.me/40123456789"
+                href="https://wa.me/40730140766"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300"
+                className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
               >
-                <MessageCircle className="mr-2 h-5 w-5" />
+                <MessageCircle className="icon mr-2" aria-hidden />
                 Întrebări? WhatsApp
               </a>
             </div>
@@ -145,17 +178,19 @@ export default function ServiceInchidereFirma() {
       </section>
 
       {/* BREADCRUMB */}
-      <section className="py-4 bg-gray-50 border-b border-gray-200">
+      <section className="py-4 bg-gray-50 border-b border-gray-200" id="content-start">
         <div className="page-container">
-          <nav className="flex items-center gap-2 text-sm font-sans">
+          <nav className="flex items-center gap-2 text-sm font-sans" aria-label="breadcrumb">
             <Link to="/" className="text-gray-600 hover:text-[#3eb89a] flex items-center gap-1">
-              Acasă <ArrowRight className="w-4 h-4" />
+              Acasă <ArrowRight className="icon" aria-hidden />
             </Link>
             <Link to="/servicii" className="text-gray-600 hover:text-[#3eb89a]">
               Servicii
             </Link>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
-            <span className="text-[#0a2540] font-semibold">Închidere firmă</span>
+            <ChevronRight className="icon text-gray-400" aria-hidden />
+            <span className="text-[#0a2540] font-semibold" aria-current="page">
+              Închidere firmă
+            </span>
           </nav>
         </div>
       </section>
@@ -169,8 +204,7 @@ export default function ServiceInchidereFirma() {
             </h2>
             <div className="h-1 w-24 bg-[#3eb89a] mx-auto mt-3 rounded-full" />
             <p className="text-base sm:text-lg text-gray-600 mt-6 max-w-3xl mx-auto leading-relaxed">
-              Tot ce ai nevoie pentru o lichidare voluntară corectă și sigură – consultanță, documente, depuneri și
-              radiere.
+              Tot ce ai nevoie pentru o lichidare voluntară corectă și sigură – consultanță, documente, depuneri și radiere.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -179,7 +213,7 @@ export default function ServiceInchidereFirma() {
                 key={idx}
                 className="flex items-start gap-3 p-6 bg-gray-50 border border-gray-200 rounded-xl hover:shadow-md transition-all"
               >
-                <CheckCircle2 className="w-5 h-5 text-[#3eb89a] flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="icon text-[#3eb89a] mt-0.5" aria-hidden />
                 <span className="text-base text-gray-700 font-sans leading-relaxed">{item}</span>
               </div>
             ))}
@@ -187,77 +221,47 @@ export default function ServiceInchidereFirma() {
         </div>
       </section>
 
-      {/* ACTE / CADRUL LEGAL */}
-      <section className="py-20 md:py-28 bg-gradient-to-br from-[#0a2540] via-[#0d3a52] to-[#1a5c6b]">
-        <div className="page-container max-w-7xl mx-auto text-white">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Col stânga - Abordarea noastră */}
-            <div className="p-6 bg-white/10 border border-white/10 rounded-xl backdrop-blur-sm">
-              <h3 className="text-2xl font-bold mb-4 font-serif">Abordarea noastră</h3>
-              <p className="text-base text-white/90 mb-6 leading-relaxed">
-                Lucrăm direct cu asociații și administratorii pentru a gestiona eficient închiderea voluntară: relație
-                transparentă cu instituțiile, programarea corectă a pașilor, optimizarea fiscală în limitele legii și
-                comunicare clară până la radiere.
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#3eb89a] flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-white/80 leading-relaxed">
-                    Analiză eligibilitate și calendar de pași
-                  </span>
+      {/* CADRUL LEGAL + ABORDAREA */}
+      <section className="py-20 md:py-28 bg-gradient-to-br from-[#0a2540] via-[#0d3a52] to-[#1a5c6b] text-white">
+        <div className="page-container max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="p-6 bg-white/10 border border-white/10 rounded-xl backdrop-blur-sm">
+            <h3 className="text-2xl font-bold mb-4 font-serif">Abordarea noastră</h3>
+            <p className="text-base text-white/90 mb-6 leading-relaxed">
+              Lucrăm direct cu asociații și administratorii pentru o gestionare eficientă și transparentă a procesului.
+            </p>
+            <ul className="space-y-3">
+              {[
+                "Analiză eligibilitate și calendar de pași",
+                "Set complet de documente pentru ONRC și Monitorul Oficial",
+                "Corelare cu situațiile contabile și închiderea obligațiilor curente",
+                "Suport complet până la radierea definitivă",
+              ].map((item, idx) => (
+                <li key={idx} className="flex items-start gap-3">
+                  <CheckCircle2 className="icon text-[#3eb89a] mt-0.5" aria-hidden />
+                  <span className="text-sm text-white/80">{item}</span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#3eb89a] flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-white/80 leading-relaxed">
-                    Set complet de documente pentru ONRC și Monitorul Oficial
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#3eb89a] flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-white/80 leading-relaxed">
-                    Corelare cu situațiile contabile și închiderea obligațiilor curente
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#3eb89a] flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-white/80 leading-relaxed">
-                    Suport la fiecare etapă – până la radierea definitivă
-                  </span>
-                </li>
-              </ul>
-            </div>
+              ))}
+            </ul>
+          </div>
 
-            {/* Col dreapta - Cadrul legal */}
-            <div className="p-6 bg-white/10 border border-white/10 rounded-xl backdrop-blur-sm">
-              <h3 className="text-2xl font-bold mb-2 font-serif">Cadrul legal aplicabil (exemple uzuale)</h3>
-              <p className="text-xs text-white/70 mb-6 italic">
-                Aplicăm întotdeauna legislația în vigoare relevantă situației tale specifice.
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#3eb89a] flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-white/80 leading-relaxed">Legea 31/1990 privind societățile</span>
+          <div className="p-6 bg-white/10 border border-white/10 rounded-xl backdrop-blur-sm">
+            <h3 className="text-2xl font-bold mb-2 font-serif">Cadrul legal aplicabil</h3>
+            <p className="text-xs text-white/70 mb-6 italic">
+              Aplicăm întotdeauna legislația în vigoare relevantă situației tale.
+            </p>
+            <ul className="space-y-3">
+              {[
+                "Legea 31/1990 privind societățile",
+                "Reglementări ONRC privind dizolvarea și lichidarea",
+                "Norme privind publicitatea în Monitorul Oficial",
+                "Dispoziții fiscale și contabile relevante",
+              ].map((item, idx) => (
+                <li key={idx} className="flex items-start gap-3">
+                  <CheckCircle2 className="icon text-[#3eb89a] mt-0.5" aria-hidden />
+                  <span className="text-sm text-white/80">{item}</span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#3eb89a] flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-white/80 leading-relaxed">
-                    Reglementări ONRC privind dizolvarea și lichidarea
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#3eb89a] flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-white/80 leading-relaxed">
-                    Norme metodologice aplicabile publicității în Monitorul Oficial
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-[#3eb89a] flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-white/80 leading-relaxed">
-                    Alte dispoziții incidente (fiscale / contabile), după caz
-                  </span>
-                </li>
-              </ul>
-            </div>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
@@ -267,9 +271,9 @@ export default function ServiceInchidereFirma() {
         <div className="page-container max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0a2540] mb-3 font-serif">
-              Pașii procedurii de închidere a firmei (lichidare voluntară)
+              Pașii procedurii de închidere a firmei
             </h2>
-            <p className="text-base sm:text-lg text-gray-600 mt-6 max-w-3xl mx-auto font-sans leading-relaxed">
+            <p className="text-base sm:text-lg text-gray-600 mt-6 max-w-3xl mx-auto leading-relaxed">
               Clar și transparent – de la decizia de dizolvare până la radierea din Registrul Comerțului.
             </p>
           </div>
@@ -277,14 +281,12 @@ export default function ServiceInchidereFirma() {
             {pasi.map((pas, idx) => (
               <div
                 key={idx}
-                className="flex items-center gap-5 p-6 bg-gray-50 border border-gray-200 rounded-xl hover:shadow-md transition-all min-h-[100px]"
+                className="flex items-center gap-5 p-6 bg-gray-50 border border-gray-200 rounded-xl hover:shadow-md transition-all"
               >
-                <div className="w-12 h-12 rounded-full bg-[#3eb89a] text-white text-xl font-bold flex items-center justify-center font-serif shadow-md flex-shrink-0">
+                <div className="w-12 h-12 flex-none rounded-full bg-[#3eb89a] text-white text-xl font-bold flex items-center justify-center font-serif shadow-md">
                   {pas.number}
                 </div>
-                <h3 className="text-base sm:text-lg font-bold text-[#0a2540] font-serif leading-relaxed">
-                  {pas.title}
-                </h3>
+                <h3 className="text-base sm:text-lg font-bold text-[#0a2540] font-serif">{pas.title}</h3>
               </div>
             ))}
           </div>
@@ -302,9 +304,9 @@ export default function ServiceInchidereFirma() {
               De ce să alegi lichidarea voluntară?
             </h2>
             <p className="text-base sm:text-lg text-white/80 mt-6 leading-relaxed">
-              Dacă firma nu mai desfășoară activitate și nu are datorii restante, poți opta pentru închiderea voluntară
-              – o procedură reglementată, clară și previzibilă. Aceasta presupune dizolvarea, lichidarea patrimoniului
-              și radierea definitivă din Registrul Comerțului, fără instanță.
+              Dacă firma nu mai desfășoară activitate și nu are datorii, poți opta pentru închiderea voluntară – o
+              procedură reglementată, clară și fără instanță. Include dizolvarea, lichidarea patrimoniului și radierea
+              definitivă din Registrul Comerțului.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -321,7 +323,7 @@ export default function ServiceInchidereFirma() {
         </div>
       </section>
 
-      {/* FAQ (fără titlu dublat) */}
+      {/* FAQ */}
       <section className="py-20 md:py-28 bg-gray-50">
         <div className="page-container max-w-4xl mx-auto">
           <FAQSection faqs={faqItems} />
