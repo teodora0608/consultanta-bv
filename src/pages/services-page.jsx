@@ -111,7 +111,7 @@ export default function ServicesPage() {
             "@type": "Organization",
             name: "ConsultantaBV",
             url: origin,
-            logo: `${origin}/images/logo.png`,
+            logo: `${origin}/images//public/images/logo.svg`,
           },
         },
       }

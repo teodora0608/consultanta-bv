@@ -17,7 +17,7 @@ export default function DespreNoiPage() {
   const pageTitle = "Despre noi | Consultanță juridică online & Brașov – ConsultantaBV"
   const pageDescr =
     "Echipa ConsultantaBV oferă consultanță juridică pentru firme în Brașov și online, înființări SRL/PFA, modificări ONRC și închideri. Rapid, transparent, 100% online."
-  const ogImage = `${origin}/images/hero-tablet.jpg`
+  const ogImage = `${origin}/images/hero-tablet.webp`
 
   // ─────────────── JSON-LD ───────────────
   const aboutPageLd = {
@@ -30,7 +30,7 @@ export default function DespreNoiPage() {
       "@type": "Organization",
       name: "ConsultantaBV",
       url: origin,
-      logo: `${origin}/images/logo.png`,
+      logo: `${origin}/images//public/images/logo.svg`,
       telephone: "+40730140766",
       sameAs: [
         "https://www.facebook.com/consultantabv",
@@ -73,7 +73,7 @@ export default function DespreNoiPage() {
     name: "Consultanță juridică pentru firme – Brașov & online",
     description:
       "Înființări SRL/PFA, modificări ONRC, închidere firmă și consultanță juridică – livrare 100% online sau în Brașov.",
-    provider: { "@type": "Organization", name: "ConsultantaBV", url: origin, logo: `${origin}/images/logo.png` },
+    provider: { "@type": "Organization", name: "ConsultantaBV", url: origin, logo: `${origin}/images//public/images/logo.svg` },
     areaServed: [{ "@type": "City", name: "Brașov" }, { "@type": "Country", name: "România" }],
     url: canonical,
     image: ogImage,
@@ -99,14 +99,14 @@ export default function DespreNoiPage() {
       role: "Specialist servicii juridice",
       description:
         "Ghidează clienții prin pași clari și se asigură că dosarele pentru ONRC sunt corecte din prima – atât online, cât și în Brașov.",
-      image: "/images/diana.jpeg",
+      image: "/images/diana.webp",
     },
     {
       name: "Teodora Croitoru",
       role: "Specialist servicii juridice",
       description:
         "Organizează documentele, urmărește termenele și comunică transparent stadiul fiecărei proceduri juridice.",
-      image: "/images/teodora.jpeg",
+      image: "/images/teodora.webp",
     },
   ]
 
@@ -187,7 +187,7 @@ export default function DespreNoiPage() {
 
             <div className="relative">
               <img
-                src="/images/hero-tablet.jpg"
+                src="/images/hero-tablet.webp"
                 alt="Consultanță juridică pentru firme în Brașov și online – ConsultantaBV"
                 className="rounded-2xl shadow-2xl w-full h-auto"
                 loading="lazy"

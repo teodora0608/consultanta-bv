@@ -70,7 +70,7 @@ export default function PoliticaConfidentialitate() {
         streetAddress: "Strada Nicolae Pop nr. 13, etaj 1, ap. 7",
         addressCountry: "RO",
       },
-      logo: `${origin}/images/logo.png`,
+      logo: `${origin}/images//public/images/logo.svg`,
       url: origin,
     },
     isPartOf: { "@type": "WebSite", url: origin, name: "ConsultantaBV" },

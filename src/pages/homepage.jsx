@@ -24,7 +24,7 @@ export default function HomePage() {
   const pageTitle = "ConsultantaBV – Servicii juridice și înființări firme online în Brașov"
   const pageDescr =
     "Consultanță juridică, înființare SRL și PFA, închidere firme, modificări ONRC și găzduire sediu social. Totul 100% online, rapid și sigur – în 3–5 zile lucrătoare."
-  const ogImage = `${origin}/images/hero-tablet.jpg`
+  const ogImage = `${origin}/images/hero-tablet.webp`
 
   // ─────────────── META la mount ───────────────
   useEffect(() => {
@@ -69,7 +69,7 @@ export default function HomePage() {
     "@type": "Organization",
     name: "ConsultantaBV",
     url: origin,
-    logo: `${origin}/images/logo.png`,
+    logo: `${origin}/images//public/images/logo.svgimages/logo.svg`,
     sameAs: [
       "https://www.facebook.com/consultantabv",
       "https://www.linkedin.com/company/consultantabv",

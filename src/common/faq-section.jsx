@@ -1,6 +1,6 @@
+// src/components/FAQSection.jsx
 "use client"
 
-import { motion, AnimatePresence } from "framer-motion"
 import { useState, useMemo } from "react"
 import { ChevronDownIcon } from "../icons"
 import JsonLd from "../components/JsonLd"
@@ -36,9 +36,9 @@ export default function FAQSection() {
     },
   ]
 
-  const toggleFAQ = (i) => setOpenIndex(openIndex === i ? null : i)
+  const toggle = (i) => setOpenIndex((prev) => (prev === i ? null : i))
 
-  // ✅ JSON-LD (FAQPage)
+  // JSON-LD pentru rich results
   const faqLd = useMemo(
     () => ({
       "@context": "https://schema.org",
@@ -46,10 +46,7 @@ export default function FAQSection() {
       mainEntity: faqs.map((f) => ({
         "@type": "Question",
         name: f.question,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: f.answer,
-        },
+        acceptedAnswer: { "@type": "Answer", text: f.answer },
       })),
     }),
     [faqs]
@@ -63,74 +60,71 @@ export default function FAQSection() {
       itemScope
       itemType="https://schema.org/FAQPage"
     >
-      {/* JSON-LD pentru rich results */}
       <JsonLd data={faqLd} />
 
       <div className="page-container max-w-4xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
+        <div className="text-center mb-12">
           <h2 id="faq-heading" className="text-3xl md:text-4xl font-bold text-[#0a2540] font-serif">
             Întrebări frecvente
           </h2>
-        </motion.div>
+        </div>
 
         <div className="space-y-4">
-          {faqs.map((faq, i) => (
-            <motion.div
-              key={i}
-              itemScope
-              itemProp="mainEntity"
-              itemType="https://schema.org/Question"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="rounded-lg overflow-hidden"
-            >
-              <button
-                onClick={() => toggleFAQ(i)}
-                className="w-full text-left py-5 px-6 bg-gray-50 hover:bg-gray-100 rounded-lg flex justify-between items-center transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#3eb89a] focus:ring-inset"
-                aria-expanded={openIndex === i}
-                aria-controls={`faq-answer-${i}`}
+          {faqs.map((faq, i) => {
+            const open = openIndex === i
+            return (
+              <div
+                key={i}
+                className="rounded-lg overflow-hidden border border-gray-100"
+                itemScope
+                itemProp="mainEntity"
+                itemType="https://schema.org/Question"
               >
-                <span className="text-lg font-semibold text-[#0a2540] pr-8 font-serif" itemProp="name">
-                  {faq.question}
-                </span>
-                <ChevronDownIcon
-                  className={`h-5 w-5 text-[#3eb89a] flex-shrink-0 transition-transform duration-300 ${
-                    openIndex === i ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
+                <button
+                  onClick={() => toggle(i)}
+                  className="w-full text-left py-5 px-6 bg-gray-50 hover:bg-gray-100 flex justify-between items-center transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#3eb89a] focus:ring-inset"
+                  aria-expanded={open}
+                  aria-controls={`faq-answer-${i}`}
+                >
+                  <span className="text-lg font-semibold text-[#0a2540] pr-8 font-serif" itemProp="name">
+                    {faq.question}
+                  </span>
+                  <ChevronDownIcon
+                    className={`h-5 w-5 text-[#3eb89a] flex-shrink-0 transition-transform duration-300 ${
+                      open ? "rotate-180" : ""
+                    }`}
+                    aria-hidden="true"
+                  />
+                </button>
 
-              <AnimatePresence initial={false}>
-                {openIndex === i && (
-                  <motion.div
-                    id={`faq-answer-${i}`}
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="overflow-hidden"
-                    itemScope
-                    itemProp="acceptedAnswer"
-                    itemType="https://schema.org/Answer"
-                  >
-                    <div className="px-6 py-4 text-gray-600 text-base leading-relaxed font-sans" itemProp="text">
-                      {faq.answer}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
+                {/* Panoul cu răspuns: animat doar cu CSS (max-height) */}
+                <div
+                  id={`faq-answer-${i}`}
+                  role="region"
+                  aria-labelledby={`faq-question-${i}`}
+                  className={`faq-panel transition-[max-height,opacity] duration-300 ease-in-out ${
+                    open ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
+                  } overflow-hidden bg-white`}
+                  itemScope
+                  itemProp="acceptedAnswer"
+                  itemType="https://schema.org/Answer"
+                >
+                  <div className="px-6 py-4 text-gray-600 text-base leading-relaxed font-sans" itemProp="text">
+                    {faq.answer}
+                  </div>
+                </div>
+              </div>
+            )
+          })}
         </div>
       </div>
+
+      {/* Reduce motion respectat */}
+      <style>{`
+        @media (prefers-reduced-motion: reduce) {
+          .transition-[max-height,opacity] { transition: none !important; }
+        }
+      `}</style>
     </section>
   )
 }

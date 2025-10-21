@@ -30,7 +30,7 @@ export default function ServiceInfiintareSRL() {
   const pageTitle = "Înființare SRL Online Brașov | ConsultantaBV - 3–5 Zile Lucrătoare"
   const pageDescr =
     "Înființare SRL 100% online în Brașov și în toată România. Consultanță juridică, redactare acte, depunere ONRC. Livrare documente în 3–5 zile lucrătoare."
-  const ogImage = `${origin}/images/hero-tablet.jpg`
+  const ogImage = `${origin}/images/hero-tablet.webp`
 
   // --- JSON-LD data ---
   const jsonLdService = {
@@ -44,7 +44,7 @@ export default function ServiceInfiintareSRL() {
       "@type": "Organization",
       name: "ConsultantaBV",
       url: origin,
-      logo: `${origin}/images/logo.png`,
+      logo: `${origin}/images//public/images/logo.svgimages/logo.svg`,
     },
     areaServed: { "@type": "Country", name: "România" },
     serviceType: "Înființare SRL și consultanță juridică",

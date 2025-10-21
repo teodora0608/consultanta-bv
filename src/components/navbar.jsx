@@ -1,3 +1,6 @@
+// src/components/navbar.jsx
+"use client"
+
 import { useState, useEffect } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { MenuIcon, XIcon, ChevronDownIcon, ChevronRightIcon } from "../icons"
@@ -11,30 +14,35 @@ export default function Navbar() {
   const location = useLocation()
   const isHomePage = location.pathname === "/"
 
+  // Schimbă aspectul la scroll
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 60)
-    }
+    const handleScroll = () => setIsScrolled(window.scrollY > 60)
+    handleScroll()
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // Blochează scroll-ul paginii când e deschis meniul mobil
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden"
     } else {
       document.body.style.overflow = ""
     }
-    return () => {
-      document.body.style.overflow = ""
-    }
+    return () => { document.body.style.overflow = "" }
   }, [isMobileMenuOpen])
+
+  // Închide meniul mobil când se schimbă ruta
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+    setIsServicesOpen(false)
+  }, [location.pathname])
 
   const navLinks = [
     { href: "/servicii", label: "Servicii", hasSubmenu: true, isRoute: true },
-    { href: "/resurse", label: "Ghiduri Juridice", isRoute: true }, // ✅ nou
-    { href: "/despre-noi", label: "Despre", isRoute: true },         // ✅ rută
+    { href: "/despre-noi", label: "Despre", isRoute: true },
     { href: "/contact", label: "Contact", isRoute: true },
+    { href: "/resurse", label: "Ghiduri Juridice", isRoute: true },
   ]
 
   return (
@@ -45,24 +53,30 @@ export default function Navbar() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
         isScrolled ? "bg-white shadow-sm h-[60px]" : "bg-transparent h-[72px]"
       }`}
+      role="navigation"
+      aria-label="Navigație principală"
     >
       <div className="page-container h-full">
         <div className="flex items-center justify-between h-full">
+          {/* LOGO */}
           <Link
             to="/"
-            className="flex items-center group relative transition-transform hover:scale-[1.04] active:scale-[0.97]"
-            aria-label="Consultant ABV Home"
+            className="flex items-center relative transition-transform hover:scale-[1.04] active:scale-[0.97]"
+            aria-label="ConsultantaBV – Acasă"
           >
             <img
-              src="/images/logo.png"
-              alt="Consultant ABV Logo"
+              src="/images/logo.svg"   /* ✅ corect: fără /public în path, fără dublu slash */
+              alt="ConsultantaBV"
               className={`w-[70px] md:w-[75px] h-auto transition-all duration-200 ${
                 isScrolled ? "opacity-100" : "brightness-0 invert"
               }`}
+              height="60"
+              width="180"
+              decoding="async"
             />
           </Link>
 
-          {/* Desktop navigation */}
+          {/* Desktop nav */}
           <div className="hidden lg:flex items-center gap-6">
             {navLinks.map((link) =>
               link.isRoute ? (
@@ -87,13 +101,13 @@ export default function Navbar() {
                   {link.label}
                   <span className="absolute -bottom-0 left-0 w-0 h-0.5 bg-[#3eb89a] transition-all duration-200 group-hover:w-full" />
                 </a>
-              ),
+              )
             )}
 
             <Link
               to="/contact"
               className="px-5 py-2.5 bg-[#3eb89a] text-white rounded-xl font-medium text-sm hover:bg-[#3eb89a]/90 transition-all duration-200 hover:shadow-lg hover:shadow-[#3eb89a]/20 font-sans"
-              aria-label="Request a quote"
+              aria-label="Solicită ofertă"
             >
               Solicită ofertă
             </Link>
@@ -101,10 +115,11 @@ export default function Navbar() {
 
           {/* Mobile burger */}
           <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            onClick={() => setIsMobileMenuOpen((v) => !v)}
             className={`lg:hidden p-2 transition-colors duration-200 ${isScrolled ? "text-gray-700" : "text-white"}`}
-            aria-label="Toggle menu"
+            aria-label="Deschide/închide meniul"
             aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             {isMobileMenuOpen ? <XIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
           </button>
@@ -114,6 +129,7 @@ export default function Navbar() {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
+              id="mobile-menu"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
@@ -121,15 +137,17 @@ export default function Navbar() {
               className="lg:hidden overflow-hidden bg-white shadow-lg"
             >
               <div className="pt-4 pb-6 space-y-1 px-2 max-h-[calc(100vh-80px)] overflow-y-auto">
-                {/* Servicii cu submenu */}
+                {/* Servicii + submenu */}
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0, duration: 0.2 }}
+                  transition={{ duration: 0.2 }}
                 >
                   <button
-                    onClick={() => setIsServicesOpen(!isServicesOpen)}
+                    onClick={() => setIsServicesOpen((v) => !v)}
                     className="w-full flex items-center justify-between text-base font-medium text-gray-700 hover:text-[#3eb89a] transition-colors py-2.5 px-3 font-sans min-h-[44px]"
+                    aria-expanded={isServicesOpen}
+                    aria-controls="submenu-servicii"
                   >
                     <span>Servicii</span>
                     <ChevronDownIcon
@@ -140,6 +158,7 @@ export default function Navbar() {
                   <AnimatePresence>
                     {isServicesOpen && (
                       <motion.div
+                        id="submenu-servicii"
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
@@ -180,11 +199,7 @@ export default function Navbar() {
                 </motion.div>
 
                 {/* Despre */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.08, duration: 0.2 }}
-                >
+                <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.2 }}>
                   <Link
                     to="/despre-noi"
                     onClick={() => setIsMobileMenuOpen(false)}
@@ -195,11 +210,7 @@ export default function Navbar() {
                 </motion.div>
 
                 {/* Contact */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.16, duration: 0.2 }}
-                >
+                <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.2 }}>
                   <Link
                     to="/contact"
                     onClick={() => setIsMobileMenuOpen(false)}
@@ -209,12 +220,8 @@ export default function Navbar() {
                   </Link>
                 </motion.div>
 
-                                {/* Ghiduri Juridice */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.12, duration: 0.2 }}
-                >
+                {/* Ghiduri Juridice */}
+                <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.2 }}>
                   <Link
                     to="/resurse"
                     onClick={() => setIsMobileMenuOpen(false)}

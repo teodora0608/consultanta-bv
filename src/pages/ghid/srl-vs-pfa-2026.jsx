@@ -26,7 +26,7 @@ export default function GhidSRLvsPFA2026() {
     "SRL sau PFA în 2026 – Care ți se potrivește? Avantaje, costuri și obligații | ConsultantaBV"
   const description =
     "Comparație SRL vs PFA în 2026: avantaje, dezavantaje, costuri, taxe, contribuții, răspundere și când să alegi fiecare formă. Ghid actualizat, cu pași rapizi pentru înființare."
-  const ogImage = `${origin}/images/ghiduri/srl-vs-pfa-2026.jpg`
+  const ogImage = `${origin}/images/ghiduri/srl-vs-pfa-2026.webp`
 
   // ─────────────── META (idempotent) ───────────────
   useEffect(() => {
@@ -76,7 +76,7 @@ export default function GhidSRLvsPFA2026() {
       "@type": "Organization",
       name: "ConsultantaBV",
       url: origin,
-      logo: { "@type": "ImageObject", url: `${origin}/images/logo.png` },
+      logo: { "@type": "ImageObject", url: `${origin}/images//public/images/logo.svg` },
     },
     datePublished: "2026-01-01",
     articleSection: ["SRL", "PFA", "Taxe", "Contribuții", "Înființare", "Contabilitate"],

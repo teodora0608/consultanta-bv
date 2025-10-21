@@ -33,7 +33,7 @@ export default function ServicePreluareFirmaCuDatorii() {
   const title = "Preluare firmă cu datorii | ConsultantaBV – soluții legale și sigure"
   const description =
     "Preluare firmă cu datorii: analiză juridică și fiscală, soluții legale (cesiune părți sociale, insolvență, faliment), documente, depuneri și reprezentare completă."
-  const ogImage = `${origin}/images/hero-tablet.jpg`
+  const ogImage = `${origin}/images/hero-tablet.webp`
 
   // ─────────────── META la mount (idempotent) ───────────────
   useEffect(() => {
@@ -84,7 +84,7 @@ export default function ServicePreluareFirmaCuDatorii() {
       "@type": "Organization",
       name: "ConsultantaBV",
       url: origin,
-      logo: `${origin}/images/logo.png`,
+      logo: `${origin}/images//public/images/logo.svg`,
     },
   }
 

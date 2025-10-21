@@ -56,7 +56,7 @@ export default function ContactPage() {
   const title = "Contact ConsultantaBV | Asistență juridică rapidă și profesionistă"
   const description =
     "Contactează echipa ConsultantaBV pentru soluții juridice rapide, transparente și sigure. Răspundem în mai puțin de 2 ore – online sau la sediu, în Brașov."
-  const ogImage = `${origin}/images/hero-tablet.jpg`
+  const ogImage = `${origin}/images/hero-tablet.webp`
 
   // ───────────── META la mount (idempotent) ─────────────
   useEffect(() => {

@@ -133,7 +133,7 @@ export default function ServiceConsultantaJuridica() {
   const pageTitle = "Consultanță juridică pentru SRL, SA și PFA | ConsultantaBV"
   const pageDescr =
     "Consultanță juridică completă pentru SRL, SA și PFA: acte, modificări ONRC, contracte comerciale, litigii, drept comercial și civil. Rapid, clar, adaptat afacerii tale."
-  const ogImage = `${origin}/images/hero-tablet.jpg`
+  const ogImage = `${origin}/images/hero-tablet.webp`
 
   // META la mount
   useEffect(() => {
@@ -184,7 +184,7 @@ export default function ServiceConsultantaJuridica() {
       "@type": "Organization",
       name: "ConsultantaBV",
       url: origin,
-      logo: `${origin}/images/logo.png`,
+      logo: `${origin}/images//public/images/logo.svg`,
     },
   }
 

@@ -1,6 +1,6 @@
+// src/common/about-why-section.jsx
 "use client"
 
-import { motion } from "framer-motion"
 import { ArrowRightIcon } from "../icons"
 import { Link } from "react-router-dom"
 import JsonLd from "../components/JsonLd"
@@ -8,7 +8,7 @@ import JsonLd from "../components/JsonLd"
 export default function AboutWhySection() {
   const origin =
     (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
-  const canonical = `${origin}/#despre` // ancoră stabilă către secțiune
+  const canonical = `${origin}/#despre`
 
   const team = [
     {
@@ -16,7 +16,7 @@ export default function AboutWhySection() {
       role: "Specialist servicii juridice",
       description:
         "Oferă sprijin pas cu pas și explică procedurile pe înțelesul fiecărui client. Se asigură că fiecare etapă este clară și ușor de urmat.",
-      image: "/images/diana.jpeg",
+      image: "/images/diana.webp",
       url: `${origin}/#diana-milotin`,
     },
     {
@@ -24,32 +24,24 @@ export default function AboutWhySection() {
       role: "Specialist servicii juridice",
       description:
         "Organizează și verifică fiecare detaliu pentru ca procesul să decurgă simplu și fără întârzieri. Menține o comunicare clară și eficientă.",
-      image: "/images/teodora.jpeg",
+      image: "/images/teodora.webp",
       url: `${origin}/#teodora-croitoru`,
     },
   ]
 
   const steps = [
     { number: "1", title: "Completează formularul", description: "Simplu și rapid — durează doar câteva minute." },
-    {
-      number: "2",
-      title: "Te contactăm în < 24 ore",
-      description: "Primești analiza inițială și lista documentelor necesare.",
-    },
-    {
-      number: "3",
-      title: "Primești soluția ta juridică",
-      description: "Ghidare clară până la finalizarea procedurilor.",
-    },
+    { number: "2", title: "Te contactăm în < 24 ore", description: "Primești analiza inițială și lista documentelor necesare." },
+    { number: "3", title: "Primești soluția ta juridică", description: "Ghidare clară până la finalizarea procedurilor." },
   ]
 
-  // ---------- JSON-LD (idempotent, fără duplicate) ----------
+  // ---------- JSON-LD (idempotent) ----------
   const organizationLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "ConsultantaBV",
     url: origin,
-    logo: `${origin}/images/logo.png`,
+    logo: `${origin}/images/logo.svg`, // ✅ fix
     sameAs: [
       "https://www.facebook.com/consultantabv",
       "https://www.linkedin.com/company/consultantabv",
@@ -104,51 +96,34 @@ export default function AboutWhySection() {
       aria-labelledby="about-heading"
       className="py-16 md:py-20 bg-[radial-gradient(ellipse_at_top,_#0b2a3a_0%,_#0f3546_40%,_#0f3a4b_100%)] relative overflow-hidden"
     >
-      {/* JSON-LD injectat aici, fără a afecta UI-ul */}
+      {/* JSON-LD (nu afectează UI-ul) */}
       <JsonLd data={[organizationLd, teamItemListLd, howToLd]} />
 
       <div className="page-container">
         <div className="max-w-5xl mx-auto text-center">
           {/* Titlu */}
-          <motion.h2
-            id="about-heading"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl md:text-5xl font-bold mb-6 text-white font-serif"
-          >
+          <h2 id="about-heading" className="text-4xl md:text-5xl font-bold mb-6 text-white font-serif">
             Echipa noastră
-          </motion.h2>
+          </h2>
 
           {/* Descriere */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-base md:text-lg leading-relaxed text-white/80 mb-12 font-sans max-w-3xl mx-auto"
-          >
+          <p className="text-base md:text-lg leading-relaxed text-white/80 mb-12 font-sans max-w-3xl mx-auto">
             Suntem o echipă dedicată, atentă la detalii și mereu aproape de clienți. Oferim ghidare clară și sprijin în
             toate etapele procedurilor juridice — cu accent pe transparență, seriozitate și comunicare eficientă.
-          </motion.p>
+          </p>
 
           {/* Carduri echipă */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 mt-10 items-stretch mb-16">
             {team.map((member, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.2 }}
-                className="group relative h-full"
+                className="group relative h-full transition-transform duration-300 hover:scale-[1.01]"
               >
                 <div className="absolute -inset-[2px] bg-gradient-to-br from-[#3eb89a] via-[#0a2540] to-[#3eb89a] rounded-2xl opacity-0 group-hover:opacity-30 blur-sm transition-opacity duration-300" />
-                <div className="relative bg-white rounded-2xl p-8 h-full flex flex-col items-center text-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-[1.01]">
+                <div className="relative bg-white rounded-2xl p-8 h-full flex flex-col items-center text-center shadow-lg group-hover:shadow-xl transition-shadow duration-300">
                   <div className="mb-6">
                     <img
-                      src={member.image || "/placeholder.svg"}
+                      src={member.image}
                       alt={`${member.name} — ${member.role}`}
                       className="w-[120px] h-[120px] rounded-full object-cover shadow-md"
                       width="120"
@@ -167,32 +142,19 @@ export default function AboutWhySection() {
                     {member.description}
                   </p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
 
           {/* Cum lucrăm */}
-          <motion.h3
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-2xl md:text-3xl font-serif font-bold text-white text-center mb-10"
-          >
+          <h3 className="text-2xl md:text-3xl font-serif font-bold text-white text-center mb-10">
             Cum lucrăm
-          </motion.h3>
+          </h3>
 
           {/* Pașii */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 items-start relative max-w-5xl mx-auto">
             {steps.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
-                className="relative flex flex-col items-center text-center"
-              >
+              <div key={index} className="relative flex flex-col items-center text-center">
                 <div className="w-10 h-10 rounded-full bg-[#3eb89a] text-white font-bold flex items-center justify-center mb-4 mx-auto text-sm">
                   {step.number}
                 </div>
@@ -202,27 +164,20 @@ export default function AboutWhySection() {
                 <p className="text-sm text-white/70 leading-relaxed font-sans">
                   {step.description}
                 </p>
-              </motion.div>
+              </div>
             ))}
           </div>
 
           {/* Buton CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-12"
-          >
+          <div className="mt-12">
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg transition-all durata
-              tion-300 shadow-lg hover:shadow-xl hover:scale-105"
+              className="inline-flex items-center gap-2 bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
             >
               Hai să discutăm cazul tău
               <ArrowRightIcon className="w-5 h-5" />
             </Link>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

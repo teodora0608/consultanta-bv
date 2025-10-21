@@ -32,7 +32,7 @@ export default function ServiceInchidereFirma() {
   const pageTitle = "Închidere firmă (lichidare voluntară) | ConsultantaBV – legal și sigur"
   const pageDescr =
     "Închidere firmă 100% online. Dizolvare, lichidare și radiere conform legii. Documente, depuneri ONRC, Monitorul Oficial. Suport complet, în Brașov și în toată țara."
-  const ogImage = `${origin}/images/hero-tablet.jpg`
+  const ogImage = `${origin}/images/hero-tablet.webp`
 
   useEffect(() => {
     setMetaTags({
@@ -79,7 +79,7 @@ export default function ServiceInchidereFirma() {
       "@type": "Organization",
       name: "ConsultantaBV",
       url: origin,
-      logo: `${origin}/images/logo.png`,
+      logo: `${origin}/images//public/images/logo.svg`,
     },
   }
 

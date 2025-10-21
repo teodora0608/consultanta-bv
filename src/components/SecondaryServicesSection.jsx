@@ -303,7 +303,7 @@ export default function SecondaryServicesSection({
             "@type": "Organization",
             name: "ConsultantABV",
             url: origin,
-            logo: `${origin}/images/logo.png`,
+            logo: `${origin}/images//public/images/logo.svg`,
           },
         },
       })),

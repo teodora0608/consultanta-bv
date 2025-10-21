@@ -1,3 +1,4 @@
+// src/components/footer.jsx
 "use client"
 
 import { MailIcon, PhoneIcon, MapPinIcon, FacebookIcon, InstagramIcon } from "../icons"
@@ -20,19 +21,20 @@ export default function Footer() {
 
       <div className="page-container py-16 relative">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-12">
-          {/* Logo și descriere */}
+          {/* Logo + descriere */}
           <div>
             <img
-              src="/images/logo.png" // ✅ asigură-te că fișierul există aici: public/images/logo.png
+              src="/images/logo.svg"  
               alt="ConsultantaBV"
               className="h-14 w-auto mb-6 brightness-0 invert"
               width="200"
               height="56"
+              decoding="async"
             />
 
             <p className="text-white/80 text-base leading-relaxed mb-6 max-w-md font-sans">
-              Consultanță juridică pentru firme și antreprenori. Soluții rapide, transparente și sigure, adaptate
-              nevoilor tale.
+              Consultanță juridică pentru firme și antreprenori. Soluții rapide, transparente și sigure,
+              adaptate nevoilor tale.
             </p>
 
             <div className="flex items-center gap-4">
@@ -85,26 +87,17 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/servicii"
-                  className="text-white/70 hover:text-[#3eb89a] transition-colors text-base font-sans"
-                >
+                <Link to="/servicii" className="text-white/70 hover:text-[#3eb89a] transition-colors text-base font-sans">
                   Servicii
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/resurse"
-                  className="text-white/70 hover:text-[#3eb89a] transition-colors text-base font-sans"
-                >
+                <Link to="/resurse" className="text-white/70 hover:text-[#3eb89a] transition-colors text-base font-sans">
                   Ghiduri juridice
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/contact"
-                  className="text-white/70 hover:text-[#3eb89a] transition-colors text-base font-sans"
-                >
+                <Link to="/contact" className="text-white/70 hover:text-[#3eb89a] transition-colors text-base font-sans">
                   Contact
                 </Link>
               </li>
@@ -130,7 +123,7 @@ export default function Footer() {
                   className="flex items-start gap-3 text-white/70 hover:text-[#3eb89a] transition-colors text-base font-sans"
                 >
                   <PhoneIcon className="h-5 w-5 mt-0.5 flex-shrink-0" />
-                  <span>+40730140766</span>
+                  <span>+40 730 140 766</span>
                 </a>
               </li>
               <li>

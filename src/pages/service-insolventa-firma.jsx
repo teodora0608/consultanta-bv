@@ -26,7 +26,7 @@ export default function ServiceInsolventaFirma() {
     "Insolvență firmă – Reorganizare, lichidare și asistență juridică | ConsultantaBV"
   const pageDescr =
     "Asistență juridică completă în procedurile de insolvență: analiză juridică și financiară, redactare cerere de deschidere, reprezentare în instanță și relația cu lichidatorul judiciar."
-  const ogImage = `${origin}/images/hero-tablet.jpg`
+  const ogImage = `${origin}/images/hero-tablet.webp`
 
   // ── JSON-LD data
   const breadcrumbLd = {
@@ -64,7 +64,7 @@ export default function ServiceInsolventaFirma() {
       "@type": "Organization",
       name: "ConsultantaBV",
       url: origin,
-      logo: `${origin}/images/logo.png`,
+      logo: `${origin}/images//public/images/logo.svg`,
     },
   }
 

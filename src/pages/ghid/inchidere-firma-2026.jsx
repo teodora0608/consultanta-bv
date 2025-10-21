@@ -23,7 +23,8 @@ export default function GhidInchidereFirma2026() {
   const description =
     "Ghid 2026 pentru închiderea unui SRL: lichidare voluntară, pași ONRC, documente, termene, radiere și verificări fiscale. Explicat clar, pas cu pas."
   // ✅ servește imaginea din /public/images/ghiduri
-  const ogImage = `${origin}/images/ghiduri/inchidere-firma-2026.jpg`
+  const ogImage = `${origin}/images/ghiduri/inchidere-firma-2026.webp`
+
 
   // ─────────────── META (idempotent) ───────────────
   useEffect(() => {
@@ -73,7 +74,7 @@ export default function GhidInchidereFirma2026() {
       "@type": "Organization",
       name: "ConsultantaBV",
       url: origin,
-      logo: { "@type": "ImageObject", url: `${origin}/images/logo.png` },
+      logo: { "@type": "ImageObject", url: `${origin}/images//public/images/logo.svg` },
     },
     datePublished: "2026-01-01",
     articleSection: ["Lichidare voluntară", "Radiere", "ONRC", "ANAF"],

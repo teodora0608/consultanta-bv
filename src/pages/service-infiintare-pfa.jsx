@@ -32,7 +32,7 @@ export default function ServiceInfiintarePFA() {
     "Înființare PFA online | ConsultantaBV – rapid, legal și fără bătăi de cap"
   const pageDescr =
     "Deschide un PFA rapid, 100% online. Consultanță pentru coduri CAEN, dosar ONRC, rezervare denumire, declarații fiscale și depunere la Registrul Comerțului. Suport în Brașov și în toată țara."
-  const ogImage = `${origin}/images/hero-tablet.jpg`
+  const ogImage = `${origin}/images/hero-tablet.webp`
 
   // ─────────────── META (idempotent) ───────────────
   useEffect(() => {
