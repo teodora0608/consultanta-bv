@@ -107,13 +107,13 @@ export default function ServiceInsolventaFirma() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={scrollToDocuments}
-                className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300"
-              >
-                Află detalii
-                <ArrowRightIcon className="icon ml-2" />
-              </button>
+<Link
+  to="/contact"
+  className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300"
+>
+  Află detalii
+  <ArrowRightIcon className="icon ml-2" />
+</Link>
               <a
                 href="https://wa.me/40730140766"
                 target="_blank"

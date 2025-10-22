@@ -29,7 +29,7 @@ export default function FinalCTA() {
         </h2>
 
         <p className="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto font-sans">
-          Scrie-ne pe scurt situația ta — primești un răspuns personalizat în mai puțin de 24 de ore.
+          Scrie-ne pe scurt situația ta — primești un răspuns în mai puțin de 24 de ore.
         </p>
 
         <div className="flex flex-col lg:flex-row gap-4 justify-center items-stretch lg:items-center">

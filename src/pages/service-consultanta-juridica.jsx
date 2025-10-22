@@ -208,13 +208,13 @@ export default function ServiceConsultantaJuridica() {
               ONRC, modificări statutare, contracte comerciale, consultanță în drept comercial și civil, în Brașov și în toată țara.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={scrollToFinalCTA}
-                className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300"
-              >
-                Solicită ofertă
-                <ArrowRightIcon className="ml-2 h-5 w-5" />
-              </button>
+<Link
+  to="/contact"
+  className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300"
+>
+  Solicită ofertă
+  <ArrowRightIcon className="ml-2 h-5 w-5" />
+</Link>
               <a
                 href="https://wa.me/40730140766"
                 target="_blank"
@@ -326,7 +326,7 @@ export default function ServiceConsultantaJuridica() {
         </div>
       </section>
 
-      {/* DE CE ABV */}
+      {/* DE CE NOI? */}
       <section className="py-20 md:py-28 bg-gradient-to-br from-[#0a2540] via-[#0d3a52] to-[#1a5c6b] text-white">
         <div className="page-container max-w-7xl mx-auto">
           <div className="text-center mb-12">

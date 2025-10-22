@@ -156,13 +156,14 @@ export default function ServiceInchidereFirma() {
               depunerile ONRC și publicitatea în Monitorul Oficial – până la radierea finală. Totul fără drumuri inutile.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={scrollToDeceVoluntara}
-                className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#3eb89a]"
-              >
-                Află detalii
-                <ArrowRight className="icon ml-2" aria-hidden />
-              </button>
+  <Link
+    to="/contact"
+    className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300"
+    aria-label="Solicită evaluare - mergi la pagina de contact"
+  >
+    Solicită evaluare
+    <ArrowRight className="ml-2 h-5 w-5" />
+  </Link>
               <a
                 href="https://wa.me/40730140766"
                 target="_blank"

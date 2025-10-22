@@ -73,7 +73,7 @@ export default function CookieConsent() {
     <div className="fixed bottom-0 left-0 right-0 bg-slate-900 text-white z-50 shadow-lg">
       <div className="max-w-6xl mx-auto px-6 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <p className="text-sm text-white/90 max-w-2xl">
-          Folosim cookie-uri doar pentru statistici (Google Analytics 4). Fără publicitate, fără profilare.
+          Folosim cookie-uri doar pentru statistici.
           Detalii în{" "}
           <a href="/politica-cookies" className="underline hover:text-teal-300">
             Politica Cookies

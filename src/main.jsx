@@ -1,4 +1,3 @@
-// src/main.jsx
 "use client"
 
 import { StrictMode, lazy, Suspense } from "react"
@@ -6,14 +5,11 @@ import { createRoot } from "react-dom/client"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import "./global.css"
 
-// Utilitare (pot rămâne non-lazy, sunt mici)
 import ScrollToTop from "./components/ScrollToTop.jsx"
 import NoWidowProvider from "./providers/NoWidowProvider.jsx"
 
-// 🔹 Lazy pentru componente/pagini mai grele
 const CookieConsent = lazy(() => import("./components/CookieConsent.jsx"))
 
-// Pagini
 const HomePage = lazy(() => import("./pages/homepage.jsx"))
 const ContactPage = lazy(() => import("./pages/contactpage.jsx"))
 const NotFound = lazy(() => import("./pages/not-found.jsx"))
@@ -42,11 +38,11 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <ScrollToTop />
-      <NoWidowProvider />
 
-      {/* Suspense pentru încărcarea graduală a chunk-urilor */}
+      {/* Provider global: prinde H1/H2/H3 și orice are .no-widow */}
+      <NoWidowProvider selector="h1, h2, h3, .no-widow" keep={2} />
+
       <Suspense fallback={<div className="p-8 text-center text-gray-500">Se încarcă...</div>}>
-        {/* Cookie banner lazy (se încarcă imediat, dar în chunk separat) */}
         <CookieConsent />
 
         <Routes>
@@ -67,7 +63,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/resurse" element={<ResursePage />} />
           <Route path="/despre-noi" element={<DespreNoiPage />} />
 
-          {/* GHIDURI 2026 – slugs CONSISTENTE */}
+          {/* GHIDURI 2026 */}
           <Route path="/ghid/infiintare-srl-2026" element={<GhidInfiintareSRL2026 />} />
           <Route path="/ghid/inchidere-firma-2026" element={<GhidInchidereFirma2026 />} />
           <Route path="/ghid/insolventa-firma-2026" element={<GhidInsolventa2026 />} />
