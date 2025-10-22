@@ -148,15 +148,16 @@ export default function ServicesPage() {
                 Solicită ofertă
                 <ArrowRightIcon className="ml-2 h-5 w-5" aria-hidden />
               </Link>
-              <a
-                href="https://wa.me/40730140766"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 font-sans min-h-[56px]"
-              >
-                <MessageCircleIcon className="mr-2 h-5 w-5" aria-hidden />
-                Întrebări? WhatsApp
-              </a>
+<a
+  href="https://wa.me/40730140766?text=Salut!%20Aș%20dori%20mai%20multe%20informații%20despre%20serviciile%20ConsultantaBV."
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Scrie-ne pe WhatsApp"
+  className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 min-h-[44px]"
+>
+  <MessageCircleIcon className="mr-2 h-5 w-5 shrink-0" />
+  Întrebări? WhatsApp
+</a>
             </div>
           </div>
         </div>

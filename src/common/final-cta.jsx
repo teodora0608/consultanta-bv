@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 export default function FinalCTA() {
   // setează numărul pentru WhatsApp în format internațional, fără spații sau +
   const whatsappHref =
-    "https://wa.me/0730140766?text=Salut!%20Aș%20dori%20o%20consultanță.%20Îmi%20puteți%20spune%20care%20ar%20fi%20următorii%20pași?"
+    "https://wa.me/40730140766?text=Salut!%20Aș%20dori%20o%20consultanță.%20Îmi%20puteți%20spune%20care%20ar%20fi%20următorii%20pași?"
 
   return (
     <section

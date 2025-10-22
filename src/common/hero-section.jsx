@@ -80,16 +80,17 @@ export default function HeroSection() {
             <ArrowRightIcon className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
           </Link>
 
-          <a
-            href="tel:+40730140766"
-            className="w-full lg:w-auto inline-flex items-center justify-center border-2 border-white/30
-                       bg-white/0 text-white hover:bg-white/10 hover:border-white
-                       font-semibold px-8 py-4 rounded-lg text-lg
-                       transition-all duration-300 font-sans min-h-[44px]"
-          >
-            <PhoneIcon className="mr-2 h-5 w-5" />
-            Sună acum
-          </a>
+<a
+  href="tel:+40799180999"
+  aria-label="Sună acum la ConsultantaBV"
+  className="w-full lg:w-auto inline-flex items-center justify-center border-2 border-white/30
+             bg-transparent text-white hover:bg-white/10 hover:border-white
+             font-semibold px-8 py-4 rounded-lg text-lg
+             transition-all duration-300 font-sans min-h-[44px]"
+>
+  <PhoneIcon className="mr-2 h-5 w-5 shrink-0" />
+  Sună acum
+</a>
         </div>
 
         {/* Beneficii */}

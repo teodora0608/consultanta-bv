@@ -64,16 +64,16 @@ export default function Navbar() {
             className="flex items-center relative transition-transform hover:scale-[1.04] active:scale-[0.97]"
             aria-label="ConsultantaBV – Acasă"
           >
-            <img
-              src="/images/logo.svg"   /* ✅ corect: fără /public în path, fără dublu slash */
-              alt="ConsultantaBV"
-              className={`w-[70px] md:w-[75px] h-auto transition-all duration-200 ${
-                isScrolled ? "opacity-100" : "brightness-0 invert"
-              }`}
-              height="60"
-              width="180"
-              decoding="async"
-            />
+<img
+  src="/images/logo.svg"
+  alt="ConsultantaBV"
+  className={`w-[48px] md:w-[52px] h-auto transition-all duration-200 ${
+    isScrolled ? "opacity-100" : "brightness-0 invert"
+  }`}
+  height="48"
+  width="160"
+  decoding="async"
+/>
           </Link>
 
           {/* Desktop nav */}
