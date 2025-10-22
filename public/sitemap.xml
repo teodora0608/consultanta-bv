@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Pagina principală -->
+  <url>
+    <loc>https://consultantabv.ro/</loc>
+    <lastmod>2025-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Pagini generale -->
+  <url><loc>https://consultantabv.ro/servicii</loc><lastmod>2025-10-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://consultantabv.ro/resurse</loc><lastmod>2025-10-21</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://consultantabv.ro/despre-noi</loc><lastmod>2025-10-21</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://consultantabv.ro/contact</loc><lastmod>2025-10-21</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Servicii -->
+  <url><loc>https://consultantabv.ro/servicii/infiintare-srl</loc><lastmod>2025-10-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://consultantabv.ro/servicii/infiintare-pfa</loc><lastmod>2025-10-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://consultantabv.ro/servicii/consultanta-juridica</loc><lastmod>2025-10-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://consultantabv.ro/servicii/inchidere-firma</loc><lastmod>2025-10-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://consultantabv.ro/servicii/preluare-firma</loc><lastmod>2025-10-21</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://consultantabv.ro/servicii/insolventa-firma</loc><lastmod>2025-10-21</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Ghiduri 2026 -->
+  <url><loc>https://consultantabv.ro/ghid/infiintare-srl-2026</loc><lastmod>2025-10-21</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://consultantabv.ro/ghid/inchidere-firma-2026</loc><lastmod>2025-10-21</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://consultantabv.ro/ghid/insolventa-firma-2026</loc><lastmod>2025-10-21</lastmod><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://consultantabv.ro/ghid/modificare-sediu-social-2026</loc><lastmod>2025-10-21</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://consultantabv.ro/ghid/modificari-onrc-2026</loc><lastmod>2025-10-21</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://consultantabv.ro/ghid/srl-vs-pfa-2026</loc><lastmod>2025-10-21</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+
+  <!-- Politici -->
+  <url><loc>https://consultantabv.ro/politica-confidentialitate</loc><lastmod>2025-10-21</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://consultantabv.ro/termeni-conditii</loc><lastmod>2025-10-21</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://consultantabv.ro/politica-cookies</loc><lastmod>2025-10-21</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
+</urlset>
