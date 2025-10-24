@@ -7,6 +7,8 @@ import "./global.css"
 
 import ScrollToTop from "./components/ScrollToTop.jsx"
 import NoWidowProvider from "./providers/NoWidowProvider.jsx"
+import GAReporter from "./components/GAReporter.jsx"
+import AutoGA from "./components/AutoGA.jsx"
 
 const CookieConsent = lazy(() => import("./components/CookieConsent.jsx"))
 
@@ -18,7 +20,7 @@ const ServiceInfiintareSRL = lazy(() => import("./pages/service-infiintare-srl.j
 const ServiceInfiintarePFA = lazy(() => import("./pages/service-infiintare-pfa.jsx"))
 const ServiceConsultantaJuridica = lazy(() => import("./pages/service-consultanta-juridica.jsx"))
 const ServiceInchidereFirma = lazy(() => import("./pages/service-inchidere-firma.jsx"))
-const ServiceInchidereFirmaCuDatorii = lazy(() => import("./pages/service-inchidere-firma-cu-datorii.jsx"))
+const ServicePreluareFirma = lazy(() => import("./pages/service-preluare-firma.jsx"))
 const ServiceInsolventaFirma = lazy(() => import("./pages/service-insolventa-firma.jsx"))
 const PoliticaConfidentialitate = lazy(() => import("./pages/politica-confidentialitate.jsx"))
 const TermeniConditii = lazy(() => import("./pages/termeni-conditii.jsx"))
@@ -44,6 +46,8 @@ createRoot(document.getElementById("root")).render(
 
       <Suspense fallback={<div className="p-8 text-center text-gray-500">Se încarcă...</div>}>
         <CookieConsent />
+        <GAReporter />  {/* 🔥 urmărește paginile vizitate în SPA */}
+        <AutoGA /> {/* urmărește clickurile pe CTA-uri */}
 
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -53,7 +57,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/servicii/infiintare-pfa" element={<ServiceInfiintarePFA />} />
           <Route path="/servicii/consultanta-juridica" element={<ServiceConsultantaJuridica />} />
           <Route path="/servicii/inchidere-firma" element={<ServiceInchidereFirma />} />
-          <Route path="/servicii/preluare-firma" element={<ServiceInchidereFirmaCuDatorii />} />
+           <Route path="/servicii/preluare-firma" element={<ServicePreluareFirma />} />
           <Route path="/servicii/insolventa-firma" element={<ServiceInsolventaFirma />} />
 
           <Route path="/politica-confidentialitate" element={<PoliticaConfidentialitate />} />

@@ -1,3 +1,4 @@
+// src/pages/contactpage.jsx
 "use client"
 
 import { useState, useEffect } from "react"
@@ -47,7 +48,7 @@ export default function ContactPage() {
     { value: "alte-servicii", label: "Alte servicii" },
   ]
 
-  // ───────────── SEO CONSTS ─────────────
+  // ───────────── SEO VARS ─────────────
   const origin =
     (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
   const path = "/contact"
@@ -71,7 +72,10 @@ export default function ContactPage() {
     })
   }, [title, description, canonical, ogImage])
 
-  // ───────────── JSON-LD (în JSX) ─────────────
+  // ───────────── JSON-LD (fără dubluri) ─────────────
+  const orgId = `${origin}/#organization`
+  const webSiteId = `${origin}/#website`
+
   const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -86,9 +90,9 @@ export default function ContactPage() {
     "@type": "WebPage",
     "@id": `${canonical}#webpage`,
     url: canonical,
+    isPartOf: { "@id": webSiteId },
     name: title,
     description,
-    isPartOf: { "@type": "WebSite", url: origin, name: "ConsultantaBV" },
     primaryImageOfPage: ogImage,
     inLanguage: "ro-RO",
   }
@@ -96,24 +100,15 @@ export default function ContactPage() {
   const contactPageLd = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
+    "@id": `${canonical}#contactpage`,
+    url: canonical,
+    isPartOf: { "@id": webSiteId },
     name: title,
     description,
-    url: canonical,
     image: ogImage,
-    mainEntity: {
-      "@type": "Organization",
-      "@id": `${origin}#organization`,
-      name: "ConsultantaBV",
-      email: "contact@consultantabv.ro",
-      telephone: "+40730140766",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "Strada Nicolae Pop nr 13, etaj 1, ap 7",
-        addressLocality: "Brașov",
-        addressCountry: "RO",
-      },
-      openingHours: "Mo-Fr 09:00-17:00",
-    },
+    inLanguage: "ro-RO",
+    // doar referință la organizație, să evităm duplicate
+    mainEntity: { "@id": orgId },
   }
 
   const handleInputChange = (e) => {
@@ -176,7 +171,7 @@ export default function ContactPage() {
   ]
 
   return (
-    <main className="min-h-screen bg-gray-50" itemScope itemType="https://schema.org/ContactPage">
+    <main className="min-h-screen bg-gray-50">
       {/* JSON-LD (idempotent) */}
       <JsonLd data={[webPageLd, breadcrumbLd, contactPageLd]} />
 
@@ -277,7 +272,7 @@ export default function ContactPage() {
                 <p className="text-white/90 font-sans text-base">
                   Luni – Vineri
                   <br />
-                  <span className="text-xl font-semibold text-[#3eb89a]">09:00 – 17:00</span>
+                  <span className="text-xl font-semibold text-[#3eb89a]">10:00 – 15:00</span>
                 </p>
               </div>
             </div>

@@ -1,28 +1,21 @@
 // src/pages/service-infiintare-srl.jsx
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { Link } from "react-router-dom"
 import Navbar from "../components/navbar"
 import Footer from "../components/footer"
-import FAQSection from "../components/FAQSection"
 import FinalCTA from "../common/final-cta"
+import FAQSectionUI from "../common/FAQSectionUI.jsx" // ✅ import corect
 
 // ✅ icons proprii (fără lucide-react)
-import { ArrowRightIcon, ChevronRightIcon, CheckCircle2Icon, MessageCircleIcon } from "../icons"
+import { ArrowRightIcon, ChevronRightIcon, CheckCircle2Icon } from "../icons"
 
 // ✅ SEO helpers
 import { setMetaTags } from "../seo/meta"
 import JsonLd from "../components/JsonLd"
 
 export default function ServiceInfiintareSRL() {
-  const [openFaqIndex, setOpenFaqIndex] = useState(null)
-
-  const scrollToForm = () => {
-    document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })
-  }
-  const toggleFaq = (index) => setOpenFaqIndex(openFaqIndex === index ? null : index)
-
   // --- SEO constants ---
   const origin =
     (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
@@ -32,7 +25,19 @@ export default function ServiceInfiintareSRL() {
     "Înființare SRL 100% online în Brașov și în toată România. Consultanță juridică, redactare acte, depunere ONRC. Livrare documente în 3–5 zile lucrătoare."
   const ogImage = `${origin}/images/hero-tablet.webp`
 
-  // --- JSON-LD data ---
+  // --- JSON-LD data (minim și corect pentru indexare) ---
+  const jsonLdWebPage = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${canonical}#webpage`,
+    url: canonical,
+    name: pageTitle,
+    description: pageDescr,
+    isPartOf: { "@id": `${origin}/#website` }, // ✅ leagă de WebSite-ul de pe homepage
+    inLanguage: "ro-RO",
+    primaryImageOfPage: ogImage,
+  }
+
   const jsonLdService = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -40,14 +45,9 @@ export default function ServiceInfiintareSRL() {
     description: pageDescr,
     url: canonical,
     image: ogImage,
-    provider: {
-      "@type": "Organization",
-      name: "ConsultantaBV",
-      url: origin,
-      logo: `${origin}/images//public/images/logo.svgimages/logo.svg`,
-    },
-    areaServed: { "@type": "Country", name: "România" },
     serviceType: "Înființare SRL și consultanță juridică",
+    areaServed: { "@type": "Country", name: "România" },
+    provider: { "@type": "Organization", "@id": `${origin}/#organization` }, // ✅ fără dubluri
   }
 
   const jsonLdBreadcrumbs = {
@@ -131,8 +131,8 @@ export default function ServiceInfiintareSRL() {
 
   return (
     <main className="min-h-screen bg-white">
-      {/* ✅ JSON-LD idempotent */}
-      <JsonLd data={[jsonLdService, jsonLdBreadcrumbs]} />
+      {/* ✅ JSON-LD */}
+      <JsonLd data={[jsonLdWebPage, jsonLdService, jsonLdBreadcrumbs]} />
 
       <Navbar />
 
@@ -150,35 +150,39 @@ export default function ServiceInfiintareSRL() {
               în țară.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-<Link
-  to="/contact"
-  className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300"
->
-  Solicită ofertă
-  <ArrowRightIcon className="ml-2 h-5 w-5" />
-</Link>
-<a
-  href="https://wa.me/40730140766?text=Salut!%20Aș%20dori%20mai%20multe%20informații%20despre%20serviciile%20ConsultantaBV."
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Scrie-ne pe WhatsApp"
-  className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 min-h-[44px]"
->
-  <svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  strokeWidth="2"
-  strokeLinecap="round"
-  strokeLinejoin="round"
-  aria-hidden="true"
-  className="h-5 w-5 mr-2"
->
-  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
-</svg>
-  WhatsApp
-</a>
+              <Link
+                to="/contact"
+                className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300"
+              >
+                Solicită ofertă
+                <ArrowRightIcon className="ml-2 h-5 w-5" />
+              </Link>
+              <a
+                href="https://wa.me/40730140766?text=Salut!%20Aș%20dori%20mai%20multe%20informații%20despre%20serviciile%20ConsultantaBV."
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Scrie-ne pe WhatsApp"
+                data-ga="contact"
+                data-ga-type="whatsapp"
+                data-ga-section="infiintare_srl"
+                data-ga-label="Scrie-ne pe WhatsApp"
+                className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 min-h-[44px]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  className="h-5 w-5 mr-2"
+                >
+                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                </svg>
+                WhatsApp
+              </a>
             </div>
           </div>
         </div>
@@ -323,7 +327,7 @@ export default function ServiceInfiintareSRL() {
       {/* FAQ */}
       <section className="py-20 md:py-28 bg-gray-50">
         <div className="page-container max-w-4xl mx-auto">
-          <FAQSection faqs={faqItems} />
+          <FAQSectionUI faqs={faqItems} />
         </div>
       </section>
 

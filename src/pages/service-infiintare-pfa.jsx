@@ -6,18 +6,17 @@ import { Link } from "react-router-dom"
 // UI
 import Navbar from "../components/navbar"
 import Footer from "../components/footer"
-import FAQSection from "../components/FAQSection"
 import FinalCTA from "../common/final-cta"
+import FAQSectionUI from "../common/FAQSectionUI.jsx" // ✅ import corect
 
 // ✅ SEO helpers
-import { setMetaTags } from "../seo/meta";
+import { setMetaTags } from "../seo/meta"
 import JsonLd from "../components/JsonLd"
 
-// ✅ Iconurile interne
+// ✅ Iconurile interne (doar cele folosite)
 import {
   CheckCircle2Icon as CheckCircle2,
   ArrowRightIcon as ArrowRight,
-  MessageCircleIcon as MessageCircle,
   ChevronRightIcon as ChevronRight,
 } from "../icons"
 
@@ -41,6 +40,9 @@ export default function ServiceInfiintarePFA() {
       description: pageDescr,
       canonical,
       image: ogImage,
+      siteName: "ConsultantaBV",     // ✅ coerență
+      ogType: "article",             // ✅ coerență
+      locale: "ro_RO",               // ✅ coerență
     })
   }, [pageTitle, pageDescr, canonical, ogImage])
 
@@ -91,8 +93,8 @@ export default function ServiceInfiintarePFA() {
   ]
 
   // ─────────────── JSON-LD ───────────────
-  const orgId = `${origin}#organization`
-  const webSiteId = `${origin}#website`
+  const orgId = `${origin}/#organization`   // ✅ cu slash (consistență)
+  const webSiteId = `${origin}/#website`     // ✅ cu slash (consistență)
 
   const breadcrumbLd = {
     "@context": "https://schema.org",
@@ -129,15 +131,6 @@ export default function ServiceInfiintarePFA() {
     provider: { "@type": "Organization", "@id": orgId },
   }
 
-  const faqLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqItems.map((f) => ({
-      "@type": "Question",
-      name: f.question,
-      acceptedAnswer: { "@type": "Answer", text: f.answer },
-    })),
-  }
 
   const howToLd = {
     "@context": "https://schema.org",
@@ -155,7 +148,7 @@ export default function ServiceInfiintarePFA() {
   return (
     <main className="min-h-screen bg-white">
       {/* JSON-LD idempotent */}
-      <JsonLd data={[webPageLd, breadcrumbLd, serviceLd, faqLd, howToLd]} />
+      <JsonLd data={[webPageLd, breadcrumbLd, serviceLd, howToLd]} />
 
       <Navbar />
 
@@ -168,38 +161,48 @@ export default function ServiceInfiintarePFA() {
               Înființare PFA rapidă și complet online
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-white/90 mb-8 font-sans max-w-3xl leading-relaxed">
-              Deschide un PFA legal și fără stres. Consultanță completă pentru coduri CAEN, documente, rezervare denumire și depunere online la Registrul Comerțului – în Brașov și în toată țara.
+              Deschide un PFA legal și fără stres. Consultanță completă pentru coduri CAEN, documente, rezervare
+              denumire și depunere online la Registrul Comerțului – în Brașov și în toată țara.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/contact"
+                data-ga="generate_lead"
+                data-ga-type="CTA"
+                data-ga-section="infiintare_pfa"   // ✅ lowercase + underscore
+                data-ga-label="Începe acum - PFA"
                 className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#3eb89a]"
               >
                 Începe acum
                 <ArrowRight className="ml-2 h-5 w-5" aria-hidden />
               </Link>
-<a
-  href="https://wa.me/40730140766?text=Salut!%20Aș%20dori%20mai%20multe%20informații%20despre%20serviciile%20ConsultantaBV."
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Scrie-ne pe WhatsApp"
-  className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 min-h-[44px]"
->
-  <svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  strokeWidth="2"
-  strokeLinecap="round"
-  strokeLinejoin="round"
-  aria-hidden="true"
-  className="h-5 w-5 mr-2"
->
-  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
-</svg>
-  WhatsApp
-</a>
+
+              <a
+                href="https://wa.me/40730140766?text=Salut!%20Aș%20dori%20mai%20multe%20informații%20despre%20serviciile%20ConsultantaBV."
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Scrie-ne pe WhatsApp"
+                data-ga="contact"
+                data-ga-type="whatsapp"
+                data-ga-section="infiintare_pfa"   // ✅ uniform
+                data-ga-label="Scrie-ne pe WhatsApp"
+                className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 min-h-[44px]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  className="h-5 w-5 mr-2"
+                >
+                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                </svg>
+                WhatsApp
+              </a>
             </div>
           </div>
         </div>
@@ -298,8 +301,7 @@ export default function ServiceInfiintarePFA() {
       {/* FAQ */}
       <section className="py-20 md:py-28 bg-gray-50">
         <div className="page-container max-w-4xl mx-auto">
-          {/* Dacă FAQSection la tine așteaptă `faqs`, schimbă prop-ul înapoi */}
-          <FAQSection items={faqItems} />
+          <FAQSectionUI faqs={faqItems} />
         </div>
       </section>
 

@@ -76,7 +76,7 @@ export default function GhidInfiintareSRL2026() {
       "@type": "Organization",
       name: "ConsultantaBV",
       url: origin,
-      logo: { "@type": "ImageObject", url: `${origin}/images//public/images/logo.svg` },
+      logo: { "@type": "ImageObject", url: `${origin}/images/logo.svg` },
     },
     datePublished: "2026-01-01",
     articleSection: ["Înființare SRL", "Acte necesare", "ONRC", "Sediu social", "UBO", "CAEN"],

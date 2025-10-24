@@ -1,27 +1,27 @@
+// src/pages/service-consultanta-juridica.jsx
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { Link } from "react-router-dom"
 
 // ✅ folosește-ți setul local de icon-uri, nu lucide-react
 import {
   CheckCircle2Icon,
   ArrowRightIcon,
-  MessageCircleIcon,
   ChevronRightIcon,
 } from "../icons"
 
 import Navbar from "../components/navbar"
 import Footer from "../components/footer"
-import FAQSection from "../components/FAQSection"
 import FinalCTA from "../common/final-cta"
+import FAQSectionUI from "../common/FAQSectionUI" // ✅ import aliniat
 
 // ✅ SEO
 import { setMetaTags } from "../seo/meta"
 import JsonLd from "../components/JsonLd"
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Date statice (liste/arrays) 
+// Date statice (liste/arrays)
 // ─────────────────────────────────────────────────────────────────────────────
 
 const ceIncludem = [
@@ -114,16 +114,6 @@ const faqItems = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function ServiceConsultantaJuridica() {
-  const [openFaqIndex, setOpenFaqIndex] = useState(null)
-
-  const scrollToFinalCTA = () => {
-    document.getElementById("final-cta")?.scrollIntoView({ behavior: "smooth" })
-  }
-
-  const toggleFaq = (index) => {
-    setOpenFaqIndex(openFaqIndex === index ? null : index)
-  }
-
   // SEO VARS
   const origin =
     (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
@@ -135,7 +125,7 @@ export default function ServiceConsultantaJuridica() {
     "Consultanță juridică completă pentru SRL, SA și PFA: acte, modificări ONRC, contracte comerciale, litigii, drept comercial și civil. Rapid, clar, adaptat afacerii tale."
   const ogImage = `${origin}/images/hero-tablet.webp`
 
-  // META la mount
+  // META la mount (idempotent)
   useEffect(() => {
     setMetaTags({
       title: pageTitle,
@@ -148,7 +138,10 @@ export default function ServiceConsultantaJuridica() {
     })
   }, [pageTitle, pageDescr, canonical, ogImage])
 
-  // JSON-LD
+  // ─────────────── JSON-LD (doar referințe prin @id) ───────────────
+  const orgId = `${origin}/#organization`
+  const webSiteId = `${origin}/#website`
+
   const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -164,9 +157,9 @@ export default function ServiceConsultantaJuridica() {
     "@type": "WebPage",
     "@id": `${canonical}#webpage`,
     url: canonical,
+    isPartOf: { "@id": webSiteId }, // ✅ referință, nu obiect nou
     name: pageTitle,
     description: pageDescr,
-    isPartOf: { "@type": "WebSite", url: origin, name: "ConsultantaBV" },
     primaryImageOfPage: ogImage,
     inLanguage: "ro-RO",
   }
@@ -174,24 +167,33 @@ export default function ServiceConsultantaJuridica() {
   const serviceLd = {
     "@context": "https://schema.org",
     "@type": "Service",
+    "@id": `${canonical}#service`,
     name: "Consultanță juridică pentru SRL, SA și PFA",
     description: pageDescr,
     url: canonical,
     image: ogImage,
     serviceType: "Consultanță juridică",
     areaServed: { "@type": "Country", name: "România" },
-    provider: {
-      "@type": "Organization",
-      name: "ConsultantaBV",
-      url: origin,
-      logo: `${origin}/images//public/images/logo.svg`,
-    },
+    provider: { "@type": "Organization", "@id": orgId }, // ✅ fără dublură de Organization
+  }
+
+
+  const howToLd = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "Pașii colaborării pentru consultanță juridică",
+    description: "Etapele colaborării: de la solicitare, la analiză, implementare și livrare.",
+    step: pasi.map((p, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: p.title,
+    })),
   }
 
   return (
     <main className="min-h-screen bg-white">
       {/* JSON-LD inline (idempotent) */}
-      <JsonLd data={[webPageLd, breadcrumbLd, serviceLd]} />
+      <JsonLd data={[webPageLd, breadcrumbLd, serviceLd, howToLd]} />
 
       <Navbar />
 
@@ -208,35 +210,44 @@ export default function ServiceConsultantaJuridica() {
               ONRC, modificări statutare, contracte comerciale, consultanță în drept comercial și civil, în Brașov și în toată țara.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-<Link
-  to="/contact"
-  className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300"
->
-  Solicită ofertă
-  <ArrowRightIcon className="ml-2 h-5 w-5" />
-</Link>
-<a
-  href="https://wa.me/40730140766?text=Salut!%20Aș%20dori%20mai%20multe%20informații%20despre%20serviciile%20ConsultantaBV."
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Scrie-ne pe WhatsApp"
-  className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 min-h-[44px]"
->
-  <svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  strokeWidth="2"
-  strokeLinecap="round"
-  strokeLinejoin="round"
-  aria-hidden="true"
-  className="h-5 w-5 mr-2"
->
-  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
-</svg>
-  WhatsApp
-</a>
+              <Link
+                to="/contact"
+                data-ga="generate_lead"
+                data-ga-type="CTA"
+                data-ga-section="consultanta_juridica"   // ✅ lowercase + underscore
+                data-ga-label="Solicită ofertă - Consultanță juridică"
+                className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300"
+              >
+                Solicită ofertă
+                <ArrowRightIcon className="ml-2 h-5 w-5" />
+              </Link>
+
+              <a
+                href="https://wa.me/40730140766?text=Salut!%20Aș%20dori%20mai%20multe%20informații%20despre%20serviciile%20ConsultantaBV."
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Scrie-ne pe WhatsApp"
+                data-ga="contact"
+                data-ga-type="whatsapp"
+                data-ga-section="consultanta_juridica"   // ✅ uniform
+                data-ga-label="Scrie-ne pe WhatsApp"
+                className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 min-h-[44px]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  className="h-5 w-5 mr-2"
+                >
+                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                </svg>
+                WhatsApp
+              </a>
             </div>
           </div>
         </div>
@@ -367,7 +378,7 @@ export default function ServiceConsultantaJuridica() {
       {/* FAQ */}
       <section className="py-20 md:py-28 bg-gray-50">
         <div className="page-container max-w-4xl mx-auto">
-          <FAQSection faqs={faqItems} />
+          <FAQSectionUI faqs={faqItems} />
         </div>
       </section>
 

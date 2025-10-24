@@ -1,3 +1,4 @@
+// src/pages/service-inchidere-firma.jsx
 "use client"
 
 import { useEffect } from "react"
@@ -5,24 +6,19 @@ import { Link } from "react-router-dom"
 
 import Navbar from "../components/navbar"
 import Footer from "../components/footer"
-import FAQSection from "../components/FAQSection"
 import FinalCTA from "../common/final-cta"
+import FAQSectionUI from "../common/FAQSectionUI.jsx"
 
 import { setMetaTags } from "../seo/meta"
 import JsonLd from "../components/JsonLd"
 
 import {
   ArrowRightIcon as ArrowRight,
-  MessageCircleIcon as MessageCircle,
   ChevronRightIcon as ChevronRight,
   CheckCircle2Icon as CheckCircle2,
 } from "../icons"
 
 export default function ServiceInchidereFirma() {
-  const scrollToDeceVoluntara = () => {
-    document.getElementById("de-ce-voluntara")?.scrollIntoView({ behavior: "smooth" })
-  }
-
   // ─────────────── SEO VARS ───────────────
   const origin =
     (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
@@ -34,54 +30,18 @@ export default function ServiceInchidereFirma() {
     "Închidere firmă 100% online. Dizolvare, lichidare și radiere conform legii. Documente, depuneri ONRC, Monitorul Oficial. Suport complet, în Brașov și în toată țara."
   const ogImage = `${origin}/images/hero-tablet.webp`
 
+  // ─────────────── META (idempotent) ───────────────
   useEffect(() => {
     setMetaTags({
       title: pageTitle,
       description: pageDescr,
       canonical,
       image: ogImage,
+      siteName: "ConsultantaBV", // ✅ coerență OG
+      ogType: "article",         // ✅ subpagină serviciu
+      locale: "ro_RO",
     })
   }, [pageTitle, pageDescr, canonical, ogImage])
-
-  // ─────────────── JSON-LD ───────────────
-  const breadcrumbLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Acasă", item: origin },
-      { "@type": "ListItem", position: 2, name: "Servicii", item: `${origin}/servicii` },
-      { "@type": "ListItem", position: 3, name: "Închidere firmă", item: canonical },
-    ],
-  }
-
-  const webPageLd = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": `${canonical}#webpage`,
-    url: canonical,
-    name: pageTitle,
-    description: pageDescr,
-    isPartOf: { "@type": "WebSite", url: origin, name: "ConsultantaBV" },
-    primaryImageOfPage: ogImage,
-    inLanguage: "ro-RO",
-  }
-
-  const serviceLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: "Închidere firmă (lichidare voluntară)",
-    description: pageDescr,
-    url: canonical,
-    image: ogImage,
-    serviceType: "Dizolvare, lichidare și radiere firme",
-    areaServed: { "@type": "Country", name: "România" },
-    provider: {
-      "@type": "Organization",
-      name: "ConsultantaBV",
-      url: origin,
-      logo: `${origin}/images//public/images/logo.svg`,
-    },
-  }
 
   // ─────────────── Content ───────────────
   const ceIncludem = [
@@ -129,10 +89,62 @@ export default function ServiceInchidereFirma() {
     },
   ]
 
+  // ─────────────── JSON-LD ───────────────
+  const orgId = `${origin}/#organization` // ✅ cu slash
+  const webSiteId = `${origin}/#website`  // ✅ cu slash
+
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Acasă", item: origin },
+      { "@type": "ListItem", position: 2, name: "Servicii", item: `${origin}/servicii` },
+      { "@type": "ListItem", position: 3, name: "Închidere firmă", item: canonical },
+    ],
+  }
+
+  const webPageLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${canonical}#webpage`,
+    url: canonical,
+    isPartOf: { "@id": webSiteId }, // ✅ referință, nu obiect nou
+    name: pageTitle,
+    description: pageDescr,
+    primaryImageOfPage: ogImage,
+    inLanguage: "ro-RO",
+  }
+
+  const serviceLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${canonical}#service`,
+    name: "Închidere firmă (lichidare voluntară)",
+    description: pageDescr,
+    url: canonical,
+    image: ogImage,
+    serviceType: "Dizolvare, lichidare și radiere firme",
+    areaServed: { "@type": "Country", name: "România" },
+    provider: { "@type": "Organization", "@id": orgId }, // ✅ fără dublură
+  }
+
+  const howToLd = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "Pașii procedurii de închidere a firmei",
+    description: "Ghid succint al etapelor pentru dizolvare, lichidare și radiere.",
+    step: pasi.map((p, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: p.title,
+    })),
+  }
+
   // ─────────────── Layout ───────────────
   return (
     <main id="main-content" className="min-h-screen bg-white">
-      <JsonLd data={[webPageLd, breadcrumbLd, serviceLd]} />
+      {/* JSON-LD idempotent */}
+      <JsonLd data={[webPageLd, breadcrumbLd, serviceLd, howToLd]} />
 
       <a
         href="#content-start"
@@ -156,36 +168,45 @@ export default function ServiceInchidereFirma() {
               depunerile ONRC și publicitatea în Monitorul Oficial – până la radierea finală. Totul fără drumuri inutile.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-  <Link
-    to="/contact"
-    className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300"
-    aria-label="Solicită evaluare - mergi la pagina de contact"
-  >
-    Solicită evaluare
-    <ArrowRight className="ml-2 h-5 w-5" />
-  </Link>
-<a
-  href="https://wa.me/40730140766?text=Salut!%20Aș%20dori%20mai%20multe%20informații%20despre%20serviciile%20ConsultantaBV."
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Scrie-ne pe WhatsApp"
-  className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 min-h-[44px]"
->
-  <svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  strokeWidth="2"
-  strokeLinecap="round"
-  strokeLinejoin="round"
-  aria-hidden="true"
-  className="h-5 w-5 mr-2"
->
-  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
-</svg>
-  WhatsApp
-</a>
+              <Link
+                to="/contact"
+                aria-label="Solicită evaluare - mergi la pagina de contact"
+                data-ga="generate_lead"
+                data-ga-type="CTA"
+                data-ga-section="inchidere_firma"  // ✅ lowercase + underscore
+                data-ga-label="Solicită evaluare - Închidere firmă"
+                className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#3eb89a]"
+              >
+                Solicită evaluare
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+
+              <a
+                href="https://wa.me/40730140766?text=Salut!%20Aș%20dori%20mai%20multe%20informații%20despre%20serviciile%20ConsultantaBV."
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Scrie-ne pe WhatsApp"
+                data-ga="contact"
+                data-ga-type="whatsapp"
+                data-ga-section="inchidere_firma"  // ✅ uniform
+                data-ga-label="Scrie-ne pe WhatsApp"
+                className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 min-h-[44px]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  className="h-5 w-5 mr-2"
+                >
+                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                </svg>
+                WhatsApp
+              </a>
             </div>
           </div>
         </div>
@@ -196,12 +217,12 @@ export default function ServiceInchidereFirma() {
         <div className="page-container">
           <nav className="flex items-center gap-2 text-sm font-sans" aria-label="breadcrumb">
             <Link to="/" className="text-gray-600 hover:text-[#3eb89a] flex items-center gap-1">
-              Acasă <ArrowRight className="icon" aria-hidden />
+              Acasă <ArrowRight className="w-4 h-4" aria-hidden />
             </Link>
             <Link to="/servicii" className="text-gray-600 hover:text-[#3eb89a]">
               Servicii
             </Link>
-            <ChevronRight className="icon text-gray-400" aria-hidden />
+            <ChevronRight className="w-4 h-4 text-gray-400" aria-hidden />
             <span className="text-[#0a2540] font-semibold" aria-current="page">
               Închidere firmă
             </span>
@@ -227,7 +248,7 @@ export default function ServiceInchidereFirma() {
                 key={idx}
                 className="flex items-start gap-3 p-6 bg-gray-50 border border-gray-200 rounded-xl hover:shadow-md transition-all"
               >
-                <CheckCircle2 className="icon text-[#3eb89a] mt-0.5" aria-hidden />
+                <CheckCircle2 className="w-5 h-5 text-[#3eb89a] flex-shrink-0 mt-0.5" aria-hidden />
                 <span className="text-base text-gray-700 font-sans leading-relaxed">{item}</span>
               </div>
             ))}
@@ -251,7 +272,7 @@ export default function ServiceInchidereFirma() {
                 "Suport complet până la radierea definitivă",
               ].map((item, idx) => (
                 <li key={idx} className="flex items-start gap-3">
-                  <CheckCircle2 className="icon text-[#3eb89a] mt-0.5" aria-hidden />
+                  <CheckCircle2 className="w-5 h-5 text-[#3eb89a] mt-0.5" aria-hidden />
                   <span className="text-sm text-white/80">{item}</span>
                 </li>
               ))}
@@ -271,7 +292,7 @@ export default function ServiceInchidereFirma() {
                 "Dispoziții fiscale și contabile relevante",
               ].map((item, idx) => (
                 <li key={idx} className="flex items-start gap-3">
-                  <CheckCircle2 className="icon text-[#3eb89a] mt-0.5" aria-hidden />
+                  <CheckCircle2 className="w-5 h-5 text-[#3eb89a] mt-0.5" aria-hidden />
                   <span className="text-sm text-white/80">{item}</span>
                 </li>
               ))}
@@ -340,7 +361,7 @@ export default function ServiceInchidereFirma() {
       {/* FAQ */}
       <section className="py-20 md:py-28 bg-gray-50">
         <div className="page-container max-w-4xl mx-auto">
-          <FAQSection faqs={faqItems} />
+          <FAQSectionUI faqs={faqItems} />
         </div>
       </section>
 

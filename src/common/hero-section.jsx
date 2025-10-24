@@ -70,19 +70,27 @@ export default function HeroSection() {
 
         {/* CTA-uri */}
         <div className="opacity-0 translate-y-3 animate-[fadeInUp_.6s_.2s_ease-out_forwards] flex flex-col lg:flex-row gap-4 justify-center items-stretch lg:items-center mb-10">
-          <Link
-            to="/contact"
-            className="w-full lg:w-auto inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085]
-                       text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg
-                       transition-all duration-300 group font-sans min-h-[44px]"
-          >
-            Solicită ofertă gratuită
-            <ArrowRightIcon className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-          </Link>
+  <Link
+    to="/contact"
+    data-ga="generate_lead"
+    data-ga-label="Solicită ofertă gratuită"
+    data-ga-section="hero"
+    data-ga-type="CTA"
+    className="w-full lg:w-auto inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085]
+               text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg
+               transition-all duration-300 group font-sans min-h-[44px]"
+  >
+    Solicită ofertă gratuită
+    <ArrowRightIcon className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+  </Link>
 
 <a
   href="tel:+40799180999"
   aria-label="Sună acum la ConsultantaBV"
+  data-ga="contact"
+  data-ga-label="Sună acum"
+  data-ga-section="hero"
+  data-ga-type="telefon"
   className="w-full lg:w-auto inline-flex items-center justify-center border-2 border-white/30
              bg-transparent text-white hover:bg-white/10 hover:border-white
              font-semibold px-8 py-4 rounded-lg text-lg

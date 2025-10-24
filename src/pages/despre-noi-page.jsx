@@ -1,17 +1,26 @@
+// src/pages/despre-noi-page.jsx
 "use client"
 
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
+
 import Navbar from "../components/navbar"
 import Footer from "../components/footer"
 import FinalCTA from "../common/final-cta"
 import JsonLd from "../components/JsonLd"
 import { setMetaTags } from "../seo/meta"
-import { ArrowRightIcon, CheckCircle2Icon, ShieldIcon, ZapIcon, HeartIcon } from "../icons"
+import {
+  ArrowRightIcon,
+  CheckCircle2Icon,
+  ShieldIcon,
+  ZapIcon,
+  HeartIcon,
+} from "../icons"
 
 export default function DespreNoiPage() {
   // ─────────────── SEO VARS ───────────────
-  const origin = (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
+  const origin =
+    (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
   const canonical = `${origin}/despre-noi`
 
   const pageTitle = "Despre noi | Consultanță juridică online & Brașov – ConsultantaBV"
@@ -19,42 +28,35 @@ export default function DespreNoiPage() {
     "Echipa ConsultantaBV oferă consultanță juridică pentru firme în Brașov și online, înființări SRL/PFA, modificări ONRC și închideri. Rapid, transparent, 100% online."
   const ogImage = `${origin}/images/hero-tablet.webp`
 
-  // ─────────────── JSON-LD ───────────────
+  // ─────────────── META (idempotent) ───────────────
+  useEffect(() => {
+    setMetaTags({
+      title: pageTitle,
+      description: pageDescr,
+      canonical,
+      image: ogImage,
+      siteName: "ConsultantaBV",
+      ogType: "website",
+      locale: "ro_RO",
+    })
+  }, [pageTitle, pageDescr, canonical, ogImage])
+
+  // ─────────────── JSON-LD (fără dubluri) ───────────────
+  const orgId = `${origin}/#organization`
+  const webSiteId = `${origin}/#website`
+
   const aboutPageLd = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
+    "@id": `${canonical}#webpage`,
+    url: canonical,
+    isPartOf: { "@id": webSiteId },
     name: pageTitle,
     description: pageDescr,
-    url: canonical,
-    mainEntity: {
-      "@type": "Organization",
-      name: "ConsultantaBV",
-      url: origin,
-      logo: `${origin}/images//public/images/logo.svg`,
-      telephone: "+40730140766",
-      sameAs: [
-        "https://www.facebook.com/consultantabv",
-        "https://www.linkedin.com/company/consultantabv",
-      ],
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: "Strada Nicolae Pop nr. 13, etaj 1, ap. 7",
-        addressLocality: "Brașov",
-        addressRegion: "BV",
-        postalCode: "500152",
-        addressCountry: "RO",
-      },
-      areaServed: [{ "@type": "City", name: "Brașov" }, { "@type": "Country", name: "România" }],
-      contactPoint: [{
-        "@type": "ContactPoint",
-        telephone: "+40730140766",
-        contactType: "customer support",
-        areaServed: "RO",
-        availableLanguage: ["ro"],
-      }],
-      description:
-        "ConsultantaBV oferă servicii juridice pentru companii: înființare SRL/PFA, modificări ONRC, închidere firmă și consultanță juridică – online și în Brașov.",
-    },
+    primaryImageOfPage: ogImage,
+    inLanguage: "ro-RO",
+    // referim organizația existentă de pe homepage, nu creăm una nouă
+    mainEntity: { "@id": orgId },
   }
 
   const breadcrumbLd = {
@@ -65,32 +67,6 @@ export default function DespreNoiPage() {
       { "@type": "ListItem", position: 2, name: "Despre noi", item: canonical },
     ],
   }
-
-  // opțional, pentru local + serviciu
-  const serviceLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: "Consultanță juridică pentru firme – Brașov & online",
-    description:
-      "Înființări SRL/PFA, modificări ONRC, închidere firmă și consultanță juridică – livrare 100% online sau în Brașov.",
-    provider: { "@type": "Organization", name: "ConsultantaBV", url: origin, logo: `${origin}/images//public/images/logo.svg` },
-    areaServed: [{ "@type": "City", name: "Brașov" }, { "@type": "Country", name: "România" }],
-    url: canonical,
-    image: ogImage,
-  }
-
-  // ─────────────── META inject ───────────────
-  useEffect(() => {
-    setMetaTags({
-      title: pageTitle,
-      description: pageDescr,
-      canonical,
-      image: ogImage,     // ✅ corect: “image”, nu ogImage
-      siteName: "ConsultantaBV",
-      ogType: "website",
-      locale: "ro_RO",
-    })
-  }, [pageTitle, pageDescr, canonical, ogImage])
 
   // ─────────────── Content ───────────────
   const team = [
@@ -125,7 +101,9 @@ export default function DespreNoiPage() {
 
   return (
     <main className="min-h-screen bg-white">
-      <JsonLd data={[aboutPageLd, breadcrumbLd, serviceLd]} />
+      {/* JSON-LD idempotent */}
+      <JsonLd data={[aboutPageLd, breadcrumbLd]} />
+
       <Navbar />
 
       {/* HERO */}
@@ -159,7 +137,7 @@ export default function DespreNoiPage() {
         </div>
       </section>
 
-      {/* MISIUNE / SEO TEXT */}
+      {/* MISIUNE */}
       <section className="py-20 md:py-28 bg-white">
         <div className="page-container max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

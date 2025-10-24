@@ -1,3 +1,4 @@
+// src/pages/servicii.jsx
 "use client"
 
 import { useState, useEffect, useRef } from "react"
@@ -111,7 +112,8 @@ export default function ServicesPage() {
             "@type": "Organization",
             name: "ConsultantaBV",
             url: origin,
-            logo: `${origin}/images//public/images/logo.svg`,
+            // ✅ FIX: path corect pentru logo
+            logo: `${origin}/images/logo.svg`,
           },
         },
       }
@@ -131,9 +133,9 @@ export default function ServicesPage() {
 
         <div className="page-container relative z-10">
           <div className="flex flex-col items-center text-center max-w-5xl mx-auto">
-<h1 className="text-4xl md:text-5xl font-bold mb-6 font-serif text-white/90">
-  Toate serviciile
-</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 font-serif text-white/90">
+              Toate serviciile
+            </h1>
             <p className="text-lg md:text-xl text-white/90 mb-10 font-sans max-w-4xl leading-relaxed">
               De la înființare și modificări până la închidere, insolvență și documente conexe. 100% online, simplu și
               rapid. Lucrăm în toată țara, cu redactare corectă a actelor, depunere la ONRC/ANAF și urmărirea statusului
@@ -148,28 +150,32 @@ export default function ServicesPage() {
                 Solicită ofertă
                 <ArrowRightIcon className="ml-2 h-5 w-5" aria-hidden />
               </Link>
-<a
-  href="https://wa.me/40730140766?text=Salut!%20Aș%20dori%20mai%20multe%20informații%20despre%20serviciile%20ConsultantaBV."
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Scrie-ne pe WhatsApp"
-  className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 min-h-[44px]"
->
-  <svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  strokeWidth="2"
-  strokeLinecap="round"
-  strokeLinejoin="round"
-  aria-hidden="true"
-  className="h-5 w-5 mr-2"
->
-  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
-</svg>
-  WhatsApp
-</a>
+              <a
+                href="https://wa.me/40730140766?text=Salut!%20Aș%20dori%20mai%20multe%20informații%20despre%20serviciile%20ConsultantaBV."
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Scrie-ne pe WhatsApp"
+                data-ga="contact"
+                data-ga-type="whatsapp"
+                data-ga-section="Servicii"
+                data-ga-label="Scrie-ne pe WhatsApp"
+                className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 min-h-[44px]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  className="h-5 w-5 mr-2"
+                >
+                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                </svg>
+                WhatsApp
+              </a>
             </div>
           </div>
         </div>
@@ -200,7 +206,8 @@ export default function ServicesPage() {
         subtitle="Servicii complementare pentru înființarea firmei."
         services={serviceGroups.infiintare}
         onServiceClick={openModal}
-        columns={3}
+        // ✅ FIX: prop corect pentru 3 coloane
+        lgCols={3}
         bgColor="bg-gray-50"
       />
 
@@ -209,7 +216,8 @@ export default function ServicesPage() {
         subtitle="Actualizează datele firmei rapid și conform legii."
         services={serviceGroups.modificari}
         onServiceClick={openModal}
-        columns={3}
+        // ✅ FIX: prop corect pentru 3 coloane
+        lgCols={3}
         bgColor="bg-white"
       />
 
@@ -235,7 +243,7 @@ export default function ServicesPage() {
             </p>
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 font-sans min-h-[56px]"
+              className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all durata-300 font-sans min-h-[56px]"
             >
               Solicită ofertă
               <ArrowRightIcon className="ml-2 h-5 w-5" aria-hidden />

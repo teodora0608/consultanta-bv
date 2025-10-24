@@ -1,8 +1,9 @@
-// src/pages/resurse.jsx
+// src/pages/resurse-page.jsx
 "use client"
 
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
+
 import { ClockIcon as Clock, ArrowRightIcon as ArrowRight, BookOpenIcon as BookOpen } from "../icons"
 import Navbar from "../components/navbar"
 import Footer from "../components/footer"
@@ -23,7 +24,7 @@ export default function ResursePage() {
     "Ghiduri complete 2026: acte pentru înființare SRL, SRL vs PFA 2026, închidere firmă, modificări ONRC, insolvență și modificare sediu social. Explicat clar, pas cu pas."
   const ogImage = `${origin}/images/ghiduri/inchidere-firma-2026.jpg`
 
-  // ─────────────── META la mount ───────────────
+  // ─────────────── META (idempotent) ───────────────
   useEffect(() => {
     setMetaTags({
       title,
@@ -31,7 +32,7 @@ export default function ResursePage() {
       canonical,
       image: ogImage,
       siteName: "ConsultantaBV",
-      ogType: "website",
+      ogType: "website", // listă/colectie
       locale: "ro_RO",
     })
   }, [title, description, canonical, ogImage])
@@ -82,7 +83,10 @@ export default function ResursePage() {
     },
   ]
 
-  // ─────────────── JSON-LD ───────────────
+  // ─────────────── JSON-LD (fără dubluri; doar referințe prin @id) ───────────────
+  const orgId = `${origin}/#organization`
+  const webSiteId = `${origin}/#website`
+
   const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -94,12 +98,12 @@ export default function ResursePage() {
 
   const webPageLd = {
     "@context": "https://schema.org",
-    "@type": "WebPage",
+    "@type": "CollectionPage",
     "@id": `${canonical}#webpage`,
     url: canonical,
+    isPartOf: { "@id": webSiteId },
     name: title,
     description,
-    isPartOf: { "@type": "WebSite", url: origin, name: "ConsultantaBV" },
     primaryImageOfPage: ogImage,
     inLanguage: "ro-RO",
   }
@@ -113,16 +117,20 @@ export default function ResursePage() {
       position: idx + 1,
       item: {
         "@type": "Article",
+        "@id": `${origin}${g.slug}#article`,
+        url: `${origin}${g.slug}`,
         name: g.title,
         description: g.description,
-        url: `${origin}${g.slug}`,
+        inLanguage: "ro-RO",
+        isPartOf: { "@id": webSiteId }, // referință, nu WebSite nou
+        publisher: { "@id": orgId },   // referință la Organization-ul de pe homepage
       },
     })),
   }
 
   return (
     <main className="min-h-screen bg-white">
-      {/* JSON-LD */}
+      {/* JSON-LD idempotent */}
       <JsonLd data={[webPageLd, breadcrumbLd, itemListLd]} />
 
       <Navbar />
@@ -168,6 +176,10 @@ export default function ResursePage() {
                   to={guide.slug}
                   className="block focus:outline-none focus:ring-2 focus:ring-[#3eb89a] focus:ring-offset-2 focus:ring-offset-white"
                   aria-label={`${guide.title} – deschide ghidul`}
+                  data-ga="view_content"
+                  data-ga-type="guide_card"
+                  data-ga-section="resurse"
+                  data-ga-label={guide.title}
                 >
                   <div className="p-8">
                     <h3 className="text-xl font-bold text-[#0a2540] mb-4 font-serif group-hover:text-[#3eb89a] transition-colors leading-tight">
@@ -196,15 +208,17 @@ export default function ResursePage() {
       <section className="py-16 md:py-20 bg-gradient-to-br from-[#0a2540] via-[#0d3a52] to-[#1a5c6b]">
         <div className="page-container">
           <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 font-serif">
-              Ai nevoie de ajutor?
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 font-serif">Ai nevoie de ajutor?</h2>
             <p className="text-lg md:text-xl text-white/90 mb-8 font-sans">
               Spune-ne pe scurt situația ta și îți răspundem rapid cu pașii potriviți pentru 2026.
             </p>
             <Link
               to="/contact"
               className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 font-sans"
+              data-ga="generate_lead"
+              data-ga-type="CTA"
+              data-ga-section="resurse"
+              data-ga-label="Cere ofertă"
             >
               Cere ofertă
               <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />

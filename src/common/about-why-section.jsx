@@ -3,12 +3,10 @@
 
 import { ArrowRightIcon } from "../icons"
 import { Link } from "react-router-dom"
-import JsonLd from "../components/JsonLd"
 
 export default function AboutWhySection() {
   const origin =
     (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
-  const canonical = `${origin}/#despre`
 
   const team = [
     {
@@ -35,70 +33,12 @@ export default function AboutWhySection() {
     { number: "3", title: "Primești soluția ta juridică", description: "Ghidare clară până la finalizarea procedurilor." },
   ]
 
-  // ---------- JSON-LD (idempotent) ----------
-  const organizationLd = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "ConsultantaBV",
-    url: origin,
-    logo: `${origin}/images/logo.svg`, // ✅ fix
-    sameAs: [
-      "https://www.facebook.com/consultantabv",
-      "https://www.linkedin.com/company/consultantabv",
-    ],
-    employee: team.map((m) => ({
-      "@type": "Person",
-      name: m.name,
-      jobTitle: m.role,
-      description: m.description,
-      image: `${origin}${m.image}`,
-      url: m.url,
-      worksFor: { "@type": "Organization", name: "ConsultantaBV" },
-    })),
-  }
-
-  const teamItemListLd = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: "Echipa ConsultantaBV",
-    itemListElement: team.map((m, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      item: {
-        "@type": "Person",
-        name: m.name,
-        jobTitle: m.role,
-        description: m.description,
-        image: `${origin}${m.image}`,
-        url: m.url,
-      },
-    })),
-  }
-
-  const howToLd = {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    name: "Cum lucrăm la ConsultantaBV",
-    description:
-      "Etapele prin care clienții obțin soluția juridică: completare formular, contact în < 24h și livrarea soluției.",
-    url: canonical,
-    step: steps.map((s, i) => ({
-      "@type": "HowToStep",
-      position: i + 1,
-      name: s.title,
-      text: s.description,
-    })),
-  }
-
   return (
     <section
       id="despre"
       aria-labelledby="about-heading"
       className="py-16 md:py-20 bg-[radial-gradient(ellipse_at_top,_#0b2a3a_0%,_#0f3546_40%,_#0f3a4b_100%)] relative overflow-hidden"
     >
-      {/* JSON-LD (nu afectează UI-ul) */}
-      <JsonLd data={[organizationLd, teamItemListLd, howToLd]} />
-
       <div className="page-container">
         <div className="max-w-5xl mx-auto text-center">
           {/* Titlu */}
@@ -161,9 +101,7 @@ export default function AboutWhySection() {
                 <h4 className="text-lg font-semibold text-white mb-2 font-serif">
                   {step.title}
                 </h4>
-                <p className="text-sm text-white/70 leading-relaxed font-sans">
-                  {step.description}
-                </p>
+                <p className="text-sm text-white/70 leading-relaxed font-sans" dangerouslySetInnerHTML={{ __html: step.description }} />
               </div>
             ))}
           </div>

@@ -75,7 +75,7 @@ export default function GhidModificariONRC2026() {
       "@type": "Organization",
       name: "ConsultantaBV",
       url: origin,
-      logo: { "@type": "ImageObject", url: `${origin}/images//public/images/logo.svg` },
+      logo: { "@type": "ImageObject", url: `${origin}/images/logo.svg` },
     },
     datePublished: "2026-01-01",
     articleSection: ["ONRC", "Sediu social", "CAEN", "Asociați", "Administratori", "Puncte de lucru"],

@@ -1,8 +1,8 @@
+// src/components/MainServicesGrid.jsx
 "use client"
 
-import React, { useMemo } from "react"
+import React from "react"
 import { Link } from "react-router-dom"
-import JsonLd from "../components/JsonLd"
 
 import {
   CheckCircle2Icon,
@@ -56,51 +56,17 @@ export const mainServices = [
 ]
 
 /**
- * MainServicesGrid
- * - withJsonLd: true|false → controlează injectarea JSON-LD (ItemList + Service)
- *   * true pe pagina de Servicii
- *   * false pe homepage, ca să eviți dublurile de schema
+ * MainServicesGrid (fără JSON-LD)
  */
 export default function MainServicesGrid({
   items = mainServices,
   title,
   subtitle,
-  cta,                 // opțional: { to: "/contact", label: "Vezi ofertele" }
-  withJsonLd = true,   // 🔥 default on (dezactivezi pe homepage)
+  cta,          // { to: "/contact", label: "Vezi ofertele" } (opțional)
   className = "",
 }) {
-  const origin = (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
-
-  const jsonLd = useMemo(() => {
-    if (!withJsonLd) return null
-    return {
-      "@context": "https://schema.org",
-      "@type": "ItemList",
-      name: title || "Servicii principale",
-      itemListElement: items.map((s, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        item: {
-          "@type": "Service",
-          name: s.title,
-          description: s.bullets?.length ? s.bullets.join(", ") : undefined,
-          url: `${origin}${s.link}`,
-          provider: {
-            "@type": "Organization",
-            name: "ConsultantaBV",
-            url: origin,
-            logo: `${origin}/images//public/images/logo.svg`,
-          },
-        },
-      })),
-    }
-  }, [withJsonLd, items, origin, title])
-
   return (
     <section className={`section-spacing bg-white ${className}`}>
-      {/* ✅ JSON-LD doar când withJsonLd = true */}
-      {jsonLd && <JsonLd data={jsonLd} />}
-
       <div className="page-container">
         {(title || subtitle) && (
           <div className="mb-12 text-center">

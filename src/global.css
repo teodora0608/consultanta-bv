@@ -1,10 +1,6 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
-
-/* =========================
-   Design tokens (OKLCH)
-   ========================= */
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -79,9 +75,7 @@
   --sidebar-ring: oklch(0.439 0 0);
 }
 
-/* =========================
-   Tailwind v4 theme inline
-   ========================= */
+/* ========================= */
 @theme inline {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Playfair Display", ui-serif, Georgia, serif;
@@ -128,9 +122,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* =========================
-   Base styles
-   ========================= */
+/* =========================*/
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -159,19 +151,14 @@
   p, li {
     font-size: clamp(1rem, 1vw + 0.25rem, 1.125rem);
     line-height: 1.6;
-    text-wrap: pretty;    /* împărțire „umană” */
-    hyphens: none;        /* fără silabisire */
-    overflow-wrap: normal;/* nu rupe în mijlocul cuvintelor */
-    word-break: normal;   /* rupe doar la spații */
+    text-wrap: pretty;  
+    hyphens: none;       
+    overflow-wrap: normal;
+    word-break: normal;   
   }
 
-  /* claritate: menținem comportamentul normal în ro; nu setăm hyphens:auto */
-  html[lang="ro"] body { word-break: normal; }
-
-  /* Scroll offset pentru header sticky */
-  section[id] { scroll-margin-top: 80px; }
-
-  /* Fără overflow orizontal cauzat de flex/grid copii */
+ html[lang="ro"] body { word-break: normal; }
+ section[id] { scroll-margin-top: 80px; }
   * { min-width: 0; }
 }
 

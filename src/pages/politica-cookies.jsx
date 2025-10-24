@@ -28,6 +28,8 @@ export default function PoliticaCookies() {
       canonical,
       image: ogImage,
       siteName: "ConsultantaBV",
+      ogType: "website",   // opțional: poate fi și "article"
+      locale: "ro_RO",     // opțional, pentru coerență cu restul paginilor
     })
   }, [pageTitle, pageDescr, canonical, ogImage])
 
@@ -41,15 +43,15 @@ export default function PoliticaCookies() {
     ],
   }
 
-  // Notă: nu definim Organization/WebSite aici (ca să evităm duplicate site-wide).
+  // Notă: NU definim Organization/WebSite aici.
   const webPageLd = {
     "@context": "https://schema.org",
-    "@type": "WebPage",
+    "@type": "WebPage",                 // poți lăsa WebPage pentru politica cookies
     "@id": `${canonical}#webpage`,
     url: canonical,
     name: pageTitle,
     description: pageDescr,
-    isPartOf: { "@type": "WebSite", url: origin, name: "ConsultantaBV" },
+    isPartOf: { "@id": `${origin}/#website` },   // ✅ referință, fără dubluri
     primaryImageOfPage: ogImage,
     inLanguage: "ro-RO",
   }

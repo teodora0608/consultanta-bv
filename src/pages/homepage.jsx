@@ -6,7 +6,7 @@ import Navbar from "../components/navbar"
 import HeroSection from "../common/hero-section"
 import ServicesSection from "../common/services-section"
 import AboutWhySection from "../common/about-why-section"
-import FAQSection from "../common/faq-section"
+import FAQSection from "../common/FAQSectionUI"
 import FinalCTA from "../common/final-cta"
 import Footer from "../components/footer"
 
@@ -26,7 +26,6 @@ export default function HomePage() {
     "Consultanță juridică, înființare SRL și PFA, închidere firme, modificări ONRC și găzduire sediu social. Totul 100% online, rapid și sigur – în 3–5 zile lucrătoare."
   const ogImage = `${origin}/images/hero-tablet.webp`
 
-  // ─────────────── META la mount ───────────────
   useEffect(() => {
     setMetaTags({
       title: pageTitle,
@@ -40,6 +39,9 @@ export default function HomePage() {
   }, [pageTitle, pageDescr, canonical, ogImage])
 
   // ─────────────── JSON-LD ───────────────
+  const orgId = `${origin}/#organization`
+  const webSiteId = `${origin}/#website`
+
   const webPageLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -47,7 +49,7 @@ export default function HomePage() {
     url: canonical,
     name: pageTitle,
     description: pageDescr,
-    isPartOf: { "@type": "WebSite", url: origin, name: "ConsultantaBV" },
+    isPartOf: { "@id": webSiteId },         // ✅ referință, nu obiect nou
     primaryImageOfPage: ogImage,
     inLanguage: "ro-RO",
   }
@@ -55,8 +57,11 @@ export default function HomePage() {
   const webSiteLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": webSiteId,                       // ✅ ID canonic
     name: "ConsultantaBV",
     url: origin,
+    inLanguage: "ro-RO",
+    publisher: { "@id": orgId },            // ✅ leagă de Organization
     potentialAction: {
       "@type": "SearchAction",
       target: `${origin}/?q={search_term_string}`,
@@ -67,9 +72,10 @@ export default function HomePage() {
   const organizationLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": orgId,                           // ✅ ID canonic
     name: "ConsultantaBV",
     url: origin,
-    logo: `${origin}/images//public/images/logo.svgimages/logo.svg`,
+    logo: `${origin}/images/logo.svg`,      // ✅ path reparat
     sameAs: [
       "https://www.facebook.com/consultantabv",
       "https://www.linkedin.com/company/consultantabv",
@@ -91,29 +97,15 @@ export default function HomePage() {
     ],
   }
 
-  const howToLd = {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    name: "Cum lucrăm – servicii 100% online",
-    description:
-      "Pașii tipici: cerere, consultanță, redactare acte, depunere la ONRC/ANAF și livrarea documentelor.",
-    step: [
-      { "@type": "HowToStep", name: "Trimite cererea", url: `${origin}/contact` },
-      { "@type": "HowToStep", name: "Consultanță & clarificări" },
-      { "@type": "HowToStep", name: "Redactare acte & semnare (electronic/împuternicire)" },
-      { "@type": "HowToStep", name: "Depunere online la ONRC/ANAF" },
-      { "@type": "HowToStep", name: "Livrare documente și urmărire status" },
-    ],
-  }
+  // ℹ️ Recomandare: Nu pune HowTo pe home decât dacă pașii sunt VIZIBILI aici.
+  // Dacă păstrezi pașii doar pe paginile de servicii, scoate howToLd de pe homepage.
+  // const howToLd = { ... }
 
   return (
     <main className="min-h-screen bg-white">
-      {/* JSON-LD (idempotent; nu includem FAQ aici ca să nu dublăm schema din componentă) */}
-      <JsonLd data={[webPageLd, webSiteLd, organizationLd, breadcrumbLd, howToLd]} />
-
+      <JsonLd data={[webPageLd, webSiteLd, organizationLd, breadcrumbLd]} />
       <Navbar />
       <HeroSection />
-
       <ServicesSection />
       <AboutWhySection />
       <FAQSection />

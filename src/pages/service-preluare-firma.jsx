@@ -1,29 +1,26 @@
+// src/pages/service-preluare-firma-cu-datorii.jsx
 "use client"
 
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
-import Navbar from "../components/navbar"
-import Footer from "../components/footer"
-import FAQSection from "../components/FAQSection"
-import FinalCTA from "../common/final-cta"
+
+import Navbar from "../components/navbar.jsx"
+import Footer from "../components/footer.jsx"
+import FinalCTA from "../common/final-cta.jsx"
+import FAQSectionUI from "../common/FAQSectionUI.jsx"
 
 // ✅ SEO
-import { setMetaTags } from "../seo/meta"
-import JsonLd from "../components/JsonLd"
+import { setMetaTags } from "../seo/meta.js"
+import JsonLd from "../components/JsonLd.jsx"
 
-// ✅ Icoanele tale (din fișierul /src/icons)
+// ✅ Iconuri
 import {
   ArrowRightIcon as ArrowRight,
-  MessageCircleIcon as MessageCircle,
   ChevronRightIcon as ChevronRight,
   CheckCircle2Icon as CheckCircle2,
-} from "../icons"
+} from "../icons.js"
 
 export default function ServicePreluareFirmaCuDatorii() {
-  const scrollToDeceAceastaSolutie = () => {
-    document.getElementById("de-ce-aceasta-solutie")?.scrollIntoView({ behavior: "smooth" })
-  }
-
   // ─────────────── SEO VARS ───────────────
   const origin =
     (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
@@ -35,7 +32,7 @@ export default function ServicePreluareFirmaCuDatorii() {
     "Preluare firmă cu datorii: analiză juridică și fiscală, soluții legale (cesiune părți sociale, insolvență, faliment), documente, depuneri și reprezentare completă."
   const ogImage = `${origin}/images/hero-tablet.webp`
 
-  // ─────────────── META la mount (idempotent) ───────────────
+  // ─────────────── META (idempotent) ───────────────
   useEffect(() => {
     setMetaTags({
       title,
@@ -48,47 +45,7 @@ export default function ServicePreluareFirmaCuDatorii() {
     })
   }, [title, description, canonical, ogImage])
 
-  // ─────────────── JSON-LD (în JSX) ───────────────
-  const breadcrumbLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Acasă", item: origin },
-      { "@type": "ListItem", position: 2, name: "Servicii", item: `${origin}/servicii` },
-      { "@type": "ListItem", position: 3, name: "Preluare firmă cu datorii", item: canonical },
-    ],
-  }
-
-  const webPageLd = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": `${canonical}#webpage`,
-    url: canonical,
-    name: title,
-    description,
-    isPartOf: { "@type": "WebSite", url: origin, name: "ConsultantaBV" },
-    primaryImageOfPage: ogImage,
-    inLanguage: "ro-RO",
-  }
-
-  const serviceLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: "Preluare firmă cu datorii",
-    description,
-    url: canonical,
-    image: ogImage,
-    serviceType: "Consultanță juridică și fiscală pentru firme cu datorii",
-    areaServed: { "@type": "Country", name: "România" },
-    provider: {
-      "@type": "Organization",
-      name: "ConsultantaBV",
-      url: origin,
-      logo: `${origin}/images//public/images/logo.svg`,
-    },
-  }
-
-  // 📋 Content arrays (UI neschimbat)
+  // ─────────────── Content arrays ───────────────
   const ceIncludem = [
     "Analiză juridică & fiscală a situației (debite, litigii, garanții, istoricul fiscal)",
     "Propunere de soluție legală: cesiune părți sociale / insolvență / faliment",
@@ -136,10 +93,62 @@ export default function ServicePreluareFirmaCuDatorii() {
     { question: "Preluați orice firmă cu datorii?", answer: "Nu. Acceptăm doar cazurile care trec analiza de eligibilitate juridică, fiscală și contabilă." },
   ]
 
+  // ─────────────── JSON-LD ───────────────
+  const orgId = `${origin}/#organization`
+  const webSiteId = `${origin}/#website`
+
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Acasă", item: origin },
+      { "@type": "ListItem", position: 2, name: "Servicii", item: `${origin}/servicii` },
+      { "@type": "ListItem", position: 3, name: "Preluare firmă cu datorii", item: canonical },
+    ],
+  }
+
+  const webPageLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${canonical}#webpage`,
+    url: canonical,
+    isPartOf: { "@id": webSiteId }, // ✅ referință, nu obiect nou
+    name: title,
+    description,
+    primaryImageOfPage: ogImage,
+    inLanguage: "ro-RO",
+  }
+
+  const serviceLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${canonical}#service`,
+    name: "Preluare firmă cu datorii",
+    description,
+    url: canonical,
+    image: ogImage,
+    serviceType: "Consultanță juridică și fiscală pentru firme cu datorii",
+    areaServed: { "@type": "Country", name: "România" },
+    provider: { "@type": "Organization", "@id": orgId }, // ✅ fără dublură
+  }
+
+  const howToLd = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "Pașii gestionării unei firme cu datorii",
+    description: "Etapele posibile: analiză, documente, depuneri, comunicări și finalizare.",
+    step: pasi.map((p, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: p.title,
+    })),
+  }
+
+  // ─────────────── Layout ───────────────
   return (
     <main className="min-h-screen bg-white">
-      {/* 🔽 JSON-LD sus în JSX (idempotent) */}
-      <JsonLd data={[webPageLd, breadcrumbLd, serviceLd]} />
+      {/* JSON-LD idempotent */}
+      <JsonLd data={[webPageLd, breadcrumbLd, serviceLd, howToLd]} />
 
       <Navbar />
 
@@ -159,36 +168,45 @@ export default function ServicePreluareFirmaCuDatorii() {
               *Soluția finală se stabilește după analiza completă a documentelor.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-  <Link
-    to="/contact"
-    className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300"
-    aria-label="Solicită evaluare - mergi la pagina de contact"
-  >
-    Solicită evaluare
-    <ArrowRight className="ml-2 h-5 w-5" />
-  </Link>
-<a
-  href="https://wa.me/40730140766?text=Salut!%20Aș%20dori%20mai%20multe%20informații%20despre%20serviciile%20ConsultantaBV."
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Scrie-ne pe WhatsApp"
-  className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 min-h-[44px]"
->
-  <svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  strokeWidth="2"
-  strokeLinecap="round"
-  strokeLinejoin="round"
-  aria-hidden="true"
-  className="h-5 w-5 mr-2"
->
-  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
-</svg>
-  WhatsApp
-</a>
+              <Link
+                to="/contact"
+                aria-label="Solicită evaluare - mergi la pagina de contact"
+                data-ga="generate_lead"
+                data-ga-type="CTA"
+                data-ga-section="preluare_firma_cu_datorii"  // ✅ lowercase + underscore
+                data-ga-label="Solicită evaluare - Preluare firmă cu datorii"
+                className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300"
+              >
+                Solicită evaluare
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+
+              <a
+                href="https://wa.me/40730140766?text=Salut!%20Aș%20dori%20mai%20multe%20informații%20despre%20serviciile%20ConsultantaBV."
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Scrie-ne pe WhatsApp"
+                data-ga="contact"
+                data-ga-type="whatsapp"
+                data-ga-section="preluare_firma_cu_datorii"  // ✅ uniform
+                data-ga-label="Scrie-ne pe WhatsApp"
+                className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 min-h-[44px]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  className="h-5 w-5 mr-2"
+                >
+                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                </svg>
+                WhatsApp
+              </a>
             </div>
           </div>
         </div>
@@ -372,7 +390,7 @@ export default function ServicePreluareFirmaCuDatorii() {
       {/* FAQ */}
       <section className="py-20 md:py-28 bg-gray-50">
         <div className="page-container max-w-4xl mx-auto">
-          <FAQSection faqs={faqItems} />
+          <FAQSectionUI faqs={faqItems} />
         </div>
       </section>
 

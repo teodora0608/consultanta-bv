@@ -3,11 +3,10 @@
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 
-const GA_ID = "G-XXXXXXX" // ← pune ID-ul tău GA4 aici
+const GA_ID = "G-Y3S5HJF7FK"
 
 function loadGA() {
   if (!GA_ID) return
-  // evităm dublarea scriptului
   if (document.querySelector(`script[src*="${GA_ID}"]`)) return
 
   const s = document.createElement("script")
@@ -33,19 +32,16 @@ export default function CookieConsent() {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    // afișează bannerul DOAR pe homepage
     if (pathname !== "/") {
       setVisible(false)
       return
     }
 
     const consent = localStorage.getItem("cookieConsent")
-
-    // ✅ verificare anti-trucare
     const secureAccepted = localStorage.getItem("cookieSecureAccepted")
 
     if (consent === "accepted" && secureAccepted === "true") {
-      loadGA() // doar dacă acceptul e real
+      loadGA() // 
       setVisible(false)
     } else if (consent === "declined") {
       setVisible(false)
@@ -56,14 +52,13 @@ export default function CookieConsent() {
 
   const accept = () => {
     localStorage.setItem("cookieConsent", "accepted")
-    localStorage.setItem("cookieSecureAccepted", "true") // 🔒 marcat ca valid
-    setVisible(false)
+    localStorage.setItem("cookieSecureAccepted", "true")
     loadGA()
   }
 
   const decline = () => {
     localStorage.setItem("cookieConsent", "declined")
-    localStorage.removeItem("cookieSecureAccepted") // curățăm flagul
+    localStorage.removeItem("cookieSecureAccepted") 
     setVisible(false)
   }
 

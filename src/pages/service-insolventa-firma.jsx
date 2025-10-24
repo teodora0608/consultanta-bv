@@ -6,6 +6,7 @@ import { Link } from "react-router-dom"
 import Navbar from "../components/navbar"
 import Footer from "../components/footer"
 import FinalCTA from "../common/final-cta"
+import FAQSectionUI from "../common/FAQSectionUI"
 
 import JsonLd from "../components/JsonLd"
 import { setMetaTags } from "../seo/meta"
@@ -13,7 +14,6 @@ import { setMetaTags } from "../seo/meta"
 import {
   CheckCircle2Icon,
   ArrowRightIcon,
-  MessageCircleIcon,
   ChevronRightIcon,
 } from "../icons"
 
@@ -46,7 +46,7 @@ export default function ServiceInsolventaFirma() {
     url: canonical,
     name: pageTitle,
     description: pageDescr,
-    isPartOf: { "@type": "WebSite", url: origin, name: "ConsultantaBV" },
+    isPartOf: { "@id": `${origin}/#website` }, // ✅ leagă de WebSite-ul definit pe homepage
     primaryImageOfPage: ogImage,
     inLanguage: "ro-RO",
   }
@@ -60,12 +60,7 @@ export default function ServiceInsolventaFirma() {
     image: ogImage,
     serviceType: "Consultanță juridică insolvență și reorganizare firme",
     areaServed: { "@type": "Country", name: "România" },
-    provider: {
-      "@type": "Organization",
-      name: "ConsultantaBV",
-      url: origin,
-      logo: `${origin}/images//public/images/logo.svg`,
-    },
+    provider: { "@type": "Organization", "@id": `${origin}/#organization` }, // ✅ fără dubluri
   }
 
   // ── Meta tags (idempotent)
@@ -81,9 +76,28 @@ export default function ServiceInsolventaFirma() {
     })
   }, [pageTitle, pageDescr, canonical, ogImage])
 
-  const scrollToDocuments = () => {
-    document.getElementById("acte-necesare")?.scrollIntoView({ behavior: "smooth" })
-  }
+  const faqItems = [
+    {
+      question: "Când devine obligatorie deschiderea insolvenței?",
+      answer:
+        "Când firma nu își poate plăti datoriile certe, lichide și exigibile mai vechi de 60 de zile. În practică, evaluăm documentele și îți indicăm pasul corect (cerere debitor/creditor, reorganizare sau faliment).",
+    },
+    {
+      question: "Administratorul răspunde personal pentru datorii?",
+      answer:
+        "Poate răspunde în anumite situații (conform Legii 85/2014) dacă a contribuit la ajungerea în insolvență sau a întârziat nejustificat. Analizăm cazul și îți indicăm măsurile de limitare a riscurilor.",
+    },
+    {
+      question: "Cât durează procedura de insolvență?",
+      answer:
+        "Variază în funcție de complexitate și numărul creditorilor: falimentul simplificat poate dura 6–18 luni, reorganizarea 3–4 ani, în funcție de planul aprobat de instanță.",
+    },
+    {
+      question: "Ce documente trebuie pregătite inițial?",
+      answer:
+        "Cererea de deschidere, bilanț/balanță, lista creditorilor, dovezi ale imposibilității de plată, fișa rol fiscal, actul constitutiv și certificate ONRC. Te ajutăm să le strângi și să le ordonezi corect.",
+    },
+  ]
 
   return (
     <main className="min-h-screen bg-white">
@@ -107,35 +121,44 @@ export default function ServiceInsolventaFirma() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-<Link
-  to="/contact"
-  className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300"
->
-  Află detalii
-  <ArrowRightIcon className="icon ml-2" />
-</Link>
-<a
-  href="https://wa.me/40730140766?text=Salut!%20Aș%20dori%20mai%20multe%20informații%20despre%20serviciile%20ConsultantaBV."
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Scrie-ne pe WhatsApp"
-  className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 min-h-[44px]"
->
-  <svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  strokeWidth="2"
-  strokeLinecap="round"
-  strokeLinejoin="round"
-  aria-hidden="true"
-  className="h-5 w-5 mr-2"
->
-  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
-</svg>
-  WhatsApp
-</a>
+              <Link
+                to="/contact"
+                data-ga="generate_lead"
+                data-ga-label="Află detalii - Insolvență firmă"
+                data-ga-section="insolventa_firma"
+                data-ga-type="CTA"
+                className="inline-flex items-center justify-center bg-[#3eb89a] hover:bg-[#35a085] text-white font-semibold px-8 py-4 rounded-lg text-lg shadow-lg transition-all duration-300"
+              >
+                Află detalii
+                <ArrowRightIcon className="icon ml-2" />
+              </Link>
+
+              <a
+                href="https://wa.me/40730140766?text=Salut!%20Aș%20dori%20mai%20multe%20informații%20despre%20serviciile%20ConsultantaBV."
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Scrie-ne pe WhatsApp"
+                data-ga="contact"
+                data-ga-type="whatsapp"
+                data-ga-section="insolventa_firma"
+                data-ga-label="Scrie-ne pe WhatsApp"
+                className="inline-flex items-center justify-center border-2 border-white text-white hover:bg-white hover:text-[#0a2540] font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 min-h-[44px]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  className="h-5 w-5 mr-2"
+                >
+                  <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                </svg>
+                WhatsApp
+              </a>
             </div>
           </div>
         </div>
@@ -281,6 +304,13 @@ export default function ServiceInsolventaFirma() {
               </ul>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-20 md:py-28 bg-gray-50">
+        <div className="page-container max-w-4xl mx-auto">
+          <FAQSectionUI faqs={faqItems} />
         </div>
       </section>
 

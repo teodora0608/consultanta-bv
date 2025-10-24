@@ -1,28 +1,79 @@
+// src/pages/termeni-conditii.jsx
 "use client"
 
-// src/pages/termeni-conditii.jsx
-import { Link } from "react-router-dom"
 import { useEffect } from "react"
+import { Link } from "react-router-dom"
+
+import Footer from "../components/footer"
+
+// ✅ SEO
+import { setMetaTags } from "../seo/meta"
+import JsonLd from "../components/JsonLd"
 
 export default function TermeniConditii() {
   const updated = "octombrie 2025"
 
+  // ───────────── SEO VARS ─────────────
+  const origin =
+    (typeof window !== "undefined" && window.location.origin) || "https://consultantabv.ro"
+  const path = "/termeni-conditii"
+  const canonical = `${origin}${path}`
+
+  const pageTitle = "Termeni și condiții | ConsultantaBV"
+  const pageDescr =
+    "Termeni și condiții de utilizare a site-ului ConsultantaBV. Reguli de utilizare și condițiile în care prestăm serviciile noastre de consultanță."
+  const ogImage = `${origin}/images/og/default.jpg`
+
+  // ───────────── META (idempotent) ─────────────
   useEffect(() => {
-    document.title = "Termeni și condiții | ConsultantaBV"
-    const metaDescription = document.querySelector('meta[name="description"]')
-    if (metaDescription) {
-      metaDescription.setAttribute(
-        "content",
-        "Termeni și condiții de utilizare a site-ului ConsultantaBV. Reguli de utilizare și condițiile în care prestăm serviciile noastre de consultanță.",
-      )
-    }
-  }, [])
+    setMetaTags({
+      title: pageTitle,
+      description: pageDescr,
+      canonical,
+      image: ogImage,
+      siteName: "ConsultantaBV",
+      ogType: "website", // sau "article" dacă preferi
+      locale: "ro_RO",
+    })
+  }, [pageTitle, pageDescr, canonical, ogImage])
+
+  // ───────────── JSON-LD ─────────────
+  const orgId = `${origin}/#organization`
+  const webSiteId = `${origin}/#website`
+
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Acasă", item: origin },
+      { "@type": "ListItem", position: 2, name: "Termeni și condiții", item: canonical },
+    ],
+  }
+
+  // Tipul specific pentru pagina de termeni:
+  const termsPageLd = {
+    "@context": "https://schema.org",
+    "@type": "TermsOfService",
+    "@id": `${canonical}#webpage`,
+    url: canonical,
+    name: pageTitle,
+    description: pageDescr,
+    inLanguage: "ro-RO",
+    isPartOf: { "@id": webSiteId },   // ✅ referință, fără dubluri
+    mainEntityOfPage: canonical,
+    dateModified: "2025-10-01",
+  }
+
+  // Dacă vrei și un WebPage generic, îl poți omite (TermsOfService e suficient).
+  // Important e să NU redeclari Organization/WebSite aici.
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
+      {/* JSON-LD */}
+      <JsonLd data={[termsPageLd, breadcrumbLd]} />
+      
       {/* Hero Section */}
       <section className="relative py-12 sm:py-16 md:py-20 lg:py-28">
-        {/* Subtle background pattern */}
         <div className="absolute inset-0 opacity-[0.03]">
           <div
             className="absolute inset-0"
@@ -30,6 +81,7 @@ export default function TermeniConditii() {
               backgroundImage: `radial-gradient(circle at 2px 2px, #0a2540 1px, transparent 0)`,
               backgroundSize: "32px 32px",
             }}
+            aria-hidden="true"
           />
         </div>
 
@@ -40,7 +92,6 @@ export default function TermeniConditii() {
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-serif text-[#0a2540] mb-4 sm:mb-6 leading-tight">
             Termeni și condiții
           </h1>
-          {/* Decorative line */}
           <div className="mx-auto w-16 sm:w-20 md:w-24 h-0.5 bg-gradient-to-r from-transparent via-[#3eb89a] to-transparent mb-6 sm:mb-8" />
           <p className="text-base sm:text-lg md:text-xl text-gray-600 font-sans max-w-2xl mx-auto leading-relaxed">
             Reguli de utilizare a site-ului și condițiile în care prestăm serviciile noastre de consultanță.
@@ -54,6 +105,7 @@ export default function TermeniConditii() {
           <p className="text-xs sm:text-sm text-gray-500 mb-8 sm:mb-10">
             Ultima actualizare: <span className="font-medium text-[#0a2540]">{updated}</span>
           </p>
+
 
           <h2
             className="text-2xl sm:text-3xl md:text-3xl font-bold mt-10 sm:mt-12 md:mt-16 mb-4 sm:mb-6 font-serif text-[#0a2540]"
