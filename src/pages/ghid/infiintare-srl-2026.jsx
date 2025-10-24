@@ -26,7 +26,7 @@ export default function GhidInfiintareSRL2026() {
     "Acte necesare pentru înființare SRL în 2026 – Ghid complet | ConsultantaBV"
   const description =
     "Ghid complet 2026 pentru înființarea unui SRL: pași ONRC, acte necesare, costuri, termene, condiții legale, CAEN, sediu social, UBO. Totul explicat clar, pas cu pas."
-  const ogImage = `${origin}/images/ghiduri/infiintare-srl-2026.webp`
+  const ogImage = `${origin}/images/infiintare-srl-2026.webp`
 
   // ─────────────── META (idempotent) ───────────────
   useEffect(() => {

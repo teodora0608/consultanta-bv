@@ -25,7 +25,7 @@ export default function GhidModificareSediu2026() {
   const title = "Modificare sediu social 2026 – Pași, acte și costuri | ConsultantaBV"
   const description =
     "Ghid 2026 pentru schimbarea sediului social: în aceeași localitate sau în alt județ, cu/fără activitate la sediu. Acte necesare, pași ONRC și efecte fiscale."
-  const ogImage = `${origin}/images/ghiduri/modificare-sediu-social-2026.webp`
+  const ogImage = `${origin}/images/modificare-sediu-social-2026.webp`
 
   // ─────────────── META (idempotent) ───────────────
   useEffect(() => {

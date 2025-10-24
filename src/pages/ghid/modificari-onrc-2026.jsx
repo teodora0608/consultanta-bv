@@ -25,7 +25,7 @@ export default function GhidModificariONRC2026() {
   const title = "Modificări ONRC 2026 – Ghid complet | ConsultantaBV"
   const description =
     "Ghid 2026 pentru modificări la ONRC: schimbare sediu social, administratori, asociați, denumire, obiect CAEN, puncte de lucru. Pași, documente, termene."
-  const ogImage = `${origin}/images/ghiduri/modificari-onrc-2026.webp`
+  const ogImage = `${origin}/images/modificari-onrc-2026.webp`
 
   // ─────────────── META (idempotent) ───────────────
   useEffect(() => {

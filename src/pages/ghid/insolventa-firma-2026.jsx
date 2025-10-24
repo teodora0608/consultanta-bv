@@ -25,7 +25,7 @@ export default function GhidInsolventa2026() {
   const title = "Insolvența firmei în 2026 – Ce este și când e recomandată | ConsultantaBV"
   const description =
     "Explicat simplu: ce este insolvența în 2026, diferențe față de restructurare/faliment, condiții de deschidere, pași esențiali și efecte juridice."
-  const ogImage = `${origin}/images/ghiduri/insolventa-firma-2026.webp`
+  const ogImage = `${origin}/images/insolventa-firma-2026.webp`
 
   // ─────────────── META (idempotent) ───────────────
   useEffect(() => {

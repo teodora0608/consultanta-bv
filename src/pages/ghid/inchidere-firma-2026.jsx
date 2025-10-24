@@ -23,7 +23,7 @@ export default function GhidInchidereFirma2026() {
   const description =
     "Ghid 2026 pentru închiderea unui SRL: lichidare voluntară, pași ONRC, documente, termene, radiere și verificări fiscale. Explicat clar, pas cu pas."
   // ✅ servește imaginea din /public/images/ghiduri
-  const ogImage = `${origin}/images/ghiduri/inchidere-firma-2026.webp`
+  const ogImage = `${origin}/images/inchidere-firma-2026.webp`
 
 
   // ─────────────── META (idempotent) ───────────────
