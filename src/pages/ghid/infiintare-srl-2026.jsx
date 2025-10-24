@@ -238,13 +238,13 @@ export default function GhidInfiintareSRL2026() {
         </div>
       </section>
 
-      {/* COVER (picture + source) din /public/images/ghiduri */}
+
       <section className="py-8 bg-white">
         <div className="page-container max-w-4xl mx-auto">
           <picture>
-            <source srcSet="/images/ghiduri/infiintare-srl-2026.webp" type="image/webp" />
+            <source srcSet="/images/infiintare-srl-2026.webp" type="image/webp" />
             <img
-              src="/images/ghiduri/infiintare-srl-2026.jpg"
+              src="/images/infiintare-srl-2026.jpg"
               alt="Înființare SRL 2026 – acte necesare, pași ONRC, costuri și termene"
               className="w-full h-auto rounded-xl border border-gray-200 shadow-sm cover-image"
               width="1200"

@@ -157,13 +157,13 @@ export default function GhidModificariONRC2026() {
         </div>
       </section>
 
-      {/* ✅ COVER (picture + source) din /public/images/ghiduri */}
+
       <section className="py-8 bg-white">
         <div className="page-container max-w-4xl mx-auto">
           <picture>
-            <source srcSet="/images/ghiduri/modificari-onrc-2026.webp" type="image/webp" />
+            <source srcSet="/images/modificari-onrc-2026.webp" type="image/webp" />
             <img
-              src="/images/ghiduri/modificari-onrc-2026.jpg"
+              src="/images/modificari-onrc-2026.jpg"
               alt="Modificări ONRC 2026 – schimbare sediu, CAEN, administratori, asociați, denumire"
               width="1200"
               height="675"

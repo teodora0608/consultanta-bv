@@ -22,7 +22,7 @@ export default function GhidInchidereFirma2026() {
     "Cum închizi o firmă în 2026 – Procedură pas cu pas | ConsultantaBV"
   const description =
     "Ghid 2026 pentru închiderea unui SRL: lichidare voluntară, pași ONRC, documente, termene, radiere și verificări fiscale. Explicat clar, pas cu pas."
-  // ✅ servește imaginea din /public/images/ghiduri
+
   const ogImage = `${origin}/images/inchidere-firma-2026.webp`
 
 
@@ -166,13 +166,12 @@ export default function GhidInchidereFirma2026() {
         </div>
       </section>
 
-      {/* COVER din /public/images/ghiduri (webp + jpg fallback) */}
       <section className="py-8 bg-white">
         <div className="page-container max-w-4xl mx-auto">
           <picture>
-            <source srcSet="/images/ghiduri/inchidere-firma-2026.webp" type="image/webp" />
+            <source srcSet="/images/inchidere-firma-2026.webp" type="image/webp" />
             <img
-              src="/images/ghiduri/inchidere-firma-2026.jpg"
+              src="/images/inchidere-firma-2026.jpg"
               alt="Procedură închidere firmă 2026 – dizolvare, lichidare și radiere SRL pas cu pas"
               className="rounded-2xl shadow-md w-full border border-gray-200"
               width="1200"

@@ -174,13 +174,13 @@ export default function GhidModificareSediu2026() {
         </div>
       </section>
 
-      {/* COVER (picture + source) din /public/images/ghiduri */}
+
       <section className="py-8 bg-white">
         <div className="page-container max-w-4xl mx-auto">
           <picture>
-            <source srcSet="/images/ghiduri/modificare-sediu-social-2026.webp" type="image/webp" />
+            <source srcSet="/images/modificare-sediu-social-2026.webp" type="image/webp" />
             <img
-              src="/images/ghiduri/modificare-sediu-social-2026.jpg"
+              src="/images/modificare-sediu-social-2026.jpg"
               alt="Modificare sediu social 2026 – pași, acte necesare și costuri pentru schimbare sediu firmă"
               width="1200"
               height="675"

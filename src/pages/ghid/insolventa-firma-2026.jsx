@@ -152,13 +152,13 @@ export default function GhidInsolventa2026() {
         </div>
       </section>
 
-      {/* COVER (picture + source) din /public/images/ghiduri */}
+
       <section className="py-8 bg-white">
         <div className="page-container max-w-4xl mx-auto">
           <picture>
-            <source srcSet="/images/ghiduri/insolventa-firma-2026.webp" type="image/webp" />
+            <source srcSet="/images/insolventa-firma-2026.webp" type="image/webp" />
             <img
-              src="/images/ghiduri/insolventa-firma-2026.jpg"
+              src="/images/insolventa-firma-2026.jpg"
               alt="Insolvență firmă 2026 – ce este, când e recomandată și efecte juridice"
               className="w-full h-auto rounded-xl border border-gray-200 shadow-sm cover-image"
               width="1200"

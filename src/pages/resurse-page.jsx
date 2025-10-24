@@ -22,7 +22,7 @@ export default function ResursePage() {
   const title = "Resurse și Ghiduri Juridice | ConsultantaBV"
   const description =
     "Ghiduri complete 2026: acte pentru înființare SRL, SRL vs PFA 2026, închidere firmă, modificări ONRC, insolvență și modificare sediu social. Explicat clar, pas cu pas."
-  const ogImage = `${origin}/images/ghiduri/inchidere-firma-2026.jpg`
+  const ogImage = `${origin}/images/inchidere-firma-2026.jpg`
 
   // ─────────────── META (idempotent) ───────────────
   useEffect(() => {

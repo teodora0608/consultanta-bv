@@ -221,9 +221,9 @@ export default function GhidSRLvsPFA2026() {
       <section className="py-8 bg-white">
         <div className="page-container max-w-4xl mx-auto">
           <picture>
-            <source srcSet="/images/ghiduri/srl-vs-pfa-2026.webp" type="image/webp" />
+            <source srcSet="/images/srl-vs-pfa-2026.webp" type="image/webp" />
             <img
-              src="/images/ghiduri/srl-vs-pfa-2026.jpg"
+              src="/images/srl-vs-pfa-2026.jpg"
               alt="Comparație SRL vs PFA 2026 – avantaje, costuri și când să alegi fiecare formă juridică"
               width="1200"
               height="675"
