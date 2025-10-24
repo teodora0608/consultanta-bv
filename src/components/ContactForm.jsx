@@ -4,7 +4,6 @@ import { useState, useRef, useEffect, useMemo } from "react"
 import { CheckCircle2Icon, ChevronDownIcon } from "../icons"
 import { gtagSafe } from "../lib/gaSafe"
 
-// ✅ Regex-uri și validatori
 const nameRegex = /^[A-Za-zĂÂÎȘȚăâîșț'’\-\. ]{2,}(?:\s+[A-Za-zĂÂÎȘȚăâîșț'’\-\. ]{2,})+$/
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i
 
@@ -50,7 +49,6 @@ export default function ContactForm({
 
   const [showOtherService, setShowOtherService] = useState(false)
 
-  // Dropdown state + refs pentru accesibilitate
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [activeIndex, setActiveIndex] = useState(-1)
   const dropdownRef = useRef(null)

@@ -98,17 +98,6 @@ export default function PoliticaCookies() {
         </div>
       </section>
 
-      {/* Breadcrumb */}
-      <section className="py-3 bg-white/60 border-y border-gray-100">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <nav className="text-sm text-gray-600 flex items-center gap-2" aria-label="breadcrumb">
-            <Link to="/" className="hover:text-[#3eb89a]">Acasă</Link>
-            <span aria-hidden="true">/</span>
-            <span className="text-[#0a2540]" aria-current="page">Politica cookies</span>
-          </nav>
-        </div>
-      </section>
-
       {/* Content Section */}
       <section id="cookies-content" className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pb-12 sm:pb-16 md:pb-20">
         <div className="bg-white/60 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8 md:p-10 lg:p-12">
